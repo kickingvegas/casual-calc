@@ -1,0 +1,27 @@
+* casual
+An opinionated [[https://github.com/magit/transient][Transient]]-based porcelain for Emacs [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][Calc]]. Casual is a set of hierarchical menus designed to allow for casual usage of Calc.
+
+*This project is WIP. Expect future behavior to change, potentially drastically.*
+
+* Motivation
+While the feature set in Emacs Calc is rich, for most users this capability is inaccessible due Calc’s dependence on arcane keybindings to access them. These keybindings have a steep learning curve that is quickly lost if not in constant use.
+
+Menus are a user interface (UI) affordance that offer users discoverability and recall. Providing a hierarchical menu UI over Calc significantly improves its casual use.
+
+** Goals
+- To provide a keyboard-driven UI to Calc that is menu based.
+- To allow casual use of Calc without having to read its Info pages.
+
+** Non-Goals
+- Full coverage of all Calc commands. Casual is not intended to be a power user tool.
+- Strict adherence to default Calc keybindings. Calc’s prompt-first interface resulted in a command keybinding design that embeds context in the key sequence (e.g. ~v~ for vector, ~b~ for binary). Hierarchical menus make this context implicit, allowing for key reuse in different contexts.
+- Strict adherence to Calc command naming. While Casual is mostly in alignment with Calc’s command naming, there are cases where it will make an opinionated change if  the name is deemed too vague or idiomatic.
+
+* Install
+
+Ensure that the directory holding ~casual.el~ is in your ~info-path~. Add the following lines to your Emacs initialization file.
+
+#+begin_src elisp :lexical no
+  (require 'casual)
+  (define-key calc-mode-map (kbd "C-o") 'casual-calc-main-menu)
+#+end_src
