@@ -1,4 +1,4 @@
-* casual
+* Casual
 An opinionated [[https://github.com/magit/transient][Transient]]-based porcelain for Emacs [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][Calc]]. Casual is a set of hierarchical menus designed to allow for casual usage of Calc.
 
 *This project is WIP. Expect future behavior to change, potentially drastically.*
