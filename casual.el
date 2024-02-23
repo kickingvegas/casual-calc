@@ -119,7 +119,6 @@
    ((eq calc-angle-mode 'rad) "Radians")
    ((eq calc-angle-mode 'hms) "hms")))
 
-
 (defun casual-complex-format-label ()
   "Label for complex format mode."
   (cond
@@ -127,26 +126,36 @@
    ((eq calc-complex-format 'j) "x + yj")
    ((not calc-complex-format) "(x, y)")))
 
+(defun casual-float-format-label (&optional include-precision)
+  "Label for Calc float mode.
+If INCLUDE-PRECISION is non-nil, then add precision to label."
+  (let* ((mode (pcase (car calc-float-format)
+                 ('float "Normal")
+                 ('fix "Fixed Point")
+                 ('sci "Scientific")
+                 ('eng "Engineering")))
+         (precision (nth 1 calc-float-format)))
+
+    (if include-precision
+        (format "%s %d" mode precision)
+      (format "%s" mode))))
 
 (defun casual--variable-to-checkbox (v)
   "Checkbox string representation of variable V.
 V is either nil or non-nil."
-  (if v
-      "☑︎"
-    "◻︎"))
+  (if v "☑︎" "◻︎"))
 
 (defun casual--prefix-label (label prefix)
   "Label constructed with PREFIX and LABEL separated by a space."
   (format "%s %s" prefix label))
 
 (defun casual--suffix-label (label prefix)
-  "Label constructed with LABEL and SUFFIX separated by a space."
+  "Label constructed with LABEL and PREFIX separated by a space."
   (format "%s %s" prefix label))
 
 (defun casual--checkbox-label (v label)
   "Casual checkbox label using variable V and LABEL."
   (casual--prefix-label label (casual--variable-to-checkbox v)))
-
 
 ;; Menus
 (transient-define-prefix casual-main-menu ()
@@ -321,7 +330,11 @@ V is either nil or non-nil."
                     (format "Radix (now %s)›" (casual-number-radix-label)))
      :transient nil)
     ;; TODO show current value float formats
-    ("f" "Float Formats›" casual-float-format-menu :transient nil)
+    ("f" casual-float-format-menu
+     :description (lambda ()
+                    (format "Float Formats (now %s)›"
+                            (casual-float-format-label)))
+     :transient nil)
     ;; TODO show current value thousands separators
     ("g" calc-group-digits
      ;; TODO calc-group-digits can actually be an int 😦
