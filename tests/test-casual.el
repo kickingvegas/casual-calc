@@ -309,21 +309,152 @@ A testcase is used as input to `casualt-menu-assert-testcase'."
      ("T" ((vec (vec 2 4 ) (vec 8 9))) 11)))
   (casualt-breakdown t))
 
-;;; 50%
-;; (ert-deftest test-casual-statistics-menu ())
-;; (ert-deftest test-casual-set-operations-menu ())
-;; (ert-deftest test-casual-units-menu ())
-;; (ert-deftest test-casual-map-and-reduce-menu ())
-;; (ert-deftest test-casual-logarithmic-menu ())
+(ert-deftest test-casual-statistics-menu ()
+  (casualt-setup)
+  (casualt-run-menu-input-testcases
+   'casual-statistics-menu
+   '(("c" ((vec 1 2)) 2)
+     ("c" ((vec 1 2 (vec 3))) 3)
+     ("c" ((vec (vec 1 2) (vec 3))) 3)
+     ("s" ((vec 3 5)) 8)
+     ("x" ((vec 3 5)) 5)
+     ("m" ((vec 5 5)) 5)
+     ("e" ((vec 1 2 3 4 5 6 7 8 9)) (sdev 5 (float 912870929175 -12)))
+     ("M" ((vec 1 2 3 4 5 6 7 8 9)) 5)
+     ("h" ((vec 1 2 3 4 5 6 7 8 9)) (float 318137186141 -11))
+     ("g" ((vec 1 2 3 4 5 6 7 8 9)) (float 41471662744 -10))
+     ("r" ((vec 1 2 3 4 5 6 7 8 9)) (float 562731433871 -11))
+     ("1" ((vec 1 2 3 4 5 6 7 8 9)) (float 273861278753 -11))
+     ("2" ((vec 1 2 3 4 5 6 7 8 9)) (float 258198889747 -11))
+     ("3" ((vec 1 2 3 4 5 6 7 8 9)) (float 75 -1))
+     ("4" ((vec 1 2 3 4 5 6 7 8 9)) (float 666666666667 -11))
+     ("5" ((vec 1 2 3 4 5) (vec 5 3 3 4 1)) (float -175 -2))
+     ("6" ((vec 1 2 3 4 5) (vec 5 3 3 4 1)) (float -14 -1))
+     ("7" ((vec 1 2 3 4 5) (vec 5 3 3 4 1)) (float -746202507245 -12))))
+  (casualt-breakdown t))
+
+
+(ert-deftest test-casual-set-operations-menu ()
+  (casualt-setup)
+  (casualt-run-menu-input-testcases
+   'casual-set-operations-menu
+   '(("d" ((vec 5 3 3 4 1)) (vec 1 3 4 5))
+     ("u" ((vec 1 2) (vec 3 4)) (vec 1 2 3 4))
+     ("i" ((vec 1 2 3) (vec 3 4)) (vec 3))
+     ("-" ((vec 1 2 3) (vec 3 4)) (vec 1 2))
+     ("x" ((vec 1 2 3) (vec 3 4)) (vec 1 2 4))
+     ("~" ((vec 3 10)) (vec
+                        (intv 2 (neg (var inf var-inf)) 3) (intv 0 3 10)
+                        (intv 1 10 (var inf var-inf))))
+     ("#" ((vec 5 3 3 4 1)) 4)))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-units-menu ()
+  (casualt-setup)
+  (casualt-run-menu-input-testcases
+   'casual-units-menu
+   '(("ckg" ((* 2 (var lb var-lb))) (* (float 90718474 -8) (var kg var-kg)))
+     ("tdegC" ((* 57 (var degF var-degF)))
+      (* (float 138888888889 -10) (var degC var-degC)))
+     ("b" ((var km var-km)) (* 1000 (var m var-m)))
+     ("r" ((* 100 (var km var-km))) 100)
+     ("x" ((* 100 (var km var-km))) (var km var-km))))
+  ;; TODO: test "v"
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-map-and-reduce-menu ()
+  (casualt-setup)
+  (casualt-run-menu-input-testcases
+   'casual-map-and-reduce-menu
+   '(
+     ("m+" ((vec 1 2) 1) (vec 2 3))
+     ("r+" ((vec 1 2)) 3)
+     ("a+" ((vec 2 4)) 6)
+     ("A+" ((vec 1 3 8)) (vec 1 4 12))))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-logarithmic-menu ()
+  (casualt-setup)
+  (casualt-run-menu-input-testcases
+   'casual-logarithmic-menu
+   '(
+     ("l" ((float 109663315843 -8)) (float 7 0))
+     ("e" ((float 7 0)) (float 109663315843 -8))
+     ("L" ((float 100 0)) (float 2 0))
+     ;; (read-kbd-macro "M-l") evals to [134217836]
+     ([134217836] (8 2) 3)
+     ;; (read-kbd-macro "M-e") evals to [134217829]
+     ([134217829] (3) (float 190855369232 -10))))
+  (casualt-breakdown t))
+
+;; TODO: implement test for modes menu
 ;; (ert-deftest test-casual-modes-menu ())
 
-;;; 75%
-;; (ert-deftest test-casual-angle-measure-menu ())
-;; (ert-deftest test-casual-complex-format-menu ())
-;; (ert-deftest test-casual-radix-menu ())
-;; (ert-deftest test-casual-float-format-menu ())
-;; (ert-deftest test-casual-trig-menu ())
-;; (ert-deftest test-casual-hyperbolic-trig-menu ())
+(ert-deftest test-casual-complex-format-menu ()
+  (casualt-setup) ;; calc-number-radix
+  (casualt-run-menu-assert-testcases
+   'casual-complex-format-menu
+   '(("i" () (lambda () (calc-slow-wrapper (should (eq calc-complex-format 'i)))))
+     ("j" () (lambda () (calc-slow-wrapper (should (eq calc-complex-format 'j)))))
+     ("c" () (lambda () (calc-slow-wrapper (should (not calc-complex-format)))))))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-angle-measure-menu ()
+  (casualt-setup) ;; calc-number-radix
+  (casualt-run-menu-assert-testcases
+   'casual-angle-measure-menu
+   '(("r" () (lambda () (calc-slow-wrapper (should (eq calc-angle-mode 'rad)))))
+     ("h" () (lambda () (calc-slow-wrapper (should (eq calc-angle-mode 'hms)))))
+     ("d" () (lambda () (calc-slow-wrapper (should (eq calc-angle-mode 'deg)))))))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-radix-menu ()
+  (casualt-setup) ;; calc-number-radix
+  (casualt-run-menu-assert-testcases
+   'casual-radix-menu
+   '(("2" () (lambda () (should (= calc-number-radix 2))))
+     ("8" () (lambda () (should (= calc-number-radix 8))))
+     ("6" () (lambda () (should (= calc-number-radix 16))))
+     ;; TODO "n" case
+     ("0" () (lambda () (should (= calc-number-radix 10))))))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-float-format-menu ()
+  (casualt-setup) ;; calc-number-radix
+  (casualt-run-menu-assert-testcases
+   'casual-float-format-menu
+   '(("s" () (lambda () (calc-slow-wrapper (should (eq (car calc-float-format) 'sci)))))
+     ("f3" () (lambda () (calc-slow-wrapper (should (eq (car calc-float-format) 'fix)))))
+     ("e" () (lambda () (calc-slow-wrapper (should (eq (car calc-float-format) 'eng)))))
+     ("n" () (lambda () (calc-slow-wrapper (should (eq (car calc-float-format) 'float)))))
+     ))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-trig-menu ()
+  (casualt-setup)
+  (calc-degrees-mode 1)
+  (casualt-run-menu-input-testcases
+   'casual-trig-menu
+   '(("s" (90) 1)
+     ("c" (0) 1)
+     ("t" (45) (float 1 0))
+     ("S" (1) 90)
+     ("C" (1) 0)
+     ("T" (1) 45)))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-hyperbolic-trig-menu ()
+  (casualt-setup)
+  (calc-degrees-mode 1)
+  (casualt-run-menu-input-testcases
+   'casual-hyperbolic-trig-menu
+   '(("s" ((float 88137358702 -11)) (float 1 0))
+     ("c" ((float 0 0)) (float 1 0))
+     ("t" ((float 33 -2)) (float 318520776903 -12))
+     ("S" ((float 1 0)) (float 88137358702 -11))
+     ("C" ((float 1 0)) (float 0 0))
+     ("T" ((float 318520776903 -12)) (float 33 -2))))
+  (casualt-breakdown t))
 
 ;;; Labels
 ;; (ert-deftest test-casual-cmplx-or-polar-label ()

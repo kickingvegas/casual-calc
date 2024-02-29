@@ -143,7 +143,9 @@ If INCLUDE-PRECISION is non-nil, then add precision to label."
 (defun casual--variable-to-checkbox (v)
   "Checkbox string representation of variable V.
 V is either nil or non-nil."
-  (if v "☑︎" "◻︎"))
+  (if (display-graphic-p)
+      (if v "☑︎" "◻︎")
+    (if v "[x]" "[ ]")))
 
 (defun casual--prefix-label (label prefix)
   "Label constructed with PREFIX and LABEL separated by a space."
@@ -179,11 +181,11 @@ V is either nil or non-nil."
 
   [["Arithmetic"
     :pad-keys t
-    ("M-r" "Rounding›" casual-rounding-menu :transient nil)
+    ("o" "Rounding›" casual-rounding-menu :transient nil)
     ("c" "Conversion›" casual-conversions-menu :transient nil)
     ("T" "Time›" casual-time-menu :transient nil)
     ("i" "Complex›" casual-complex-number-menu :transient nil)
-    ("R" "Random›" casual-random-number-menu :transient nil)]
+    ("a" "Random›" casual-random-number-menu :transient nil)]
 
    ["Functions" ; test if anything is on the stack calc-stack-size 0
     ("t" "Trigonometric›" casual-trig-menu :transient nil)
@@ -195,10 +197,15 @@ V is either nil or non-nil."
     :pad-keys t
     ("s" "Swap" calc-roll-down :transient t)
     ("r" "Roll" (lambda ()
-                    (interactive (calc-roll-down (calc-stack-size))))
+                    (interactive) (calc-roll-down (calc-stack-size)))
      :transient t)
+    ("C" "Clear" (lambda ()
+                   (interactive)
+                   (calc-pop-stack (calc-stack-size)))
+     :transient nil)
     ("P" "Pack" calc-pack :transient nil)
-    ("u" "Unpack" calc-unpack :transient nil)]]
+    ("U" "Unpack" calc-unpack :transient nil)
+    ("y" "Copy to Buffer" calc-copy-to-buffer :transient nil)]]
   [("q" "Dismiss" (lambda () (interactive)) :transient transient--do-exit)])
 
 (transient-define-prefix casual-rounding-menu ()
@@ -248,12 +255,29 @@ V is either nil or non-nil."
    ("a" "Argument" calc-argument :transient nil)]
   [("q" "Dismiss" (lambda () (interactive)) :transient transient--do-exit)])
 
+
 (transient-define-prefix casual-random-number-menu ()
   "Casual random number functions menu."
-  ["Random Number (𝑛 is 𝟣: on stack)\n"
-   ("r" "Random number within [0..𝑛)" calc-random :transient nil)
-   ("a" "Random number again" calc-random-again :transient nil)
-   ("c" "Random real number (0 ≤ 𝑛 < 1.0)" calc-rrandom :transient nil)]
+  :value '("-m=10")
+  ["Random Number Generation\n"
+   ["Natural Number"
+    ("m" "𝑚" "-m=" :prompt "𝑚: "
+     :reader transient-read-number-N+)
+
+    ("r" "Natural within [𝟢..𝑚)"
+     (lambda ()
+       (interactive)
+       (let* ((m (transient-arg-value "-m=" (transient-args transient-current-command))))
+         (if m (calc-push (string-to-number m)))
+         (calc-random nil)))
+     :transient t)]
+
+   ["Real Number"
+    ("c" "Real within [𝟢.𝟢..𝟣.𝟢)" calc-rrandom :transient t)]]
+
+  ;;("r" "Random number within [0..𝑛)" calc-random :transient nil)
+
+  [("a" "Random number again" calc-random-again :transient t)]
   [("q" "Dismiss" (lambda () (interactive)) :transient transient--do-exit)])
 
 (transient-define-prefix casual-binary-menu ()
@@ -301,6 +325,8 @@ V is either nil or non-nil."
     ("u" "Unpack" calc-unpack :transient nil)]]
   [("q" "Dismiss" (lambda () (interactive)) :transient transient--do-exit)])
 
+
+;; TODO: add Transient prefix arguments n
 (transient-define-prefix casual-vector-building-menu ()
   "Casual vector building functions menu."
   ["Vector Building (index is 1-offset, 𝑛 is 𝟣: on stack)\n"
@@ -326,7 +352,6 @@ V is either nil or non-nil."
     ("h" "Histogram" calc-histogram :transient nil)]]
   [("q" "Dismiss" (lambda () (interactive)) :transient transient--do-exit)])
 
-
 (transient-define-prefix casual-vector-arithmetic-menu ()
   "Casual vector arithmetic functions menu."
   [["Arithmetic (index is 1-offset, 𝑛 is 𝟣: on stack)\n"
@@ -335,14 +360,13 @@ V is either nil or non-nil."
     ("r" "Row Norm" calc-rnorm :transient nil)
     ("c" "Column Norm" calc-cnorm :transient nil)
     ("p" "RH Cross Product" calc-cross :inapt-if-not casual-crossp :transient nil)
-    ("l" "LU Decomposition" calc-mlud :inapt-if-not casual-matrixp :transient nil)
     ("k" "Kronecker Product" calc-kron :inapt-if-not casual-matrixmultp :transient nil)]
    ["Square Matrix"
     ("&" "Inverse" calc-inv :inapt-if-not casual-square-matrixp :transient nil)
     ("d" "Determinant" calc-mdet :inapt-if-not casual-square-matrixp  :transient nil)
-    ("t" "Trace" calc-mtrace :inapt-if-not casual-square-matrixp :transient nil)]]
+    ("l" "LU Decomposition" calc-mlud :inapt-if-not casual-square-matrixp :transient nil)
+    ("T" "Trace" calc-mtrace :inapt-if-not casual-square-matrixp :transient nil)]]
   [("q" "Dismiss" (lambda () (interactive)) :transient transient--do-exit)])
-
 
 (transient-define-prefix casual-statistics-menu ()
   "Casual statistic functions menu."
@@ -358,7 +382,7 @@ V is either nil or non-nil."
     ("g" "Geometric Mean" calc-vector-geometric-mean :transient nil)]
 
    ["Deviation and Variance"
-    ("q" "Root Mean Square" calc-vector-rms :transient nil)
+    ("r" "Root Mean Square" calc-vector-rms :transient nil)
     ("1" "Standard Deviation" calc-vector-sdev :transient nil)
     ("2" "Population Standard Deviation" calc-vector-pop-sdev :transient nil)
     ("3" "Variance" calc-vector-variance :transient nil)
@@ -388,7 +412,8 @@ V is either nil or non-nil."
    ("c" "Convert" calc-convert-units :transient nil)
    ("t" "Convert Temperature" calc-convert-temperature :transient nil)
    ("b" "Convert to Base Unit" calc-base-units :transient nil)
-   ("a" "Autorange" calc-autorange-units :transient nil)
+   ;; TODO: display current autorange state
+   ;;("a" "Autorange" calc-autorange-units :transient nil)
    ("r" "Remove Units" calc-remove-units :transient nil)
    ("x" "Extract Units" calc-extract-units :transient nil)
    ("v" "View Units" calc-view-units-table :transient nil)]
@@ -503,7 +528,7 @@ V is either nil or non-nil."
     :description "𝑖 notation"
     :transient nil)
 
-   ("j" calc-i-notation
+   ("j" calc-j-notation
     :description "𝑗 notation"
     :transient nil)]
   [("q" "Dismiss" (lambda () (interactive)) :transient transient--do-exit)])
@@ -538,8 +563,8 @@ V is either nil or non-nil."
     ("t" "tan" calc-tan :transient nil)]
    ["Inverse"
     ("S" "arcsin" calc-arcsin :transient nil)
-    ("T" "arctan" calc-arctan :transient nil)
-    ("C" "arccos" calc-arccos :transient nil)]
+    ("C" "arccos" calc-arccos :transient nil)
+    ("T" "arctan" calc-arctan :transient nil)]
 
    ["Angle Measure"
     ("a" casual-angle-measure-menu
