@@ -205,7 +205,21 @@ V is either nil or non-nil."
      :transient nil)
     ("P" "Pack" calc-pack :transient nil)
     ("U" "Unpack" calc-unpack :transient nil)
-    ("y" "Copy to Buffer" calc-copy-to-buffer :transient nil)]]
+    ("y" "Copy to Buffer" calc-copy-to-buffer :transient nil)
+    ("z" "Variables›" casual-variable-crud-menu :transient nil)]]
+  [("q" "Dismiss" (lambda () (interactive)) :transient transient--do-exit)])
+
+(transient-define-prefix casual-variable-crud-menu ()
+  "Casual variable CRUD menu."
+  ["Variable Operations"
+   ("s" "Store (𝟣:)…" calc-store :transient t)
+   ("r" "Recall…" calc-recall :transient t)
+   ("c" "Clear…" calc-unstore :transient t)
+   ("e" "Edit…" calc-edit-variable :transient t)
+   ("o" "Copy to other variable…" calc-copy-variable :transient t)
+   ("x" "Exchange (𝟣:) to variable…" calc-store-exchange :transient t)
+   ("p" "Persist…" calc-permanent-variable :transient t)
+   ("i" "Insert variables into buffer…" calc-insert-variables :transient t)]
   [("q" "Dismiss" (lambda () (interactive)) :transient transient--do-exit)])
 
 (transient-define-prefix casual-rounding-menu ()
@@ -462,7 +476,7 @@ V is either nil or non-nil."
                     (format "Complex Number Format (now %s)›"
                             (casual-complex-format-label)))
      :transient t)
-    ("M-p" calc-precision
+    ("P" calc-precision
      :description (lambda ()
                     (format "Precision (now %d)" calc-internal-prec))
      :transient t)
@@ -491,7 +505,7 @@ V is either nil or non-nil."
      :transient t)
     ;; TODO show current value thousands separators
     ("," "Set Thousands Separator" calc-group-char :transient t)
-    ("P" "Decimal Separator" calc-point-char :transient t)
+    ("." "Decimal Separator" calc-point-char :transient t)
     ("H" "ℎ𝑚𝑠 Format" calc-hms-notation
      :description (lambda ()
                     (format
