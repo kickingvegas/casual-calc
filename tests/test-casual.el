@@ -218,10 +218,42 @@ A testcase is used as input to `casualt-menu-assert-testcase'."
         (should (math-floatp (calc-top)))))))
   (casualt-breakdown t))
 
+(ert-deftest test-casual-variable-crud-menu ()
+  (casualt-setup)
+
+  (calc-push-list '(25))
+  (funcall 'casual-variable-crud-menu)
+  ;; test (s) calc-store
+  (execute-kbd-macro "sfoo")
+  (should (= (calc-var-value 'var-foo) 25))
+  (calc-pop-stack (calc-stack-size))
+
+  ;; test (r) calc-recall
+  (execute-kbd-macro "rfoo")
+  (should (= (calc-top) 25))
+
+  ;; test (o) calc-copy-variable
+  (execute-kbd-macro "ofoojane")
+  (should (= (calc-var-value 'var-jane) 25))
+
+  ;; test (c) calc-unstore
+  (execute-kbd-macro "cfoo")
+  (should (not (calc-var-value 'var-foo)))
+
+  ;; test (x) calc-store-exchange
+  (calc-push-list '(32))
+  (execute-kbd-macro "xjane")
+  (should (= (calc-var-value 'var-jane) 32))
+
+  ;; TODO: punting on calc-edit-variable
+  ;; TODO: punting on calc-permanent-variable
+  ;; TODO: punting on calc-insert-variables
+  (casualt-breakdown t))
 
 
 (ert-deftest test-casual-binary-menu ()
   (casualt-setup)
+  (calc-word-size 8)
   (casualt-run-menu-input-testcases
    'casual-binary-menu
    '(("a" (11 12) 8)
@@ -235,6 +267,7 @@ A testcase is used as input to `casualt-menu-assert-testcase'."
      ([134217842] (24) 12) ; (read-kbd-macro "M-r") evals to [134217842]
      ([18] (24) 48) ; (read-kbd-macro "C-r") evals to [18]
      ))
+  (calc-word-size 32)
   (casualt-breakdown t))
 
 (ert-deftest test-casual-vector-menu ()
@@ -457,11 +490,63 @@ A testcase is used as input to `casualt-menu-assert-testcase'."
   (casualt-breakdown t))
 
 ;;; Labels
-;; (ert-deftest test-casual-cmplx-or-polar-label ()
-;; (ert-deftest test-casual-symbolic-mode-label ()
-;; (ert-deftest test-casual-prefer-frac-label ()
-;; (ert-deftest test-casual-number-radix-label ()
-;; (ert-deftest test-casual-matrix-mode-label ()
+(ert-deftest test-casual-cmplx-or-polar-label ()
+  (casualt-setup)
+  (setq calc-complex-mode 'polar)
+  (should (equal (casual-cmplx-or-polar-label)
+                 "Change to Complex Mode (now Polar)"))
+  (setq calc-complex-mode 'cmplx)
+  (should (equal (casual-cmplx-or-polar-label)
+                 "Change to Polar Mode (now Complex)"))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-symbolic-mode-label ()
+  (casualt-setup)
+  (setq calc-symbolic-mode t)
+  (should (equal (casual-symbolic-mode-label)
+                 "Change to Numeric Mode (now Symbolic)"))
+  (setq calc-symbolic-mode nil)
+  (should (equal (casual-symbolic-mode-label)
+                 "Change to Symbolic Mode (now Numeric)"))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-prefer-frac-label ()
+  (casualt-setup)
+  (setq calc-prefer-frac t)
+  (should (equal (casual-prefer-frac-label)
+      "Change to Floating Point Results (now Fractional)"))
+  (setq calc-prefer-frac nil)
+  (should (equal (casual-prefer-frac-label)
+    "Change to Fractional Results (now Floating Point)"))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-number-radix-label ()
+  (casualt-setup)
+  (setq calc-number-radix '2)
+  (should (equal (casual-number-radix-label) "Binary"))
+  (setq calc-number-radix '8)
+  (should (equal (casual-number-radix-label) "Octal"))
+  (setq calc-number-radix '16)
+  (should (equal (casual-number-radix-label) "Hexadecimal"))
+  (setq calc-number-radix '7)
+  (should (equal (casual-number-radix-label) "7"))
+  (setq calc-number-radix '10)
+  (should (equal (casual-number-radix-label) "Decimal"))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-matrix-mode-label ()
+  (casualt-setup)
+  (setq calc-matrix-mode 'matrix)
+  (should (equal (casual-matrix-mode-label) "Matrix"))
+  (setq calc-matrix-mode 'sqmatrix)
+  (should (equal (casual-matrix-mode-label) "Square Matrix"))
+  (setq calc-matrix-mode 'scalar)
+  (should (equal (casual-matrix-mode-label) "Scalar"))
+  (setq calc-matrix-mode 7)
+  (should (equal (casual-matrix-mode-label) "7x7"))
+  (setq calc-matrix-mode nil)
+  (should (equal (casual-matrix-mode-label) "No assumptions"))
+  (casualt-breakdown t))
 
 (ert-deftest test-casual-angle-mode-label ()
   (casualt-setup)
@@ -473,18 +558,83 @@ A testcase is used as input to `casualt-menu-assert-testcase'."
   (should (equal (casual-angle-mode-label) "hms"))
   (casualt-breakdown t))
 
-;; (ert-deftest test-casual-complex-format-label ()
-;; (ert-deftest test-casual-float-format-label (&optional include-precision)
-;; (ert-deftest test-casual--prefix-label (label prefix)
-;; (ert-deftest test-casual--suffix-label (label prefix)
-;; (ert-deftest test-casual--checkbox-label (v label)
+(ert-deftest test-casual-complex-format-label ()
+  (casualt-setup)
+  (setq calc-complex-format 'i)
+  (should (equal (casual-complex-format-label) "x + yi"))
+  (setq calc-complex-format 'j)
+  (should (equal (casual-complex-format-label) "x + yj"))
+  (setq calc-complex-format nil)
+  (should (equal (casual-complex-format-label) "(x, y)"))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-float-format-label ()
+  (casualt-setup)
+  (setq calc-float-format (list 'sci 0))
+  (should (equal (casual-float-format-label) "Scientific"))
+  (setq calc-float-format (list 'eng 0))
+  (should (equal (casual-float-format-label) "Engineering"))
+  (setq calc-float-format (list 'fix 0))
+  (should (equal (casual-float-format-label) "Fixed Point"))
+
+  (setq calc-float-format (list 'sci 4))
+  (should (equal (casual-float-format-label t) "Scientific 4"))
+  (setq calc-float-format (list 'eng 5))
+  (should (equal (casual-float-format-label t) "Engineering 5"))
+  (setq calc-float-format (list 'fix 7))
+  (should (equal (casual-float-format-label t) "Fixed Point 7"))
+
+  (setq calc-float-format (list 'float 0))
+  (should (equal (casual-float-format-label) "Normal"))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual--prefix-label ()
+  (should (equal (casual--prefix-label "fred" "jane")
+                 "jane fred")))
+
+(ert-deftest test-casual--suffix-label ()
+  (should (equal (casual--suffix-label "fred" "jane")
+                 "fred jane")))
+
+(ert-deftest test-casual--checkbox-label ()
+  (let ((var t))
+    (should (equal (casual--checkbox-label var "mary")
+                   "[x] mary"))
+    (setq var nil)
+    (should (equal (casual--checkbox-label var "min")
+                   "[ ] min"))))
 
 ;; Predicates
-;; (ert-deftest test-casual-matrixp ())
-;; (ert-deftest test-casual-square-matrixp ())
-;; (ert-deftest test-casual-vectorp ())
-;; (ert-deftest test-casual-crossp ())
-;; (ert-deftest test-casual-matrixmultp ())
+(ert-deftest test-casual-matrixp ()
+  (casualt-setup)
+  (calc-push-list '((vec (vec 2 3) (vec 5 7))))
+  (should (casual-matrixp))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-square-matrixp ()
+  (casualt-setup)
+  (calc-push-list '((vec (vec 2 3) (vec 5 7))))
+  (should (casual-square-matrixp))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-vectorp ()
+  (casualt-setup)
+  (calc-push-list '((vec 8 2 9)))
+  (should (casual-vectorp))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-crossp ()
+  (casualt-setup)
+  (calc-push-list '((vec 8 2 9) (vec 1 5 3)))
+  (should (casual-crossp))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-matrixmultp ()
+  (casualt-setup)
+  (calc-push-list '((vec (vec 8 2)) (vec (vec 7) (vec 4))))
+  (should (casual-matrixmultp))
+  (casualt-breakdown t))
+
 
 (provide 'test-casual)
 ;;; test-casual.el ends here
