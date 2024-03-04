@@ -1,6 +1,8 @@
 * Casual
 An opinionated [[https://github.com/magit/transient][Transient]]-based porcelain to support casual usage of Emacs [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][Calc]].
 
+[[file:docs/images/casual-main-menu.png]]
+
 *This project is WIP. Expect future behavior to change, perhaps drastically.*
 
 * Motivation
@@ -32,8 +34,7 @@ Ensure that the directory holding ~casual.el~ is in your ~info-path~. Add the fo
 
 * Usage
 1. Invoke ~M-x calc~ to launch Calc.
-2. When the point is in the Calc window, invoke ~C-o~ to launch the Casual menu as shown below.
-   (insert screenshot of Casual main menu)
+2. When the point is in the Calc window, invoke ~C-o~ (or a binding of your choosing) to launch the Casual menu.
 
 * Common Menu Actions
 Casual is built using Transient menus and as such adopts much of its default behavior.
@@ -44,6 +45,18 @@ Dismissing a menu regardless of how deep you are in sub-menus can be done by ent
 
 If a mouse is available, a menu item can be selected by moving the mouse cursor over its label and pressing down button 1.
 
+** Menu item notation
+
+The following conventions are used to denote menu items.
+
+If the label ends with a ~>~, it is a sub-menu.
+
+If the label ends with an ~…~, the command will prompt you for an input.
+
+If neither the above is in the label then the command is issued using arguments from the stack as needed.
+
+The top of the stack is referred to as (~1:~), where ~1~ is the stack index value. Emacs Calc uses a 1-offset for sequences to be consistent with math convention.
+
 * Calc Basics
 It helps to know some basics about Calc.
 
@@ -52,7 +65,7 @@ It helps to know some basics about Calc.
 - Stack based operations are always RPN-style.
 - Undo has the keybinding ~U~, redo is ~D~.
 - The top of the stack is referred to as ~1:~
-- Calc vectors are punctuated with ~[~ and ~]~ (e.g. ~[2 3]~)  Matrix values are represented as vectors within a vector.
+- Calc vectors are punctuated with ~[~ and ~]~ (e.g. ~[2 3]~)  Matrix values are represented as vectors within a vector. For example, ~[[1 0] [0 1]]~ is a square diagonal matrix.
 - Calc vector indexes are 1-offset.
 - Intervals
   - Inclusive intervals are represented as [𝑛..𝑚], where 𝑛 < 𝑚.
@@ -63,4 +76,4 @@ It helps to know some basics about Calc.
 - H:M:S values are default entered as ℎ@ 𝑚" 𝑠'.
 - Org-mode active timestamps can be entered into Calc.
 - The top of the stack (1:) can be edited by pressing the ~`~ key.
-- Entering ~'~ will prompt you for an algebraic entry.
+- Entering a single quote (') will prompt you for an algebraic entry.
