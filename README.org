@@ -3,8 +3,6 @@ An opinionated [[https://github.com/magit/transient][Transient]]-based porcelain
 
 [[file:docs/images/casual-main-menu.png]]
 
-*This project is WIP. Expect future behavior to change, perhaps drastically.*
-
 * Motivation
 While Emacs Calc has an embarrassingly rich feature set, for many users this capability is inaccessible due its dependence on an overwhelming number of keybindings to access them. These keybindings have a steep learning curve that is quickly lost if not in constant use.
 
@@ -20,7 +18,7 @@ Menus are a user interface (UI) affordance that offer users discoverability and 
 - Strict adherence to Calc command naming. While Casual is mostly in alignment with Calc’s command naming, there are cases where it will make an opinionated change if  the name is deemed too vague or idiomatic.
 
 * Asks
-As Casual is new, we are looking for early adopters. Your feedback is welcome!
+As Casual is new, we are looking for early adopters. Your [[https://github.com/kickingvegas/Casual/issues][feedback]] is welcome as it will likely impact the UI design of Casual. With that said, the Casual will likely have UI changes at this point of its life-cycle.
 
 * Install
 
