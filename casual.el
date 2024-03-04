@@ -129,12 +129,12 @@
 (defun casual-float-format-label (&optional include-precision)
   "Label for Calc float mode.
 If INCLUDE-PRECISION is non-nil, then add precision to label."
-  (let* ((mode (pcase (car calc-float-format)
-                 ('float "Normal")
-                 ('fix "Fixed Point")
-                 ('sci "Scientific")
-                 ('eng "Engineering")))
-         (precision (nth 1 calc-float-format)))
+  (let ((mode (pcase (car calc-float-format)
+                ('float "Normal")
+                ('fix "Fixed Point")
+                ('sci "Scientific")
+                ('eng "Engineering")))
+        (precision (nth 1 calc-float-format)))
 
     (if include-precision
         (format "%s %d" mode precision)
@@ -151,9 +151,9 @@ V is either nil or non-nil."
   "Label constructed with PREFIX and LABEL separated by a space."
   (format "%s %s" prefix label))
 
-(defun casual--suffix-label (label prefix)
-  "Label constructed with LABEL and PREFIX separated by a space."
-  (format "%s %s" prefix label))
+(defun casual--suffix-label (label suffix)
+  "Label constructed with LABEL and SUFFIX separated by a space."
+  (format "%s %s" label suffix))
 
 (defun casual--checkbox-label (v label)
   "Casual checkbox label using variable V and LABEL."
@@ -305,11 +305,11 @@ V is either nil or non-nil."
     ("!" "not" calc-not :transient nil)]
    ["Shift"
     :pad-keys t
-    ("l" "binary left" calc-lshift-binary :transient nil)
-    ("r" "binary right" calc-rshift-binary :transient nil)
-    ("M-l" "arithmetic left" calc-lshift-arith :transient nil)
-    ("M-r" "arithmetic right" calc-rshift-arith :transient nil)
-    ("C-r" "rotate binary" calc-rotate-binary :transient nil)]
+    ("l" "binary left" calc-lshift-binary :transient t)
+    ("r" "binary right" calc-rshift-binary :transient t)
+    ("M-l" "arithmetic left" calc-lshift-arith :transient t)
+    ("M-r" "arithmetic right" calc-rshift-arith :transient t)
+    ("C-r" "rotate binary" calc-rotate-binary :transient t)]
    ["Utils"
     ("R" casual-radix-menu
      :description (lambda ()
@@ -319,14 +319,14 @@ V is either nil or non-nil."
      :description (lambda ()
                     (casual--checkbox-label calc-leading-zeros "Leading Zeroes"))
      :transient nil)
-    ("w" "Set Word Size" calc-word-size :transient nil)
+    ("w" "Set Word Size…" calc-word-size :transient nil)
     ("u" "Unpack Bits" calc-unpack-bits :transient nil)
     ("p" "Pack Bits" calc-pack-bits :transient nil)]]
   [("q" "Dismiss" (lambda () (interactive)) :transient transient--do-exit)])
 
 (transient-define-prefix casual-vector-menu ()
   "Casual vector and matrix functions top-level menu."
-  ["Vector & Matrix Functions (index is 1-offset, 𝑛 is 𝟣: on stack)\n"
+  ["Vector & Matrix Functions (index is 1-offset)\n"
    ["Categories"
    ("b" "Building›" casual-vector-building-menu :transient nil)
    ("a" "Arithmetic›" casual-vector-arithmetic-menu :transient nil)
@@ -339,18 +339,17 @@ V is either nil or non-nil."
     ("u" "Unpack" calc-unpack :transient nil)]]
   [("q" "Dismiss" (lambda () (interactive)) :transient transient--do-exit)])
 
-
 ;; TODO: add Transient prefix arguments n
 (transient-define-prefix casual-vector-building-menu ()
   "Casual vector building functions menu."
-  ["Vector Building (index is 1-offset, 𝑛 is 𝟣: on stack)\n"
+  ["Vector Building (index is 1-offset, 𝑛 is a prompt value)\n"
    ["Build"
     ("|" "Concat" calc-concat :transient nil)
-    ("i" "index(1..𝑛)" calc-index :transient nil)
-    ("e" "Enumerate (𝑛: interval)" calc-set-enumerate :transient nil)
-    ("I" "Identity" calc-ident :transient nil)
-    ("d" "Diagonal" calc-diag :transient nil)
-    ("b" "Build Vector" calc-build-vector :transient nil)]
+    ("i" "index (1..𝑛)…" calc-index :transient nil)
+    ("e" "Enumerate Interval" calc-set-enumerate :transient nil)
+    ("I" "Identity 𝑛…" calc-ident :transient nil)
+    ("d" "Diagonal (𝟣:)" calc-diag :transient nil)
+    ("b" "Build Vector 𝑛…" calc-build-vector :transient nil)]
 
    ["Manipulate"
     ("t" "Transpose" calc-transpose :transient nil)
@@ -362,13 +361,13 @@ V is either nil or non-nil."
    ["Miscellaneous"
     ("l" "Length" calc-vlength :transient nil)
     ("c" "Vector Count" calc-vector-count :transient nil)
-    ("f" "Vector Find (𝑛)" calc-vector-find :transient nil)
+    ("f" "Vector Find (𝟣:)" calc-vector-find :transient nil)
     ("h" "Histogram" calc-histogram :transient nil)]]
   [("q" "Dismiss" (lambda () (interactive)) :transient transient--do-exit)])
 
 (transient-define-prefix casual-vector-arithmetic-menu ()
   "Casual vector arithmetic functions menu."
-  [["Arithmetic (index is 1-offset, 𝑛 is 𝟣: on stack)\n"
+  [["Arithmetic (index is 1-offset)\n"
     ("t" "Conjugate Transpose" calc-conj-transpose :transient nil)
     ("A" "Frobenius Norm (|𝑛|)" calc-abs :transient nil)
     ("r" "Row Norm" calc-rnorm :transient nil)
