@@ -1,5 +1,5 @@
 * Casual
-An opinionated [[https://github.com/magit/transient][Transient]]-based porcelain to support casual usage of Emacs [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][Calc]].
+An opinionated [[https://github.com/magit/transient][Transient]]-based porcelain to support the casual usage of Emacs [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][Calc]].
 
 [[file:docs/images/casual-main-menu.png]]
 
@@ -18,10 +18,9 @@ Menus are a user interface (UI) affordance that offer users discoverability and 
 - Strict adherence to Calc command naming. While Casual is mostly in alignment with Calc’s command naming, there are cases where it will make an opinionated change if  the name is deemed too vague or idiomatic.
 
 * Asks
-As Casual is new, we are looking for early adopters. Your [[https://github.com/kickingvegas/Casual/issues][feedback]] is welcome as it will likely impact the UI design of Casual. With that said, the Casual will likely have UI changes at this point of its life-cycle.
+As Casual is new, we are looking for early adopters! Your [[https://github.com/kickingvegas/Casual/issues][feedback]] is welcome as it will likely impact Casual's evolution, particularly with regards to UI.
 
 * Install
-
 Ensure that the directory holding ~casual.el~ is in your ~info-path~. Add the following lines to your Emacs initialization file.
 
 #+begin_src elisp :lexical no
@@ -29,6 +28,7 @@ Ensure that the directory holding ~casual.el~ is in your ~info-path~. Add the fo
   (define-key calc-mode-map (kbd "C-o") 'casual-main-menu)
 #+end_src
 
+Casual requires Emacs 29.1+.
 
 * Usage
 1. Invoke ~M-x calc~ to launch Calc.
@@ -44,12 +44,11 @@ Dismissing a menu regardless of how deep you are in sub-menus can be done by ent
 If a mouse is available, a menu item can be selected by moving the mouse cursor over its label and pressing down button 1.
 
 ** Menu item notation
-
 The following conventions are used to denote menu items.
 
-If the label ends with a ~>~, it is a sub-menu.
+If the label ends with a ~›~, it is a sub-menu.
 
-If the label ends with an ~…~, the command will prompt you for an input.
+If the label ends with an ~…~, the command will prompt you for an input value.
 
 If neither the above is in the label then the command is issued using arguments from the stack as needed.
 
@@ -75,3 +74,6 @@ It helps to know some basics about Calc.
 - Org-mode active timestamps can be entered into Calc.
 - The top of the stack (1:) can be edited by pressing the ~`~ key.
 - Entering a single quote (') will prompt you for an algebraic entry.
+
+* Acknowledgments
+A heartfelt thanks to all the contributors to Calc and Transit. Casual would not be possible without your efforts.
