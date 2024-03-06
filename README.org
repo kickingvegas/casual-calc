@@ -39,7 +39,7 @@ Casual is built using Transient menus and as such adopts much of its default beh
 
 Each menu item has a /key/ and a /label/. The /key/ is what is typed by the user to select the menu item. A key can be prefixed with a meta (M-) or control (C-) key. Labels ending with a ~>~ character indicates that it will open another menu.
 
-Dismissing a menu regardless of how deep you are in sub-menus can be done by entering ~d~. A menu can also be dismissed by entering ~C-g~, but this will return you to the parent menu.
+Dismissing a menu regardless of how deep you are in sub-menus can be done by entering ~q~. A menu can also be dismissed by entering ~C-g~, but this will return you to the parent menu.
 
 If a mouse is available, a menu item can be selected by moving the mouse cursor over its label and pressing down button 1.
 
