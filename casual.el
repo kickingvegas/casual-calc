@@ -161,10 +161,6 @@ V is either nil or non-nil."
 
 ;; Private functions to avoid using anonymous functions in Transients
 
-(defun casual--interactive-no-op ()
-  "No op function for Transient command."
-  (interactive))
-
 (defun casual--e-constant ()
   "Constant 𝑒."
   (interactive)
@@ -235,7 +231,7 @@ V is either nil or non-nil."
     ("z" "Variables›" casual-variable-crud-menu :transient nil)]]
   [:class transient-row
           ;; Note: no need to C-g for main menu
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-variable-crud-menu ()
   "Casual variable CRUD menu."
@@ -249,8 +245,8 @@ V is either nil or non-nil."
    ("p" "Persist…" calc-permanent-variable :transient t)
    ("i" "Insert variables into buffer…" calc-insert-variables :transient t)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-rounding-menu ()
   "Casual rounding functions menu."
@@ -260,8 +256,8 @@ V is either nil or non-nil."
    ("c" "Ceiling" calc-ceiling :transient nil)
    ("t" "Truncate" calc-trunc :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-conversions-menu ()
   "Casual conversion functions menu."
@@ -272,8 +268,8 @@ V is either nil or non-nil."
    ("f" "To Fraction" calc-fraction :transient nil)
    ("F" "To Float" calc-float :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-time-menu ()
   "Casual time functions menu."
@@ -285,8 +281,8 @@ V is either nil or non-nil."
    ("+" "Add Business Days" calc-business-days-plus :transient nil)
    ("-" "Subtract Business Days" calc-business-days-minus :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-first-day-menu ()
   "Casual time first day of menu."
@@ -295,8 +291,8 @@ V is either nil or non-nil."
    ("m" "Month" calc-new-month :transient nil)
    ("y" "Year" calc-new-year :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-complex-number-menu ()
   "Casual complex number functions menu."
@@ -306,8 +302,8 @@ V is either nil or non-nil."
    ("c" "Complex Conjugate" calc-conj :transient nil)
    ("a" "Argument" calc-argument :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-random-number-menu ()
   "Casual random number functions menu."
@@ -325,8 +321,8 @@ V is either nil or non-nil."
 
   [("a" "Random number again" calc-random-again :transient t)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-binary-menu ()
   "Casual binary functions menu."
@@ -357,8 +353,8 @@ V is either nil or non-nil."
     ("u" "Unpack Bits" calc-unpack-bits :transient nil)
     ("p" "Pack Bits" calc-pack-bits :transient nil)]]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-vector-menu ()
   "Casual vector and matrix functions top-level menu."
@@ -376,8 +372,8 @@ V is either nil or non-nil."
     ("p" "Pack (𝑛)" calc-pack :transient nil)
     ("u" "Unpack" calc-unpack :transient nil)]]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 ;; TODO: add Transient prefix arguments n
 (transient-define-prefix casual-vector-building-menu ()
@@ -404,8 +400,8 @@ V is either nil or non-nil."
     ("f" "Vector Find (𝟣:)" calc-vector-find :transient nil)
     ("h" "Histogram" calc-histogram :transient nil)]]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-vector-arithmetic-menu ()
   "Casual vector arithmetic functions menu."
@@ -422,8 +418,8 @@ V is either nil or non-nil."
     ("l" "LU Decomposition" calc-mlud :inapt-if-not casual-square-matrixp :transient nil)
     ("T" "Trace" calc-mtrace :inapt-if-not casual-square-matrixp :transient nil)]]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-statistics-menu ()
   "Casual statistic functions menu."
@@ -450,8 +446,8 @@ V is either nil or non-nil."
     ("6" "Population Covariance" calc-vector-pop-covariance :transient nil)
     ("7" "Correlation" calc-vector-correlation :transient nil)]]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-set-operations-menu ()
   "Casual set functions menu."
@@ -464,8 +460,8 @@ V is either nil or non-nil."
     ("~" "Complement" calc-set-complement :transient nil)
     ("#" "Cardinality" calc-set-cardinality :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-units-menu ()
   "Casual unit conversions menu."
@@ -479,8 +475,8 @@ V is either nil or non-nil."
    ("x" "Extract Units" calc-extract-units :transient nil)
    ("v" "View Units" calc-view-units-table :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-map-and-reduce-menu ()
   "Casual functional operations (map, reduce, apply) menu."
@@ -490,8 +486,8 @@ V is either nil or non-nil."
    ("a" "apply" calc-apply :transient nil)
    ("A" "accumulate" calc-accumulate :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-logarithmic-menu ()
   "Casual logarithmic functions."
@@ -503,8 +499,8 @@ V is either nil or non-nil."
     ("M-l" "𝑙𝑜𝑔" calc-log :transient nil)
     ("M-e" "𝑒^𝑥 - 𝟣" calc-expm1 :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-modes-menu ()
   "Casual modes menu."
@@ -569,8 +565,8 @@ V is either nil or non-nil."
    ["Reset"
     ("C-M-r" "Calc Reset" calc-reset :transient t)]]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-angle-measure-menu ()
   "Casual angle measure functions menu."
@@ -582,8 +578,8 @@ V is either nil or non-nil."
    ("r" "Radians" calc-radians-mode :transient nil)
    ("h" "Degrees-Minutes-Seconds" calc-hms-mode :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-complex-format-menu ()
   "Casual complex formats menu."
@@ -603,8 +599,8 @@ V is either nil or non-nil."
     :description "𝑗 notation"
     :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-radix-menu ()
   "Casual radix functions menu."
@@ -615,8 +611,8 @@ V is either nil or non-nil."
    ("6" "Hexadecimal" calc-hex-radix :transient nil)
    ("n" "Other base 𝑛" calc-radix :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-float-format-menu ()
   "Casual float formats menu."
@@ -626,8 +622,8 @@ V is either nil or non-nil."
    ("s" "Scientific" calc-sci-notation :transient nil)
    ("e" "Engineering" calc-eng-notation :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-exit)])
 
 (transient-define-prefix casual-trig-menu ()
   "Casual trigonometric functions menu."
@@ -651,8 +647,8 @@ V is either nil or non-nil."
      :transient nil)]]
   [("h" "Hyperbolic›" casual-hyperbolic-trig-menu :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-leave)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-leave)])
 
 (transient-define-prefix casual-hyperbolic-trig-menu ()
   "Casual hyperbolic trigonometric functions menu."
@@ -665,8 +661,8 @@ V is either nil or non-nil."
     ("C" "arccosh" calc-arccosh :transient nil)
     ("T" "arctanh" calc-arctanh :transient nil)]]
   [:class transient-row
-          ("C-g" "‹Back" casual--interactive-no-op :transient transient--do-return)
-          ("q" "Dismiss" casual--interactive-no-op :transient transient--do-leave)])
+          ("C-g" "‹Back" ignore :transient transient--do-return)
+          ("q" "Dismiss" ignore :transient transient--do-leave)])
 
 (provide 'casual)
 ;;; casual.el ends here
