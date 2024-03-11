@@ -369,7 +369,9 @@ V is either nil or non-nil."
    ("S" "Set Operations›" casual-set-operations-menu :transient nil)
    ("m" "Map, Reduce, Apply›" casual-map-and-reduce-menu :transient nil)]
 
-   ["Pack"
+   ["Extract and Pack"
+    ("r" "Extract Row…" calc-mrow :transient nil)
+    ("c" "Extract Column…" calc-mcol :transient nil)
     ("p" "Pack (𝑛)" calc-pack :transient nil)
     ("u" "Unpack" calc-unpack :transient nil)]]
   [:class transient-row
