@@ -118,6 +118,7 @@ A testcase is used as input to `casualt-menu-assert-testcase'."
      ("Q" (9) 3)
      ("n" (5) -5)
      ("^" (2 3) 8)
+     ("=" ((var pi var-pi)) (float 314159265359 -11))
      ("A" (-10) 10)
      ("!" (7) 5040)
      ("%" (8) (calcFunc-percent 8))
