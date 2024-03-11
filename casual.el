@@ -227,6 +227,7 @@ V is either nil or non-nil."
     ("s" "Swap" calc-roll-down :transient t)
     ("r" "Roll" casual--stack-roll-all :transient t)
     ("C" "Clear" casual--stack-clear :transient nil)
+    ("L" "Last" calc-last-args :transient nil)
     ("P" "Pack" calc-pack :transient nil)
     ("U" "Unpack" calc-unpack :transient nil)
     ("y" "Copy to Buffer" calc-copy-to-buffer :transient nil)
