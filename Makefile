@@ -53,13 +53,13 @@ bump: checkout-development
 checkout-development:
 	git checkout development
 	git branch --set-upstream-to=origin/development development
-	git fetch --prune
+	git fetch origin --prune
 	git pull
 
 checkout-main:
 	git checkout main
 	git branch --set-upstream-to=origin/main main
-	git fetch --prune
+	git fetch origin --prune
 	git pull
 
 sync-development-with-main: checkout-main checkout-development
