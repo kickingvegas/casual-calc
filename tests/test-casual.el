@@ -291,6 +291,29 @@ A testcase is used as input to `casualt-menu-assert-testcase'."
      ))
   (casualt-breakdown t))
 
+(ert-deftest test-casual-vector-menu-extract ()
+  (casualt-setup)
+  (calc-push-list '((vec (vec 1 4) (vec 2 3))))
+  (funcall 'casual-vector-menu)
+  (execute-kbd-macro "r2")
+  (should (equal (calc-top) '(vec 2 3)))
+
+  (calc-push-list '((vec (vec 9 2) (vec 7 14))))
+  (funcall 'casual-vector-menu)
+  (execute-kbd-macro "c2")
+  (should (equal (calc-top) '(vec 2 14)))
+
+  (calc-push-list '((vec 7 9)))
+  (funcall 'casual-vector-menu)
+  (execute-kbd-macro "r2")
+  (should (equal (calc-top) 9))
+
+  (calc-push-list '((vec 2 3)))
+  (funcall 'casual-vector-menu)
+  (execute-kbd-macro "c1")
+  (should (= (calc-top) 2))
+  (casualt-breakdown t))
+
 (ert-deftest test-casual-vector-building-menu ()
   (casualt-setup)
   (casualt-run-menu-input-testcases
