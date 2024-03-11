@@ -3,8 +3,16 @@
 #
 
 TIMESTAMP := $(shell /bin/date "+%Y%m%d_%H%M%S")
-INSTALL_DIR=$(HOME)/bin
-EXEC_NAME=/Applications/MacPorts/EmacsMac.app/Contents/MacOS/Emacs.sh
+
+EMACS_MAC_APP_HOME=/Applications/MacPorts/EmacsMac.app
+EMACS_MAC_APP_SH=$(EMACS_MAC_APP_HOME)/Contents/MacOS/Emacs.sh
+
+ifneq ("$(wildcard $(EMACS_MAC_APP_SH))","")
+  EXEC_NAME=$(EMACS_MAC_APP_SH)
+else
+  EXEC_NAME=emacs
+endif
+
 ERT_ARGS=-batch -l ert
 EMACS=$(EXEC_NAME) $(ERT_ARGS)
 ERT_RUN=-f ert-run-tests-batch-and-exit
