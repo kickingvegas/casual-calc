@@ -126,6 +126,17 @@ A testcase is used as input to `casualt-menu-assert-testcase'."
      ("e" nil (float 271828182846 -11))))
   (casualt-breakdown t))
 
+(ert-deftest test-casual-main-menu-last ()
+  (casualt-setup)
+  (calc-push-list '(2 3))
+  (funcall 'casual-main-menu)
+  (execute-kbd-macro "^")
+  (funcall 'casual-main-menu)
+  (execute-kbd-macro "L")
+  (should (and (= (calc-top) 3)
+               (= (calc-top-n 2) 2)))
+  (casualt-breakdown t))
+
 (ert-deftest test-casual-rounding-menu ()
   (casualt-setup)
   (casualt-run-menu-input-testcases
