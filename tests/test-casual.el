@@ -118,12 +118,24 @@ A testcase is used as input to `casualt-menu-assert-testcase'."
      ("Q" (9) 3)
      ("n" (5) -5)
      ("^" (2 3) 8)
+     ("=" ((var pi var-pi)) (float 314159265359 -11))
      ("A" (-10) 10)
      ("!" (7) 5040)
      ("%" (8) (calcFunc-percent 8))
      ("d" (100 20) (calcFunc-percent -80))
      ("p" nil (float 314159265359 -11))
      ("e" nil (float 271828182846 -11))))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-main-menu-last ()
+  (casualt-setup)
+  (calc-push-list '(2 3))
+  (funcall 'casual-main-menu)
+  (execute-kbd-macro "^")
+  (funcall 'casual-main-menu)
+  (execute-kbd-macro "L")
+  (should (and (= (calc-top) 3)
+               (= (calc-top-n 2) 2)))
   (casualt-breakdown t))
 
 (ert-deftest test-casual-rounding-menu ()
@@ -278,6 +290,29 @@ A testcase is used as input to `casualt-menu-assert-testcase'."
      ("b|" (2 3) (vec 2 3))
      ;; TODO: define remaining testcases.
      ))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-vector-menu-extract ()
+  (casualt-setup)
+  (calc-push-list '((vec (vec 1 4) (vec 2 3))))
+  (funcall 'casual-vector-menu)
+  (execute-kbd-macro "r2")
+  (should (equal (calc-top) '(vec 2 3)))
+
+  (calc-push-list '((vec (vec 9 2) (vec 7 14))))
+  (funcall 'casual-vector-menu)
+  (execute-kbd-macro "c2")
+  (should (equal (calc-top) '(vec 2 14)))
+
+  (calc-push-list '((vec 7 9)))
+  (funcall 'casual-vector-menu)
+  (execute-kbd-macro "r2")
+  (should (equal (calc-top) 9))
+
+  (calc-push-list '((vec 2 3)))
+  (funcall 'casual-vector-menu)
+  (execute-kbd-macro "c1")
+  (should (= (calc-top) 2))
   (casualt-breakdown t))
 
 (ert-deftest test-casual-vector-building-menu ()
