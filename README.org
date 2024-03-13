@@ -75,5 +75,10 @@ It helps to know some basics about Calc.
 - The top of the stack (1:) can be edited by pressing the ~`~ key.
 - Entering a single quote (') will prompt you for an algebraic entry.
 
+* Sponsorship
+If you enjoy using Casual, consider making a modest financial contribution to help support its development and maintenance.
+
+[[https://www.buymeacoffee.com/kickingvegas][file:docs/images/default-yellow.png]]
+
 * Acknowledgments
 A heartfelt thanks to all the contributors to Calc and Transit. Casual would not be possible without your efforts.
