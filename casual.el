@@ -193,7 +193,7 @@ V is either nil or non-nil."
     ("Q" " √" calc-sqrt :transient nil)
     ("n" "+∕− " calc-change-sign :transient nil)
     ("^" "𝑦^𝑥" calc-power :transient nil)
-    ("=" "=" calc-evaluate :transient nil)]
+    ("=" " =" calc-evaluate :transient nil)]
    [""
     ("A" "|𝑥|" calc-abs :transient nil)
     ("!" " !" calc-factorial :transient nil)
