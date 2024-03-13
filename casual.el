@@ -239,7 +239,7 @@ V is either nil or non-nil."
    ("s" "Store (𝟣:)…" calc-store :transient t)
    ("r" "Recall…" calc-recall :transient t)
    ("c" "Clear…" calc-unstore :transient t)
-   ("e" "Edit…" calc-edit-variable :transient t)
+   ("e" "Edit…" calc-edit-variable :transient nil)
    ("o" "Copy to other variable…" calc-copy-variable :transient t)
    ("x" "Exchange (𝟣:) to variable…" calc-store-exchange :transient t)
    ("p" "Persist…" calc-permanent-variable :transient t)
