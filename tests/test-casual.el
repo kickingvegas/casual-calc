@@ -41,72 +41,7 @@
 
 (require 'ert)
 (require 'casual)
-
-(defun casualt-setup ()
-  "Casual menu test setup function."
-  (calc-create-buffer))
-
-(defun casualt-breakdown (&optional clear)
-  "Casual menu test breakdown function, if CLEAR is non-nil then clear stack."
-  (if clear
-      (calc-pop-stack (calc-stack-size)))
-  (calc-quit nil))
-
-(defun casualt-menu-input-testcase (menu keyseq init value)
-  "Testcase that compares VALUE with stack result from entering KEYSEQ on MENU.
-MENU - Transient menu
-KEYSEQ - key sequence that is bound to a menu item
-INIT - list of arguments to be pushed on the Calc stack before running KEYSEQ
-VALUE - value to be compared with top of the stack"
-  (if (and init (listp init))
-      (calc-push-list init))
-  (funcall menu)
-  (execute-kbd-macro keyseq)
-  (should (equal (calc-top) value)))
-
-(defun casualt-menu-assert-testcase (menu keyseq init assert)
-  "Testcase to call ASSERT with stack result from entering KEYSEQ on MENU.
-MENU - Transient menu
-KEYSEQ - key sequence that is bound to a menu item
-INIT - list of arguments to be pushed on the Calc stack before running KEYSEQ
-ASSERT - assert function that calls `should'"
-  (if (and init (listp init))
-      (calc-push-list init))
-  (funcall menu)
-  (execute-kbd-macro keyseq)
-  (funcall assert))
-
-(defun casualt-run-menu-input-testcases (menu testcases)
-  "Test runner to exercise MENU with input TESTCASES.
-MENU - Transient menu
-TESTCASES - list of testcase instancesg\n
-A testcase is a list with the following schema - (keyseq init value)
-keyseq - key sequence that is bound to a menu item
-init - list of arguments to be pushed on the Calc stack before running keyseq
-value - value to be compared with top of the stack\n
-A testcase is used as input to `casualt-menu-input-testcase'."
-  (mapc (lambda (x)
-          (casualt-menu-input-testcase menu
-                                       (car x)
-                                       (nth 1 x)
-                                       (nth 2 x)))
-        testcases))
-
-(defun casualt-run-menu-assert-testcases (menu testcases)
-  "Test runner to exercise MENU with input TESTCASES.
-MENU - Transient menu
-TESTCASES - list of testcase instances\n
-A testcase is a list with the following schema - (keyseq init assert)
-keyseq - key sequence that is bound to a menu item
-init - list of arguments to be pushed on the Calc stack before running keyseq
-assert - assert function that calls `should'\n
-A testcase is used as input to `casualt-menu-assert-testcase'."
-  (mapc (lambda (x)
-          (casualt-menu-assert-testcase menu
-                                        (car x)
-                                        (nth 1 x)
-                                        (nth 2 x)))
-        testcases))
+(require 'casual-test-utils)
 
 ;;; Tests
 

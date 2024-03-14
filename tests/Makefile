@@ -18,8 +18,18 @@ EMACS=$(EXEC_NAME) $(ERT_ARGS)
 ERT_RUN=-f ert-run-tests-batch-and-exit
 #ERT_RUN=-f ert-run-tests-batch
 
-.PHONY: tests
+.PHONY: tests test-casual test-casual-graphics
 
-tests:
-	$(EMACS) -l ../casual.el \
+# Note ordering of packages matters! Dependencies first.
+tests: test-casual test-casual-graphics
+
+test-casual:
+	$(EMACS) -l ../casual-graphics.el \
+-l ../casual.el \
+-l casual-test-utils.el \
 -l test-casual.el $(ERT_RUN)
+
+test-casual-graphics:
+	$(EMACS) -l ../casual-graphics.el \
+-l casual-test-utils.el \
+-l test-casual-graphics.el $(ERT_RUN)
