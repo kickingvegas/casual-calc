@@ -91,8 +91,8 @@
    '(("d" ((float 785398163397 -12)) (float 45 0))
      ("r" ((float 45 0)) (float 785398163397 -12))
      ("h" ((float 150833333333 -11)) (hms 1 30 (float 3 1)))
-     ("f" ((float 15 -1)) (frac 3 2))
-     ("F" ((frac 3 2)) (float 15 -1))
+     ("F" ((float 15 -1)) (frac 3 2))
+     ("f" ((frac 3 2)) (float 15 -1))
      ))
   (casualt-breakdown t))
 

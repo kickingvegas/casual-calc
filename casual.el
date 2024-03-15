@@ -267,8 +267,8 @@ V is either nil or non-nil."
    ("d" "To Degrees" calc-to-degrees :transient nil)
    ("r" "To Radians" calc-to-radians :transient nil)
    ("h" "To HMS" calc-to-hms :transient nil)
-   ("f" "To Fraction" calc-fraction :transient nil)
-   ("F" "To Float" calc-float :transient nil)]
+   ("f" "To Float" calc-float :transient nil)
+   ("F" "To Fraction" calc-fraction :transient nil)]
   [:class transient-row
           ("C-g" "‹Back" ignore :transient transient--do-return)
           ("q" "Dismiss" ignore :transient transient--do-exit)])
