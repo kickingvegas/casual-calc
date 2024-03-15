@@ -57,7 +57,7 @@
      ("A" (-10) 10)
      ("!" (7) 5040)
      ("%" (8) (calcFunc-percent 8))
-     ("d" (100 20) (calcFunc-percent -80))
+     ("D" (100 20) (calcFunc-percent -80))
      ("p" nil (float 314159265359 -11))
      ("e" nil (float 271828182846 -11))))
   (casualt-breakdown t))
