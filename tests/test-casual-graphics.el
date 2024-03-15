@@ -30,7 +30,6 @@
 (require 'casual-test-utils)
 (require 'casual-graphics)
 
-
 (ert-deftest test-casual--push-natural-interval-0-100 ()
   (casualt-setup)
   (casual--push-natural-interval-0-100)

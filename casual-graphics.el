@@ -289,7 +289,7 @@ This string name is used in the canvas legend (key)."
 (defun casual--graph-log-y ()
   "Toggle linear/log scaling for y-axis."
   ;; TODO: inspect state variable and show current value.
-a  (interactive)
+  (interactive)
   (call-interactively 'calc-graph-log-y)
   (casual--graph-refresh-plot))
 
