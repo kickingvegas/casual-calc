@@ -34,6 +34,7 @@
 (require 'calc)
 (require 'calc-math) ; needed to reference some symbols not loaded in `calc'.
 (require 'transient)
+(require 'casual-graphics)
 
 ;; Predicates
 (defun casual-matrixp ()
@@ -218,7 +219,8 @@ V is either nil or non-nil."
     ("l" "Logarithmic›" casual-logarithmic-menu :transient nil)
     ("b" "Binary›" casual-binary-menu :transient nil)
     ("v" "Vector/Matrix›" casual-vector-menu :transient nil)
-    ("u" "Units›" casual-units-menu :transient nil)]
+    ("u" "Units›" casual-units-menu :transient nil)
+    ("g" "Graphics›" casual-plot-menu :transient nil)]
    ["Stack"
     :pad-keys t
     ("s" "Swap" calc-roll-down :transient t)
@@ -354,7 +356,8 @@ V is either nil or non-nil."
     ("p" "Pack Bits" calc-pack-bits :transient nil)]]
   [:class transient-row
           ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)])
+          ("q" "Dismiss" ignore :transient transient--do-exit)
+          ])
 
 (transient-define-prefix casual-vector-menu ()
   "Casual vector and matrix functions top-level menu."
@@ -366,14 +369,24 @@ V is either nil or non-nil."
    ("S" "Set Operations›" casual-set-operations-menu :transient nil)
    ("m" "Map, Reduce, Apply›" casual-map-and-reduce-menu :transient nil)]
 
+   ["Manipulate"
+    :pad-keys t
+    ("l" "Length" calc-vlength :transient t)
+    ("t" "Transpose" calc-transpose :transient t)
+    ("M-r" "Reverse" calc-reverse-vector :transient t)
+    ("M-s" "Sort" calc-sort :transient t)
+    ("D" "Deduplicate" calc-remove-duplicates :transient t)]
+
    ["Extract and Pack"
     ("r" "Extract Row…" calc-mrow :transient nil)
     ("c" "Extract Column…" calc-mcol :transient nil)
     ("p" "Pack (𝑛)" calc-pack :transient nil)
     ("u" "Unpack" calc-unpack :transient nil)]]
+
   [:class transient-row
           ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)])
+          ("q" "Dismiss" ignore :transient transient--do-exit)
+          ("U" "Undo Stack" calc-undo :transient t)])
 
 ;; TODO: add Transient prefix arguments n
 (transient-define-prefix casual-vector-building-menu ()
@@ -401,7 +414,8 @@ V is either nil or non-nil."
     ("h" "Histogram" calc-histogram :transient nil)]]
   [:class transient-row
           ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)])
+          ("q" "Dismiss" ignore :transient transient--do-exit)
+          ("U" "Undo Stack" calc-undo :transient t)])
 
 (transient-define-prefix casual-vector-arithmetic-menu ()
   "Casual vector arithmetic functions menu."
