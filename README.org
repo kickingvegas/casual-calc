@@ -16,6 +16,7 @@ Menus are a user interface (UI) affordance that offer users discoverability and 
 - Full coverage of all Calc commands. Casual is not intended to be a power user tool.
 - Strict adherence to default Calc keybindings. Calc’s prompt-first interface resulted in a command keybinding design that embeds context in the key sequence (e.g. ~v~ for vector, ~b~ for binary). Hierarchical menus make this context implicit, allowing for key reuse in different contexts.
 - Strict adherence to Calc command naming. While Casual is mostly in alignment with Calc’s command naming, there are cases where it will make an opinionated change if  the name is deemed too vague or idiomatic.
+- UX Stability (for now). Given that Casual is early in its life-cycle, expect changes to its user experience in terms of menu hierarchy and keybinding choices in future releases.
 
 * Asks
 As Casual is new, we are looking for early adopters! Your [[https://github.com/kickingvegas/Casual/issues][feedback]] is welcome as it will likely impact Casual's evolution, particularly with regards to UI.
