@@ -22,7 +22,7 @@
 
 ;;
 
-;;; Code
+;;; Code:
 (require 'calc)
 (require 'transient)
 (require 'casual-labels)
