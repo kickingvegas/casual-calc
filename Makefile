@@ -20,7 +20,8 @@
 # - Python semver
 # - Bash
 
-CASUAL_EL=casual.el
+CASUAL_LISP_DIR=./lisp
+CASUAL_EL=$(CASUAL_LISP_DIR)/casual.el
 
 TIMESTAMP := $(shell /bin/date "+%Y%m%d_%H%M%S")
 CASUAL_VERSION := $(shell ./scripts/read-version.sh $(CASUAL_EL))
@@ -39,16 +40,13 @@ create-pr \
 create-release-pr \
 create-release-tag
 
-
 ## Run test regression
 tests:
 	$(MAKE) -C tests tests
 
 ## Bump Patch Version
-bump: checkout-development
+bump:
 	sed -i 's/;; Version: $(CASUAL_VERSION)/;; Version: $(CASUAL_VERSION_BUMP)/' $(CASUAL_EL)
-	git commit -m 'Bump version to $(CASUAL_VERSION_BUMP)' $(CASUAL_EL)
-	git push
 
 checkout-development:
 	git checkout development
