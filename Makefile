@@ -45,8 +45,10 @@ tests:
 	$(MAKE) -C tests tests
 
 ## Bump Patch Version
-bump:
+bump: checkout-development
 	sed -i 's/;; Version: $(CASUAL_VERSION)/;; Version: $(CASUAL_VERSION_BUMP)/' $(CASUAL_EL)
+	git commit -m 'Bump version to $(CASUAL_VERSION_BUMP)' $(CASUAL_EL)
+	git push
 
 checkout-development:
 	git checkout development
