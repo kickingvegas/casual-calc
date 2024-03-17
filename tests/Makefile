@@ -34,6 +34,7 @@ casual-vector					\
 casual
 
 TIMESTAMP := $(shell /bin/date "+%Y%m%d_%H%M%S")
+CASUAL_LISP_DIR=../lisp
 
 EMACS_MAC_APP_HOME=/Applications/MacPorts/EmacsMac.app
 EMACS_MAC_APP_SH=$(EMACS_MAC_APP_HOME)/Contents/MacOS/Emacs.sh
@@ -50,31 +51,31 @@ ERT_RUN=-f ert-run-tests-batch-and-exit
 #ERT_RUN=-f ert-run-tests-batch
 
 CASUAL_INCLUDES=\
--l ../casual-predicates.el \
--l ../casual-labels.el \
--l ../casual-radix.el \
--l ../casual-angle-measure.el
+-l $(CASUAL_LISP_DIR)/casual-predicates.el	\
+-l $(CASUAL_LISP_DIR)/casual-labels.el		\
+-l $(CASUAL_LISP_DIR)/casual-radix.el		\
+-l $(CASUAL_LISP_DIR)/casual-angle-measure.el
 
-CASUAL_PACKAGES=\
--l ../casual-binary.el				\
--l ../casual-complex.el				\
--l ../casual-conversion.el			\
--l ../casual-logarithmic.el			\
--l ../casual-random.el				\
--l ../casual-rounding.el			\
--l ../casual-rounding.el			\
--l ../casual-settings.el			\
--l ../casual-time.el				\
--l ../casual-trigonometric.el			\
--l ../casual-units.el				\
--l ../casual-vector.el				\
--l ../casual-graphics.el
+CASUAL_PACKAGES=				\
+-l $(CASUAL_LISP_DIR)/casual-binary.el		\
+-l $(CASUAL_LISP_DIR)/casual-complex.el		\
+-l $(CASUAL_LISP_DIR)/casual-conversion.el	\
+-l $(CASUAL_LISP_DIR)/casual-logarithmic.el	\
+-l $(CASUAL_LISP_DIR)/casual-random.el		\
+-l $(CASUAL_LISP_DIR)/casual-rounding.el	\
+-l $(CASUAL_LISP_DIR)/casual-rounding.el	\
+-l $(CASUAL_LISP_DIR)/casual-settings.el	\
+-l $(CASUAL_LISP_DIR)/casual-time.el		\
+-l $(CASUAL_LISP_DIR)/casual-trigonometric.el	\
+-l $(CASUAL_LISP_DIR)/casual-units.el		\
+-l $(CASUAL_LISP_DIR)/casual-vector.el		\
+-l $(CASUAL_LISP_DIR)/casual-graphics.el
 
 CASUAL_TEST_INCLUDES=-l casual-test-utils.el
 
 PACKAGE_TEST_COMMAND=$(EMACS) \
 $(CASUAL_INCLUDES) \
--l ../$@.el \
+-l $(CASUAL_LISP_DIR)/$@.el \
 $(CASUAL_TEST_INCLUDES) \
 -l test-$@.el $(ERT_RUN)
 
@@ -101,7 +102,7 @@ casual:
 	$(EMACS) \
 $(CASUAL_INCLUDES) \
 $(CASUAL_PACKAGES) \
--l ../$@.el \
+-l $(CASUAL_LISP_DIR)/$@.el \
 $(CASUAL_TEST_INCLUDES) \
 -l test-$@.el $(ERT_RUN)
 

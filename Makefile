@@ -20,7 +20,8 @@
 # - Python semver
 # - Bash
 
-CASUAL_EL=casual.el
+CASUAL_LISP_DIR=./lisp
+CASUAL_EL=$(CASUAL_LISP_DIR)/casual.el
 
 TIMESTAMP := $(shell /bin/date "+%Y%m%d_%H%M%S")
 CASUAL_VERSION := $(shell ./scripts/read-version.sh $(CASUAL_EL))
@@ -38,7 +39,6 @@ create-merge-development-branch \
 create-pr \
 create-release-pr \
 create-release-tag
-
 
 ## Run test regression
 tests:

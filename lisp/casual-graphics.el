@@ -95,7 +95,7 @@ This function is intended to be called after a calc-graph command
 that changes the internal state of Gnuplot is called. This way
 the canvas is updated to support interactive usage. Invokes
 `calc-graph-plot' to do the actual work."
-  (call-interactively 'calc-graph-plot))
+  (call-interactively #'calc-graph-plot))
 
 (defun casual--graph-add ()
   "Add 2D curve to Gnuplot canvas.
@@ -120,8 +120,8 @@ calling `casual--graph-num-points'."
   ;; one should be able to define a vector [[a b] [c d] [e f]] where [a b],
   ;; [c d], [e f] are three separate points to plot.
   (interactive)
-  (call-interactively 'calc-graph-add)
-  (call-interactively 'calc-graph-name)
+  (call-interactively #'calc-graph-add)
+  (call-interactively #'calc-graph-name)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-add-3d ()
@@ -144,21 +144,21 @@ calling `casual--graph-num-points'."
   ;; one should be able to define a vector [[a b c] [d e f] [g h i]] where
   ;; [a b c], [d e f], and [g h i] are three separate points to plot.
   (interactive)
-  (call-interactively 'calc-graph-add-3d)
-  (call-interactively 'calc-graph-name)
+  (call-interactively #'calc-graph-add-3d)
+  (call-interactively #'calc-graph-name)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-delete ()
   "Delete the current curve."
   (interactive)
-  (call-interactively 'calc-graph-delete)
+  (call-interactively #'calc-graph-delete)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-hide ()
   "Hide the current curve."
   ;; TODO: for some reason this doesn't work as expected.
   (interactive)
-  (call-interactively 'calc-graph-hide)
+  (call-interactively #'calc-graph-hide)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-num-points ()
@@ -170,16 +170,16 @@ this value are not honored."
   ;; it can not be changed. Need to investigate if this is the same with other
   ;; terminals.
   (interactive)
-  (call-interactively 'calc-graph-num-points)
+  (call-interactively #'calc-graph-num-points)
   (casual--graph-refresh-plot))
 
 ;; (defun casual--graph-line-style ()
 ;;   (interactive)
 ;;   (let* ((linestyle (transient-arg-value "--linestyle=" (transient-args transient-current-command))))
 ;;          ;;(current-prefix-arg (if linestyle (string-to-number linestyle) nil)))
-;;     ;;(call-interactively 'calc-graph-line-style)
+;;     ;;(call-interactively #'calc-graph-line-style)
 ;;     (if (not linestyle)
-;;         (call-interactively 'calc-graph-line-style)
+;;         (call-interactively #'calc-graph-line-style)
 ;;       (calc-graph-line-style (string-to-number linestyle)))
 ;;     (casual--graph-refresh-plot)))
 
@@ -187,14 +187,14 @@ this value are not honored."
   "Toggle whether a line is rendered for the current curve.
 Defining a line style is not yet supported in Casual."
   (interactive)
-  (call-interactively 'calc-graph-line-style)
+  (call-interactively #'calc-graph-line-style)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-toggle-point-style ()
   "Toggle whether points are rendered for the current curve.
 Defining a point style is not yet supported in Casual."
   (interactive)
-  (call-interactively 'calc-graph-point-style)
+  (call-interactively #'calc-graph-point-style)
   (casual--graph-refresh-plot))
 
 
@@ -205,35 +205,35 @@ Note that direct selection of a curve is not yet supported in Casual."
   ;; design decision because it imposes an unnatural means to access a curve.
   ;; More ideal would a curve abstraction that supports direct manipulation.
   (interactive)
-  (call-interactively 'calc-graph-juggle)
+  (call-interactively #'calc-graph-juggle)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-grid ()
   "Toggle canvas grid."
   ;; TODO: inspect state variable and show current value.
   (interactive)
-  (call-interactively 'calc-graph-grid)
+  (call-interactively #'calc-graph-grid)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-key ()
   "Toggle canvas legend of defined curves."
   ;; TODO: inspect state variable and show current value.
   (interactive)
-  (call-interactively 'calc-graph-key)
+  (call-interactively #'calc-graph-key)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-border ()
   "Toggle canvas border."
   ;; TODO: inspect state variable and show current value.
   (interactive)
-  (call-interactively 'calc-graph-border)
+  (call-interactively #'calc-graph-border)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-header ()
   "Set string for canvas title."
   ;; TODO: inspect state variable and show current value.
   (interactive)
-  (call-interactively 'calc-graph-header)
+  (call-interactively #'calc-graph-header)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-name ()
@@ -241,63 +241,63 @@ Note that direct selection of a curve is not yet supported in Casual."
 This string name is used in the canvas legend (key)."
   ;; TODO: inspect state variable and show current value.
   (interactive)
-  (call-interactively 'calc-graph-name)
+  (call-interactively #'calc-graph-name)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-title-x ()
   "Set string for x-axis title."
   ;; TODO: inspect state variable and show current value.
   (interactive)
-  (call-interactively 'calc-graph-title-x)
+  (call-interactively #'calc-graph-title-x)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-title-y ()
   "Set string for y-axis title."
   ;; TODO: inspect state variable and show current value.
   (interactive)
-  (call-interactively 'calc-graph-title-y)
+  (call-interactively #'calc-graph-title-y)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-title-z ()
   "Set string for z-axis title."
   ;; TODO: inspect state variable and show current value.
   (interactive)
-  (call-interactively 'calc-graph-title-z)
+  (call-interactively #'calc-graph-title-z)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-zero-x ()
   "Toggle solid line for y=0."
   ;; TODO: inspect state variable and show current value.
   (interactive)
-  (call-interactively 'calc-graph-zero-x)
+  (call-interactively #'calc-graph-zero-x)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-zero-y ()
   "Toggle solid line for x=0."
   ;; TODO: inspect state variable and show current value.
   (interactive)
-  (call-interactively 'calc-graph-zero-y)
+  (call-interactively #'calc-graph-zero-y)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-log-x ()
   "Toggle linear/log scaling for x-axis."
   ;; TODO: inspect state variable and show current value.
   (interactive)
-  (call-interactively 'calc-graph-log-x)
+  (call-interactively #'calc-graph-log-x)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-log-y ()
   "Toggle linear/log scaling for y-axis."
   ;; TODO: inspect state variable and show current value.
   (interactive)
-  (call-interactively 'calc-graph-log-y)
+  (call-interactively #'calc-graph-log-y)
   (casual--graph-refresh-plot))
 
 (defun casual--graph-log-z ()
   "Toggle linear/log scaling for z-axis."
   ;; TODO: inspect state variable and show current value.
   (interactive)
-  (call-interactively 'calc-graph-log-z)
+  (call-interactively #'calc-graph-log-z)
   (casual--graph-refresh-plot))
 
 ;; Menus
