@@ -47,6 +47,7 @@
 (require 'casual-vector)
 (require 'casual-graphics)
 (require 'casual-trail)
+(require 'casual-stack)
 
 (defconst casual-version "1.2.2-rc.1"
   "Casual Version.")
@@ -94,6 +95,7 @@
    ["Settings"
     :pad-keys t
     ("m" "Modes, Displays, Angles›" casual-modes-menu :transient nil)
+    ("M-s" "Stack›" casual-stack-display-menu :transient nil)
     ("M-t" "Trail›" casual-trail-menu :transient nil)]]
 
   [["Arithmetic"
