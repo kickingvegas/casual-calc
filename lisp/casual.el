@@ -34,9 +34,6 @@
 (require 'calc)
 (require 'calc-math) ; needed to reference some symbols not loaded in `calc'.
 (require 'transient)
-(require 'casual-predicates)
-(require 'casual-labels)
-(require 'casual-angle-measure)
 (require 'casual-binary)
 (require 'casual-complex)
 (require 'casual-conversion)
@@ -49,6 +46,7 @@
 (require 'casual-units)
 (require 'casual-vector)
 (require 'casual-graphics)
+(require 'casual-trail)
 
 (defconst casual-version "1.2.2-rc.1"
   "Casual Version.")
@@ -94,7 +92,9 @@
     ("p" "𝜋" calc-pi :transient nil)
     ("e" "𝑒" casual--e-constant :transient nil)]
    ["Settings"
-    ("m" "Modes, Displays, Angles›" casual-modes-menu :transient nil)]]
+    :pad-keys t
+    ("m" "Modes, Displays, Angles›" casual-modes-menu :transient nil)
+    ("M-t" "Trail›" casual-trail-menu :transient nil)]]
 
   [["Arithmetic"
     :pad-keys t
