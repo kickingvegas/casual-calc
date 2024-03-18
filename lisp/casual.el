@@ -50,6 +50,14 @@
 (require 'casual-vector)
 (require 'casual-graphics)
 
+(defconst casual-version "1.2.1"
+  "Casual Version.")
+
+(defun casual-version ()
+  "Show current version of Casual."
+  (interactive)
+  (message casual-version))
+
 ;; Private functions to avoid using anonymous functions in Transients
 (defun casual--e-constant ()
   "Constant 𝑒."
