@@ -1,6 +1,18 @@
 ##
 # Copyright 2024 Charles Y. Choi
 #
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 TIMESTAMP := $(shell /bin/date "+%Y%m%d_%H%M%S")
 
@@ -13,11 +25,12 @@ else
   EXEC_NAME=emacs
 endif
 
-CASUAL_INCLUDES =				\
-casual-predicates.el				\
-casual-labels.el				\
-casual-radix.el					\
-casual-angle-measure.el
+CASUAL_INCLUDES =					\
+casual-predicates.el					\
+casual-labels.el					\
+casual-radix.el						\
+casual-angle-measure.el					\
+casual-stack.el
 
 CASUAL_PACKAGES=				\
 casual-binary.el				\
@@ -28,13 +41,13 @@ casual-random.el				\
 casual-rounding.el				\
 casual-rounding.el				\
 casual-settings.el				\
-casual-stack.el					\
 casual-time.el					\
 casual-trail.el					\
 casual-trigonometric.el				\
 casual-units.el					\
 casual-vector.el				\
-casual-graphics.el
+casual-graphics.el				\
+casual-financial.el
 
 CASUAL_TEST_INCLUDES= \
 casual-test-utils.el

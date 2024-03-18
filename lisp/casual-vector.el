@@ -25,6 +25,7 @@
 ;;; Code:
 (require 'calc)
 (require 'transient)
+(require 'casual-predicates)
 
 (transient-define-prefix casual-vector-menu ()
   "Casual vector and matrix functions top-level menu."
