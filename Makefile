@@ -27,6 +27,9 @@
 # To create a pull request on the development branch:
 #   $ make create-pr
 
+# Bumping development version after PR is merged:
+#   $ make BUMP_LEVEL=prerelease bump
+
 # To create a pull request on the main branch:
 #   $ make create-release-pr
 
