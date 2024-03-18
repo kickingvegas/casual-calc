@@ -24,6 +24,9 @@
 # To run test suite:
 #   $ make tests
 
+# To update development branch with fetch and pull
+#   $ make checkout-development
+
 # To create a pull request on the development branch:
 #   $ make create-pr
 

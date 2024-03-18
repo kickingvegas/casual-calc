@@ -28,6 +28,7 @@ casual-random					\
 casual-rounding					\
 casual-settings					\
 casual-time					\
+casual-trail					\
 casual-trigonometric				\
 casual-units					\
 casual-vector					\
@@ -66,6 +67,7 @@ CASUAL_PACKAGES=				\
 -l $(CASUAL_LISP_DIR)/casual-rounding.el	\
 -l $(CASUAL_LISP_DIR)/casual-settings.el	\
 -l $(CASUAL_LISP_DIR)/casual-time.el		\
+-l $(CASUAL_LISP_DIR)/casual-trail.el		\
 -l $(CASUAL_LISP_DIR)/casual-trigonometric.el	\
 -l $(CASUAL_LISP_DIR)/casual-units.el		\
 -l $(CASUAL_LISP_DIR)/casual-vector.el		\
@@ -93,6 +95,7 @@ casual-random					\
 casual-rounding					\
 casual-settings					\
 casual-time					\
+casual-trail					\
 casual-trigonometric				\
 casual-units					\
 casual-vector					\
@@ -131,6 +134,8 @@ casual-rounding:
 casual-settings:
 	$(PACKAGE_TEST_COMMAND)
 casual-time:
+	$(PACKAGE_TEST_COMMAND)
+casual-trail:
 	$(PACKAGE_TEST_COMMAND)
 casual-trigonometric:
 	$(PACKAGE_TEST_COMMAND)
