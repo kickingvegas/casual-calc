@@ -50,8 +50,9 @@
     ("k" "Kill Selected" calc-trail-kill :transient t)]]
 
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)])
+          ("C-g" "‹Back" ignore :transient transient--do-rebturn)
+          ("q" "Dismiss" ignore :transient transient--do-exit)
+          ("s" "Save Settings" calc-save-modes :transient t)])
 
 (provide 'casual-trail)
 ;;; casual-trail.el ends here

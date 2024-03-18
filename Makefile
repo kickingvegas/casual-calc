@@ -68,7 +68,7 @@ create-gh-release
 
 ## Run test regression
 tests:
-	$(MAKE) -C tests tests
+	$(MAKE) -C lisp tests
 
 ## Bump Patch Version
 bump-casual:
