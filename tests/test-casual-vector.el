@@ -134,7 +134,7 @@
      ("m" ((vec 5 5)) 5)
      ("e" ((vec 1 2 3 4 5 6 7 8 9)) (sdev 5 (float 912870929175 -12)))
      ("M" ((vec 1 2 3 4 5 6 7 8 9)) 5)
-     ("h" ((vec 1 2 3 4 5 6 7 8 9)) (float 318137186141 -11))
+     ("H" ((vec 1 2 3 4 5 6 7 8 9)) (float 318137186141 -11))
      ("g" ((vec 1 2 3 4 5 6 7 8 9)) (float 41471662744 -10))
      ("r" ((vec 1 2 3 4 5 6 7 8 9)) (float 562731433871 -11))
      ("1" ((vec 1 2 3 4 5 6 7 8 9)) (float 273861278753 -11))
@@ -172,6 +172,52 @@
      ("A+" ((vec 1 3 8)) (vec 1 4 12))))
   (casualt-breakdown t))
 
+(ert-deftest test-casual-calc-histogram ()
+  (casualt-setup)
+  (calc-push '(vec 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18
+                   19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34
+                   35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50
+                   51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66
+                   67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82
+                   83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98
+                   99 100))
+
+  (funcall 'casual-vector-menu)
+  (execute-kbd-macro "sh[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]")
+  (should (equal (calc-top) '(vec 5 10 10 10 10 10 10 10 10 10 5)))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-vector-menu-bindings ()
+  (casualt-setup)
+  (let ((test-vectors '(("b" . casual-vector-building-menu)
+                        ("a" . casual-vector-arithmetic-menu)
+                        ("s" . casual-statistics-menu)
+                        ("S" . casual-set-operations-menu)
+                        ("m" . casual-map-and-reduce-menu)
+                        ;; TODO: seems like calc functions can not be advised, need to wrap
+                        ;; ("lq" . calc-vlength)
+                        ;; ("tq" . calc-transpose)
+                        ;; ("v" . calc-reverse-vector)
+                        ;; ("o" . calc-sort)
+                        ;; ("d" . calc-remove-duplicates)
+                        ;; ("r" . calc-mrow)
+                        ;; ("c" . calc-mcol)
+                        ;; ("p" . calc-pack)
+                        ;; ("u" . calc-unpack)
+                        )))
+    (casualt-suffix-testbench-runner test-vectors
+                                     #'casual-vector-menu
+                                     '(lambda () (random 5000))))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-statistics-menu-bindings ()
+  (casualt-setup)
+  (let ((test-vectors '(("h" . casual-calc-histogram)
+                        )))
+    (casualt-suffix-testbench-runner test-vectors
+                                     #'casual-statistics-menu
+                                     '(lambda () (random 5000))))
+  (casualt-breakdown t))
 
 (provide 'test-casual-vector)
 ;;; test-casual-vector.el ends here

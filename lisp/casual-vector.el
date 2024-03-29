@@ -112,9 +112,10 @@
     ("s" "Sum" calc-vector-sum :transient nil)
     ("x" "Max" calc-vector-max :transient nil)
     ("m" "Mean" calc-vector-mean :transient nil)
+    ("h" "Histogram…" casual-calc-histogram :transient nil)
     ("e" "Mean Error" calc-vector-mean-error :transient nil)
     ("M" "Median" calc-vector-median :transient nil)
-    ("h" "Harmonic Mean" calc-vector-harmonic-mean :transient nil)
+    ("H" "Harmonic Mean" calc-vector-harmonic-mean :transient nil)
     ("g" "Geometric Mean" calc-vector-geometric-mean :transient nil)]
 
    ["Deviation and Variance"
@@ -159,6 +160,42 @@
           ("C-g" "‹Back" ignore :transient transient--do-return)
           ("q" "Dismiss" ignore :transient transient--do-exit)
           ("U" "Undo Stack" calc-undo :transient t)])
+
+;;; Wrapped Functions
+
+(defun casual-calc-histogram ()
+  "Build histogram of (1:).
+\nGiven a vector data set in (1:), this command will prompt the
+user for a bin specification vector, where each element of the
+vector is a center point of a bin. For example, if the entered
+bin vector is '[a, b, c, …]' then the bin ranges will be computed
+as (-inf, (a+b)/2], ((a+b)/2, (b+c)/2], …
+
+* Example
+
+Start with the following data set of integer numbers from 1 to 100.
+
+1: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+    19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34,
+    35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+    51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66,
+    67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82,
+    83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,
+    99, 100]
+
+A histogram of the above data set where each bin is every 10
+units requires this bin vector. Enter this when prompted:
+
+[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+
+The result on the stack is:
+
+1: [5, 10, 10, 10, 10, 10, 10, 10, 10, 10, 5]
+
+* References - info node `(calc) Manipulating Vectors' -
+`calc-histogram'"
+  (interactive)
+  (call-interactively #'calc-histogram))
 
 (provide 'casual-vector)
 ;;; casual-vector.el ends here
