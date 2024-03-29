@@ -156,10 +156,10 @@ values which trigger dismissal of the prefix. An example would be
 appending \"q\" to the keysequence."
   (mapc (lambda (x)
             (let ((key (car x))
-                  (value (cdr x)))
+                  (cmd (cdr x)))
               (casualt-testbench-transient-suffix menu
                                                   key
-                                                  value
+                                                  cmd
                                                   (funcall value-fn))))
           test-vectors))
 
