@@ -75,6 +75,7 @@
   (calc-pop-stack (calc-stack-size)))
 
 ;; Menus
+;;;###autoload
 (transient-define-prefix casual-main-menu ()
   "Casual main menu."
   [["Calc"
