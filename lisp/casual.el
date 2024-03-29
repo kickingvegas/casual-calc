@@ -48,6 +48,7 @@
 (require 'casual-graphics)
 (require 'casual-trail)
 (require 'casual-stack)
+(require 'casual-financial)
 
 (defconst casual-version "1.2.2-rc.1"
   "Casual Version.")
@@ -113,6 +114,7 @@
     ("b" "Binary›" casual-binary-menu :transient nil)
     ("v" "Vector/Matrix›" casual-vector-menu :transient nil)
     ("u" "Units›" casual-units-menu :transient nil)
+    ("f" "Financial›" casual-financial-menu :transient nil)
     ("g" "Graphics›" casual-plot-menu :transient nil)]
    ["Stack"
     :pad-keys t
