@@ -136,8 +136,6 @@
 (defun casual-about-casual ()
   "Casual is an opinionated porcelain for Emacs Calc.
 
-Casual was conceived and crafted by Charles Choi in San Francisco, California.
-
 Learn more about using Casual at our discussion group on GitHub.
 Any questions or comments about Casual should be made there.
 URL `https://github.com/kickingvegas/Casual/discussions'
@@ -149,6 +147,8 @@ URL `https://github.com/kickingvegas/Casual/issues'
 If you enjoy using Casual, consider making a modest financial
 contribution to help support its development and maintenance.
 URL `https://www.buymeacoffee.com/kickingvegas'
+
+Casual was conceived and crafted by Charles Choi in San Francisco, California.
 
 Thank you and always choose love."
   (ignore))
