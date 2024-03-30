@@ -150,7 +150,7 @@ URL `https://www.buymeacoffee.com/kickingvegas'
 
 Casual was conceived and crafted by Charles Choi in San Francisco, California.
 
-Thank you and always choose love."
+Thank you for using Casual and always choose love."
   (ignore))
 
 (defun casual-about ()
