@@ -1,3 +1,4 @@
+[[https://melpa.org/#/casual][file:https://melpa.org/packages/casual-badge.svg]]
 * Casual
 An opinionated [[https://github.com/magit/transient][Transient]]-based porcelain to support the casual usage of Emacs [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][Calc]].
 
@@ -22,7 +23,21 @@ Menus are a user interface (UI) affordance that offer users discoverability and 
 As Casual is new, we are looking for early adopters! Your [[https://github.com/kickingvegas/Casual/issues][feedback]] is welcome as it will likely impact Casual's evolution, particularly with regards to UI.
 
 * Install
-Ensure that the directory holding ~casual.el~ is in your ~info-path~. Add the following lines to your Emacs initialization file.
+Casual is available on [[https://melpa.org/#/casual][MELPA]].
+
+If installed via ~list-packages~ then add this line to your Emacs initialization file.
+#+begin_src elisp :lexical no
+  (define-key calc-mode-map (kbd "C-o") 'casual-main-menu)
+#+end_src
+
+If you use ~use-package~, here is the recipe for installing it.
+#+begin_src elisp :lexical no
+  (use-package casual
+    :ensure t
+    :bind (:map calc-mode-map ("C-o" . 'casual-main-menu)))
+#+end_src
+
+If you are installing by using a clone of this repository, then ensure that the directory holding ~casual.el~ is in your ~info-path~. Add the following lines to your Emacs initialization file.
 
 #+begin_src elisp :lexical no
   (require 'casual)
@@ -43,6 +58,10 @@ Each menu item has a /key/ and a /label/. The /key/ is what is typed by the user
 Dismissing a menu regardless of how deep you are in sub-menus can be done by entering ~q~. A menu can also be dismissed by entering ~C-g~, but this will return you to the parent menu.
 
 If a mouse is available, a menu item can be selected by moving the mouse cursor over its label and pressing down button 1.
+
+Pressing the ~?~ key will toggle help for all the menu items. Press the key of interest to get help for it. (Note, not all menu items are documented at this time.)
+
+Some menus have arguments (example ~--rate=~) which you can set. You can persist these settings by typing ~C-x C-s~.
 
 ** Menu item notation
 The following conventions are used to denote menu items.
