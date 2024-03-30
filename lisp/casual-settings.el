@@ -26,6 +26,7 @@
 (require 'calc)
 (require 'transient)
 (require 'casual-labels)
+(require 'casual-version)
 (require 'casual-angle-measure)
 
 (transient-define-prefix casual-modes-menu ()
@@ -90,9 +91,12 @@
 
    ["Reset"
     ("C-M-r" "Calc Reset" calc-reset :transient t)]]
-  [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)])
+  [""
+   :class transient-row
+   ("C-g" "‹Back" ignore :transient transient--do-return)
+   ("q" "Dismiss" ignore :transient transient--do-exit)
+   ("v" "Version" casual-version :transient nil)
+   ("M-a" "About" casual-about :transient nil)])
 
 (transient-define-prefix casual-complex-format-menu ()
   "Casual complex formats menu."
@@ -129,7 +133,30 @@
           ("q" "Dismiss" ignore :transient transient--do-exit)
           ("U" "Undo Stack" calc-undo :transient t)])
 
+(defun casual-about-casual ()
+  "Casual is an opinionated porcelain for Emacs Calc.
 
+Learn more about using Casual at our discussion group on GitHub.
+Any questions or comments about Casual should be made there.
+URL `https://github.com/kickingvegas/Casual/discussions'
+
+If you find a bug or have an enhancement request, please file an issue.
+Our best effort will be made to answer it.
+URL `https://github.com/kickingvegas/Casual/issues'
+
+If you enjoy using Casual, consider making a modest financial
+contribution to help support its development and maintenance.
+URL `https://www.buymeacoffee.com/kickingvegas'
+
+Casual was conceived and crafted by Charles Choi in San Francisco, California.
+
+Thank you for using Casual and always choose love."
+  (ignore))
+
+(defun casual-about ()
+  "About information for Casual."
+  (interactive)
+  (describe-function 'casual-about-casual))
 
 (provide 'casual-settings)
 ;;; casual-settings.el ends here

@@ -20,34 +20,64 @@
 # - Python semver
 # - Bash
 
+## User Actions
+# To run test suite:
+#   $ make tests
+
+# To update development branch with fetch and pull
+#   $ make checkout-development
+
+# To create a pull request on the development branch:
+#   $ make create-pr
+
+# Bumping development version after PR is merged:
+#   $ make BUMP_LEVEL=prerelease bump
+
+# To create a pull request on the main branch:
+#   $ make create-release-pr
+
+# To create a new release tag (only after merging create-release-pr):
+#   $ make BUMP_LEVEL={patch|minor|major} create-release-tag
+
+# To setup for new sprint development:
+#   $ make new-sprint
+
 CASUAL_LISP_DIR=./lisp
 CASUAL_EL=$(CASUAL_LISP_DIR)/casual.el
+CASUAL_VERSION_EL=$(CASUAL_LISP_DIR)/casual-version.el
 
 TIMESTAMP := $(shell /bin/date "+%Y%m%d_%H%M%S")
 CASUAL_VERSION := $(shell ./scripts/read-version.sh $(CASUAL_EL))
 # BUMP_LEVEL: major|minor|patch|prerelease|build
 BUMP_LEVEL=patch
 CASUAL_VERSION_BUMP := $(shell python -m semver bump $(BUMP_LEVEL) $(CASUAL_VERSION))
+CASUAL_VERSION_PRERELEASE := $(shell python -m semver nextver $(CASUAL_VERSION) prerelease)
 
-.PHONY: tests \
-create-pr \
-bump \
-checkout-development \
-checkout-main \
-sync-development-with-main \
-create-merge-development-branch \
-create-pr \
-create-release-pr \
-create-release-tag
+.PHONY: tests					\
+create-pr					\
+bump-casual					\
+bump						\
+checkout-development				\
+checkout-main					\
+sync-development-with-main			\
+new-sprint					\
+create-merge-development-branch			\
+create-pr					\
+create-release-pr				\
+create-release-tag				\
+create-gh-release
 
 ## Run test regression
 tests:
-	$(MAKE) -C tests tests
+	$(MAKE) -C lisp tests
 
 ## Bump Patch Version
-bump: checkout-development
+bump-casual:
 	sed -i 's/;; Version: $(CASUAL_VERSION)/;; Version: $(CASUAL_VERSION_BUMP)/' $(CASUAL_EL)
-	git commit -m 'Bump version to $(CASUAL_VERSION_BUMP)' $(CASUAL_EL)
+	sed -i 's/(defconst casual-version "$(CASUAL_VERSION)"/(defconst casual-version "$(CASUAL_VERSION_BUMP)"/' $(CASUAL_VERSION_EL)
+
+bump: checkout-development bump-casual
+	git commit -m 'Bump version to $(CASUAL_VERSION_BUMP)' $(CASUAL_EL) $(CASUAL_VERSION_EL)
 	git push
 
 checkout-development:
@@ -64,6 +94,12 @@ checkout-main:
 
 sync-development-with-main: checkout-main checkout-development
 	git merge main
+
+new-sprint: sync-development-with-main
+	sed -i 's/;; Version: $(CASUAL_VERSION)/;; Version: $(CASUAL_VERSION_PRERELEASE)/' $(CASUAL_EL)
+	sed -i 's/(defconst casual-version "$(CASUAL_VERSION)"/(defconst casual-version "$(CASUAL_VERSION_PRERELEASE)"/' $(CASUAL_EL)
+	git commit -m 'Bump version to $(CASUAL_VERSION_PRERELEASE)' $(CASUAL_EL)
+	git push
 
 create-merge-development-branch: checkout-development
 	git checkout -b merge-development-to-main-$(TIMESTAMP)
@@ -82,3 +118,6 @@ create-release-pr: create-merge-development-branch bump
 create-release-tag: checkout-main
 	git tag $(CASUAL_VERSION)
 	git push origin $(CASUAL_VERSION)
+
+create-gh-release:
+	gh release create -t v$(CASUAL_VERSION) --notes-from-tag $(CASUAL_VERSION)

@@ -5,7 +5,7 @@
 ;; Author: Charles Choi <kickingvegas@gmail.com>
 ;; URL: https://github.com/kickingvegas/casual
 ;; Keywords: tools
-;; Version: 1.2.1
+;; Version: 1.3.0
 ;; Package-Requires: ((emacs "29.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -34,9 +34,7 @@
 (require 'calc)
 (require 'calc-math) ; needed to reference some symbols not loaded in `calc'.
 (require 'transient)
-(require 'casual-predicates)
-(require 'casual-labels)
-(require 'casual-angle-measure)
+(require 'casual-version)
 (require 'casual-binary)
 (require 'casual-complex)
 (require 'casual-conversion)
@@ -49,6 +47,9 @@
 (require 'casual-units)
 (require 'casual-vector)
 (require 'casual-graphics)
+(require 'casual-trail)
+(require 'casual-stack)
+(require 'casual-financial)
 
 ;; Private functions to avoid using anonymous functions in Transients
 (defun casual--e-constant ()
@@ -68,6 +69,7 @@
   (calc-pop-stack (calc-stack-size)))
 
 ;; Menus
+;;;###autoload
 (transient-define-prefix casual-main-menu ()
   "Casual main menu."
   [["Calc"
@@ -86,7 +88,10 @@
     ("p" "𝜋" calc-pi :transient nil)
     ("e" "𝑒" casual--e-constant :transient nil)]
    ["Settings"
-    ("m" "Modes, Displays, Angles›" casual-modes-menu :transient nil)]]
+    :pad-keys t
+    ("m" "Modes, Displays, Angles›" casual-modes-menu :transient nil)
+    ("M-s" "Stack›" casual-stack-display-menu :transient nil)
+    ("M-t" "Trail›" casual-trail-menu :transient nil)]]
 
   [["Arithmetic"
     :pad-keys t
@@ -102,6 +107,7 @@
     ("b" "Binary›" casual-binary-menu :transient nil)
     ("v" "Vector/Matrix›" casual-vector-menu :transient nil)
     ("u" "Units›" casual-units-menu :transient nil)
+    ("f" "Financial›" casual-financial-menu :transient nil)
     ("g" "Graphics›" casual-plot-menu :transient nil)]
    ["Stack"
     :pad-keys t

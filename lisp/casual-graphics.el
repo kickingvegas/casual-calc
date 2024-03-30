@@ -92,8 +92,8 @@ This can be used as a template formula to edit an order 3 polynomial."
 (defun casual--graph-refresh-plot ()
   "Internal function to refresh the Gnuplot canvas.
 This function is intended to be called after a calc-graph command
-that changes the internal state of Gnuplot is called. This way
-the canvas is updated to support interactive usage. Invokes
+that changes the internal state of Gnuplot is called.  This way
+the canvas is updated to support interactive usage.  Invokes
 `calc-graph-plot' to do the actual work."
   (call-interactively #'calc-graph-plot))
 
@@ -108,10 +108,10 @@ The x-axis specification is typically a vector or an interval.
 The y-axis specification can be either a vector or an algebraic formula with a
 single independent variable, typically 𝑥.
 
-Invoking this multiple times will for each time generate a new
-curve on the same canvas. The last curve generated is referred to
-as the current curve. The user can invoke `casual--graph-juggle'
-to rotate to an arbitrary curve to make it current.
+Invoking this multiple times will for each time generate a new curve on the same
+canvas.  The last curve generated is referred to as the current curve.  The user
+can invoke `casual--graph-juggle' to rotate to an arbitrary curve to make it
+current.
 
 The number of sample points used to plot a curve can be set by
 calling `casual--graph-num-points'."

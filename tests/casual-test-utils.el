@@ -93,5 +93,76 @@ A testcase is used as input to `casualt-menu-assert-testcase'."
                                         (nth 2 x)))
         testcases))
 
+(defun casualt-testbench-calc-fn (fn t-args value)
+  "Calc function FN testbench using Transient arguments T-ARGS, testing VALUE.
+FN - Calc function to test
+T-ARGS - list of transient prefix argument values
+VALUE - value to test against the top of the Calc stack"
+  (defun casualt-mock-transient-args (prefix)
+    "Mock function for transient-args with PREFIX argument."
+    t-args)
+
+  (advice-add #'transient-args :override  #'casualt-mock-transient-args)
+  (call-interactively fn)
+  (should (equal value (calc-top)))
+  (advice-remove #'transient-args #'casualt-mock-transient-args))
+
+
+(defun casualt-testbench-transient-suffix (menu binding cmd value)
+  "Transient suffix testbench for BINDING and CMD in MENU testing VALUE.
+This function is intended to test a Transient suffix binding
+only. It does not exercise the actual command itself.
+
+MENU - Transient prefix
+BINDING - keybinding for suffix (menu item) to be tested
+CMD - suffix (menu item) function to be overridden
+VALUE - value to test against the top of the Calc stack
+
+This function creates a testbench to exercise a menu item
+command (Transient suffix) in a menu (prefix). The command
+associated with that binding is overridden to instead push a
+value to the top of the Calc stack. This value is then tested."
+  (defun casualt-stub ()
+    (calc-push value))
+  (advice-add cmd :override #'casualt-stub)
+  (funcall menu)
+  (execute-kbd-macro binding)
+  (should (equal value (calc-top)))
+  (advice-remove cmd #'casualt-stub))
+
+
+(defun casualt-suffix-testbench-runner (test-vectors menu value-fn)
+  "Test runner for suffixes in MENU specified in TEST-VECTORS testing VALUE-FN.
+This function executes `casualt-testbench-transient-suffix' for all elements
+in TEST-VECTORS.
+
+TEST-VECTORS - alist of (keysequence . command-function) elements
+MENU - Transient prefix
+VALUE-FN - function generator of value to test against on top of the Calc stack
+
+An element in TEST-VECTOR consists of the following:
+
+keysequence - a key sequence to be exercised by `execute-kbd-macro'
+command-function - suffix command to be overridden
+
+command-function is overridden to push the result of VALUE-FN
+onto the top of the Calc stack.  This value is subsequently
+compared to test that the binding is working as expected.
+
+The value of keysequence is typically the keybinding value of the
+command (suffix). However if the suffix does not dismiss the
+Transient prefix that calls it, then the sequence should include
+values which trigger dismissal of the prefix. An example would be
+appending \"q\" to the keysequence."
+  (mapc (lambda (x)
+            (let ((key (car x))
+                  (cmd (cdr x)))
+              (casualt-testbench-transient-suffix menu
+                                                  key
+                                                  cmd
+                                                  (funcall value-fn))))
+          test-vectors))
+
+
 (provide 'casual-test-utils)
 ;;; casual-test-utils.el ends here
