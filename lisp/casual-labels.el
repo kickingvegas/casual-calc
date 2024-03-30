@@ -26,11 +26,6 @@
 (require 'calc)
 (require 'calc-math)
 
-(defun casual-version ()
-  "Show current version of Casual."
-  (interactive)
-  (message casual-version))
-
 ;; Labels
 (defun casual-cmplx-or-polar-label ()
   "Label for either complex or polar mode."

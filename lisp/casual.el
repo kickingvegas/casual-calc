@@ -34,6 +34,7 @@
 (require 'calc)
 (require 'calc-math) ; needed to reference some symbols not loaded in `calc'.
 (require 'transient)
+(require 'casual-version)
 (require 'casual-binary)
 (require 'casual-complex)
 (require 'casual-conversion)
@@ -49,9 +50,6 @@
 (require 'casual-trail)
 (require 'casual-stack)
 (require 'casual-financial)
-
-(defconst casual-version "1.2.2-rc.1"
-  "Casual Version.")
 
 ;; Private functions to avoid using anonymous functions in Transients
 (defun casual--e-constant ()
