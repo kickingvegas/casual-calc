@@ -77,7 +77,7 @@ bump-casual:
 	sed -i 's/(defconst casual-version "$(CASUAL_VERSION)"/(defconst casual-version "$(CASUAL_VERSION_BUMP)"/' $(CASUAL_VERSION_EL)
 
 bump: checkout-development bump-casual
-	git commit -m 'Bump version to $(CASUAL_VERSION_BUMP)' $(CASUAL_EL)
+	git commit -m 'Bump version to $(CASUAL_VERSION_BUMP)' $(CASUAL_EL) $(CASUAL_VERSION_EL)
 	git push
 
 checkout-development:
