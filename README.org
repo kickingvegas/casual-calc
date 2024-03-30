@@ -5,7 +5,7 @@ An opinionated [[https://github.com/magit/transient][Transient]]-based porcelain
 [[file:docs/images/casual-main-menu.png]]
 
 * Motivation
-While Emacs Calc has an embarrassingly rich feature set, for many users this capability is inaccessible due its dependence on an overwhelming number of keybindings to access them. These keybindings have a steep learning curve that is quickly lost if not in constant use.
+While Emacs Calc has an embarrassingly rich feature set, for many users this capability is inaccessible due the overwhelming number of keybindings used to access them. These keybindings have a steep learning curve that is quickly lost if not in constant use.
 
 Menus are a user interface (UI) affordance that offer users discoverability and recall. Providing a hierarchical menu UI over Calc greatly improves its casual use.
 
@@ -94,6 +94,9 @@ It helps to know some basics about Calc.
 - Org-mode active timestamps can be entered into Calc.
 - The top of the stack (1:) can be edited by pressing the ~`~ key.
 - Entering a single quote (') will prompt you for an algebraic entry.
+
+* Development
+For users who wish to help contribute to Casual or personally customize it for their own usage, please read the [[docs/developer.org][developer documentation]].
 
 * Sponsorship
 If you enjoy using Casual, consider making a modest financial contribution to help support its development and maintenance.

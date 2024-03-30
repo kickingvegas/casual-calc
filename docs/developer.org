@@ -1,0 +1,53 @@
+* Casual Development
+Casual is an open source project and as such is always open for contributors to its development.
+
+This document provides guidance on how to contribute to its development from a programming perspective.
+
+* Development Environment
+Casual is developed primarily using a GNU toolchain. GNU tools required are:
+
+- make
+- awk
+- grep
+- bash
+
+Also needed is the Python [[https://pypi.org/project/semver/][semver]] module. This will require an installation of Python 3.x, ideally at 3.9 or higher.
+
+For source code management, Casual uses ~git~.
+
+Given a clone of this repository, ensure that the directory holding ~casual.el~ is in your ~info-path~. Add the following lines to your Emacs initialization file.
+#+begin_src elisp :lexical no
+  (require 'casual)
+  (define-key calc-mode-map (kbd "C-o") 'casual-main-menu)
+#+end_src
+
+* Branches
+For Casual development, there are two git branches of note:
+
+- [[https://github.com/kickingvegas/Casual/tree/main][main]] for releases to the general public.
+- [[https://github.com/kickingvegas/Casual/tree/development][development]] for staging of stable pre-release functionality.
+
+Planned changes for the next release are done on feature branches that are merged via pull request into ~development~. Upon QA of ~development~, those changes are merged to ~main~ for release to the general public.
+
+* Test Regression
+Running the Casual test regression suite is done via Makefile. In the top-level directory of Casual, run this from the command line.
+
+#+begin_src text
+  $ make tests
+#+end_src
+
+Casual uses the [[https://www.gnu.org/software/emacs/manual/html_node/ert/][ERT]] framework to compose and manage tests.
+
+One can run a test for a single file by using a "phony" target with a suffix of ~.elt~ in the ~lisp/~ directory containing all the source files.
+
+For example, in the ~lisp/~ directory, run this command to exercise all tests for functions in ~casual-financial.el~.
+
+#+begin_src test
+  $ make casual-financial.elt
+#+end_src
+
+
+* External Pull Requests
+Users who wish to submit a pull request to Casual must make it against the ~development~ branch on GitHub. If the pull request is made against ~main~ but can be re-targeted to ~development~, it will be reviewed. A pull request with merge conflicts to ~development~ will be summarily rejected.
+
+All pull requests must pass test regression.
