@@ -25,12 +25,13 @@ else
   EXEC_NAME=emacs
 endif
 
-CASUAL_INCLUDES =					\
-casual-predicates.el					\
-casual-labels.el					\
-casual-radix.el						\
-casual-angle-measure.el					\
-casual-stack.el
+CASUAL_INCLUDES =				\
+casual-predicates.el				\
+casual-labels.el				\
+casual-radix.el					\
+casual-angle-measure.el				\
+casual-stack.el					\
+casual-version.el
 
 CASUAL_PACKAGES=				\
 casual-binary.el				\

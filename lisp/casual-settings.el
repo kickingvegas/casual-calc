@@ -26,6 +26,7 @@
 (require 'calc)
 (require 'transient)
 (require 'casual-labels)
+(require 'casual-version)
 (require 'casual-angle-measure)
 
 (transient-define-prefix casual-modes-menu ()
@@ -135,7 +136,7 @@
 (defun casual-about-casual ()
   "Casual is an opinionated porcelain for Emacs Calc.
 
-Casual is conceived and crafted by Charles Choi in San Francisco, California.
+Casual was conceived and crafted by Charles Choi in San Francisco, California.
 
 Learn more about using Casual at our discussion group on GitHub.
 Any questions or comments about Casual should be made there.
