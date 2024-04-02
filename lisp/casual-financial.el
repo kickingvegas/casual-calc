@@ -207,11 +207,10 @@
 
   ["Parameters"
    [("c" "cost" "--cost=" :prompt "cost: ")
-    ("p" "period" "--period=" :prompt "period (1..life)): ")]
-   [("s" "salvage" "--salvage=" :prompt "salvage: ")]
-   [("l" "life" "--life=" :prompt "life: ")]]
+    ("s" "salvage" "--salvage=" :prompt "salvage: ")]
+   [("l" "life" "--life=" :prompt "life: ")
+    ("p" "period" "--period=" :prompt "period (1..life)): ")]]
 
-  ;; TODO: investigate why setting :transient t does /not/ trigger a fatal Transient error.
   ["Depreciation"
    ("1" "Straight Line (c, s, l)" casual--fin-depreciation-straight-line :transient t)
    ("2" "Sum-of-Years Digits (c, s, l, p)" casual--fin-depreciation-sum-of-years :transient t)
@@ -276,7 +275,8 @@ value must be negative and at least one value must be positive.
   (interactive)
   (if (transient-arg-value "--beginning" (transient-args transient-current-command))
       (calc-inverse))
-  (call-interactively #'calc-fin-irr))
+  (call-interactively #'calc-fin-irr)
+  (calc-convert-percent))
 
 (defun casual--fin-fv-periodic ()
   "Future value given deposits over time.
@@ -614,7 +614,7 @@ FN: calc function to invoke"
     (if (not (eq fn #'calc-fin-sln))
         (calc-push arg4))
 
-    (call-interactively fn)))
+    (funcall fn)))
 
 (provide 'casual-financial)
 ;;; casual-financial.el ends here
