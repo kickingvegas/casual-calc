@@ -109,6 +109,9 @@ create-merge-development-branch: checkout-development
 create-pr:
 	gh pr create --base development --fill
 
+create-patch-pr:
+	gh pr create --base main --fill
+
 ## Create GitHub pull request for release
 create-release-pr: create-merge-development-branch bump
 	gh pr create --base main \
@@ -119,5 +122,5 @@ create-release-tag: checkout-main
 	git tag $(CASUAL_VERSION)
 	git push origin $(CASUAL_VERSION)
 
-create-gh-release:
+create-gh-release: create-release-tag
 	gh release create -t v$(CASUAL_VERSION) --notes-from-tag $(CASUAL_VERSION)
