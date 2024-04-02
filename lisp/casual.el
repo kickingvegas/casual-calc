@@ -51,23 +51,6 @@
 (require 'casual-stack)
 (require 'casual-financial)
 
-;; Private functions to avoid using anonymous functions in Transients
-(defun casual--e-constant ()
-  "Constant 𝑒."
-  (interactive)
-  (calc-hyperbolic)
-  (calc-pi))
-
-(defun casual--stack-roll-all ()
-  "Roll entire stack."
-  (interactive)
-  (calc-roll-down (calc-stack-size)))
-
-(defun casual--stack-clear ()
-  "Clear entire stack."
-  (interactive)
-  (calc-pop-stack (calc-stack-size)))
-
 ;; Menus
 ;;;###autoload (autoload 'casual-main-menu "casual" nil t)
 (transient-define-prefix casual-main-menu ()
@@ -116,7 +99,7 @@
     ("d" "Drop" calc-pop :transient t)
     ("C" "Clear" casual--stack-clear :transient t)
     ("L" "Last" calc-last-args :transient t)
-    ("y" "Copy to Buffer" calc-copy-to-buffer :transient nil)
+    ("w" "Copy as kill" casual-calc-copy-as-kill :transient nil)
     ("z" "Variables›" casual-variable-crud-menu :transient nil)]]
   [:class transient-row
           ;; Note: no need to C-g for main menu
@@ -138,6 +121,38 @@
           ("C-g" "‹Back" ignore :transient transient--do-return)
           ("q" "Dismiss" ignore :transient transient--do-exit)
           ("U" "Undo Stack" calc-undo :transient t)])
+
+;; Wrapped Functions
+(defun casual--e-constant ()
+  "Constant 𝑒."
+  (interactive)
+  (calc-hyperbolic)
+  (calc-pi))
+
+(defun casual--stack-roll-all ()
+  "Roll entire stack."
+  (interactive)
+  (calc-roll-down (calc-stack-size)))
+
+(defun casual--stack-clear ()
+  "Clear entire stack."
+  (interactive)
+  (calc-pop-stack (calc-stack-size)))
+
+(defun casual-calc-copy-as-kill ()
+  "Copy top of stack (1:) to kill ring.
+\nBy default, Calc will include the stack line number to kill-ring operations.
+To _not_ do this, set `calc-kill-line-numbering' to nil.
+\nStack Arguments:
+1: n
+
+This function wraps over `calc-copy-as-kill'.
+
+* References
+- info node `(calc) 14.1 Killing from the Stack'
+- `calc-copy-as-kill'"
+  (interactive)
+  (call-interactively #'calc-copy-as-kill))
 
 (provide 'casual)
 ;;; casual.el ends here
