@@ -22,7 +22,7 @@
 
 ;;; Code:
 
-(defconst casual-version "1.3.0"
+(defconst casual-version "1.3.1"
   "Casual Version.")
 
 (defun casual-version ()
