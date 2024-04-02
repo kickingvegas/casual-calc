@@ -5,7 +5,7 @@
 ;; Author: Charles Choi <kickingvegas@gmail.com>
 ;; URL: https://github.com/kickingvegas/casual
 ;; Keywords: tools
-;; Version: 1.3.0
+;; Version: 1.3.1
 ;; Package-Requires: ((emacs "29.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -69,7 +69,7 @@
   (calc-pop-stack (calc-stack-size)))
 
 ;; Menus
-;;;###autoload
+;;;###autoload (autoload 'casual-main-menu "casual" nil t)
 (transient-define-prefix casual-main-menu ()
   "Casual main menu."
   [["Calc"
