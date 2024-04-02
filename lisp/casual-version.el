@@ -22,11 +22,7 @@
 
 ;;; Code:
 
-<<<<<<< HEAD
 (defconst casual-version "1.4.0-rc.1"
-=======
-(defconst casual-version "1.3.1"
->>>>>>> main
   "Casual Version.")
 
 (defun casual-version ()
