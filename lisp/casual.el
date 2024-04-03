@@ -35,6 +35,7 @@
 (require 'calc-math) ; needed to reference some symbols not loaded in `calc'.
 (require 'transient)
 (require 'casual-version)
+(require 'casual-algebra)
 (require 'casual-binary)
 (require 'casual-complex)
 (require 'casual-conversion)
@@ -108,7 +109,8 @@
     ("v" "Vector/Matrix›" casual-vector-menu :transient nil)
     ("u" "Units›" casual-units-menu :transient nil)
     ("f" "Financial›" casual-financial-menu :transient nil)
-    ("g" "Graphics›" casual-plot-menu :transient nil)]
+    ("g" "Graphics›" casual-plot-menu :transient nil)
+    ("G" "alGebra›" casual-algebra-menu :transient nil)]
    ["Stack"
     :pad-keys t
     ("s" "Swap" calc-roll-down :transient t)
