@@ -50,19 +50,42 @@
 
 (ert-deftest test-casual-main-menu ()
   (casualt-setup)
-  (casualt-run-menu-input-testcases
-   'casual-main-menu
-   '(("&" (2) (float 5 -1))
-     ("Q" (9) 3)
-     ("n" (5) -5)
-     ("^" (2 3) 8)
-     ("=" ((var pi var-pi)) (float 314159265359 -11))
-     ("A" (-10) 10)
-     ("!" (7) 5040)
-     ("%" (8) (calcFunc-percent 8))
-     ("D" (100 20) (calcFunc-percent -80))
-     ("p" nil (float 314159265359 -11))
-     ("e" nil (float 271828182846 -11))))
+  (let ((test-vectors '(("&" . casual-calc-inv)
+                        ("Q" . casual-calc-sqrt)
+                        ("n" . casual-calc-change-sign)
+                        ("^" . casual-calc-power)
+                        ("=" . casual-calc-evaluate)
+                        ("A" . casual-calc-abs)
+                        ("!" . casual-calc-factorial)
+                        ("%" . casual-calc-percent)
+                        ("D" . casual-calc-percent-change)
+                        ("p" . casual-calc-pi)
+                        ("e" . casual--e-constant)
+                        ("m" . casual-modes-menu)
+                        ("ó" . casual-stack-display-menu)
+                        ("ô" . casual-trail-menu)
+                        ("o" . casual-rounding-menu)
+                        ("c" . casual-conversions-menu)
+                        ("T" . casual-time-menu)
+                        ("i" . casual-complex-number-menu)
+                        ("a" . casual-random-number-menu)
+                        ("t" . casual-trig-menu)
+                        ("l" . casual-logarithmic-menu)
+                        ("b" . casual-binary-menu)
+                        ("v" . casual-vector-menu)
+                        ("u" . casual-units-menu)
+                        ("f" . casual-financial-menu)
+                        ("g" . casual-plot-menu)
+                        ("s" . casual--stack-swap)
+                        ("r" . casual--stack-roll-all)
+                        ("d" . casual--stack-drop)
+                        ("C" . casual--stack-clear)
+                        ("L" . casual--stack-last)
+                        ("w" . casual-calc-copy-as-kill)
+                        ("z" . casual-variable-crud-menu))))
+    (casualt-suffix-testbench-runner test-vectors
+                                     #'casual-main-menu
+                                     '(lambda () (random 5000))))
   (casualt-breakdown t))
 
 (ert-deftest test-casual-main-menu-last ()
@@ -107,6 +130,22 @@
   ;; TODO: punting on calc-permanent-variable
   ;; TODO: punting on calc-insert-variables
   (casualt-breakdown t))
+
+(ert-deftest test-casual-variable-crud-menu2 ()
+  (casualt-setup)
+  (let ((test-vectors '(("sq" . casual-calc-store)
+                        ("rq" . casual-calc-recall)
+                        ("cq" . casual-calc-unstore)
+                        ("e" . casual-calc-edit-variable)
+                        ("oq" . casual-calc-copy-variable)
+                        ("xq" . casual-calc-store-exchange)
+                        ("pq" . casual-calc-permanent-variable)
+                        ("iq" . casual-calc-insert-variables))))
+    (casualt-suffix-testbench-runner test-vectors
+                                     #'casual-variable-crud-menu
+                                     '(lambda () (random 5000))))
+  (casualt-breakdown t))
+
 
 (provide 'test-casual)
 ;;; test-casual.el ends here

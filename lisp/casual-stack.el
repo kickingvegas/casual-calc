@@ -24,13 +24,15 @@
 
 ;;; Code:
 (require 'calc)
+(require 'calc-yank)
+(require 'calc-undo)
 (require 'transient)
 
 (defun casual-customize-kill-line-numbering ()
   "Customize Calc kill line numbering behavior.
 Customize the variable `calc-kill-line-numbering'.
 Set `calc-kill-line-numbering' to nil to exclude line numbering
-from kill-ring operations."
+from `kill-ring' operations."
   (interactive)
   (customize-variable 'calc-kill-line-numbering))
 
@@ -56,6 +58,77 @@ from kill-ring operations."
    ("C-g" "‹Back" ignore :transient transient--do-return)
    ("q" "Dismiss" ignore :transient transient--do-exit)
    ("s" "Save Settings" calc-save-modes :transient t)])
+
+
+;; Wrapped Functions
+(defun casual--stack-roll-all ()
+  "Roll down stack accounting for all elements currently on the stack.
+
+* References
+- info node `(calc) Stack Manipulation'
+- `calc-roll-down'"
+  (interactive)
+  (calc-roll-down (calc-stack-size)))
+
+(defun casual--stack-clear ()
+  "Clear entire stack."
+  (interactive)
+  (calc-pop-stack (calc-stack-size)))
+
+(defun casual--stack-swap ()
+  "Exchange the top two elements of the stack.
+\nGiven the values a in (2:) and b in (1:), performing this command will
+exchange their places resulting with b in (2:) and a in (1:).
+\nStack Arguments:
+2: a
+1: b
+
+This function is a wrapper over `calc-roll-down'.
+
+* References
+- info node `(calc) Stack Manipulation'
+- `calc-roll-down'"
+  (interactive)
+  (call-interactively #'calc-roll-down))
+
+(defun casual--stack-drop ()
+  "Remove the top element of the stack.
+\nStack Arguments:
+1: n
+
+This function is a wrapper over `calc-pop'.
+
+* References
+- info node `(calc) Stack Manipulation'
+- `calc-pop'"
+  (interactive)
+  (call-interactively #'calc-pop))
+
+(defun casual--stack-last ()
+  "Push the last arguments popped by the previous command back onto the stack.
+\nThis function is a wrapper over `calc-last-args'.
+
+* References
+- info node `(calc) Keep Arguments'
+- `calc-last-args'"
+  (interactive)
+  (call-interactively #'calc-last-args))
+
+
+(defun casual-calc-copy-as-kill ()
+  "Copy top of stack (1:) to the clip-ring (aka `kill-ring').
+\nBy default, Calc will include the stack line number to clip-ring operations.
+To _not_ do this, set `calc-kill-line-numbering' to nil.
+\nStack Arguments:
+1: n
+
+This function wraps over `calc-copy-as-kill'.
+
+* References
+- info node `(calc) Killing from Stack'
+- `calc-copy-as-kill'"
+  (interactive)
+  (call-interactively #'calc-copy-as-kill))
 
 (provide 'casual-stack)
 ;;; casual-stack.el ends here
