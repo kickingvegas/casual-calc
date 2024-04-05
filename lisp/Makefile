@@ -26,6 +26,7 @@ else
 endif
 
 CASUAL_INCLUDES =				\
+casual-calc.el					\
 casual-predicates.el				\
 casual-labels.el				\
 casual-radix.el					\
