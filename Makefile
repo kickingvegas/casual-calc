@@ -50,7 +50,7 @@ TIMESTAMP := $(shell /bin/date "+%Y%m%d_%H%M%S")
 CASUAL_VERSION := $(shell ./scripts/read-version.sh $(CASUAL_EL))
 # BUMP_LEVEL: major|minor|patch|prerelease|build
 BUMP_LEVEL=patch
-CASUAL_VERSION_BUMP := $(shell python -m semver bump $(BUMP_LEVEL) $(CASUAL_VERSION))
+CASUAL_VERSION_BUMP := $(shell python -m semver nextver $(CASUAL_VERSION) $(BUMP_LEVEL))
 CASUAL_VERSION_PRERELEASE := $(shell python -m semver nextver $(CASUAL_VERSION) prerelease)
 
 .PHONY: tests					\
