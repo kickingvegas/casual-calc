@@ -92,14 +92,13 @@
    [("a" "Amount" "--amount=" :prompt "Amount: ")
     ("b" "Beginning" "--beginning")]]
 
-  ;; TODO: investigate why setting :transient t triggers a fatal Transient error.
   ["Future Value"
-   ("f" "Periodic" casual--fin-fv-periodic :transient nil)
-   ("F" "Lump Sum" casual--fin-fv-lump :transient nil)]
+   ("f" "Periodic" casual--fin-fv-periodic :transient t)
+   ("F" "Lump Sum" casual--fin-fv-lump :transient t)]
 
   ["Present Value"
-    ("p" "Periodic" casual--fin-pv-periodic :transient nil)
-    ("P" "Lump Sum" casual--fin-pv-lump :transient nil)]
+    ("p" "Periodic" casual--fin-pv-periodic :transient t)
+    ("P" "Lump Sum" casual--fin-pv-lump :transient t)]
 
   [:class transient-row
           ("C-g" "‹Back" ignore :transient transient--do-return)
@@ -118,7 +117,7 @@
     ("b" "Beginning" "--beginning")]]
 
   ["Projected payment per period"
-    ("p" "Payment" casual--fin-periodic-payment :transient nil)]
+    ("p" "Payment" casual--fin-periodic-payment :transient t)]
 
   [:class transient-row
           ("C-g" "‹Back" ignore :transient transient--do-return)
@@ -137,7 +136,7 @@
     ("b" "Beginning" "--beginning")]]
 
   ["Projected number of payments"
-    ("n" "Number of Payments" casual--fin-number-of-payments :transient nil)]
+    ("n" "Number of Payments" casual--fin-number-of-payments :transient t)]
 
   [:class transient-row
           ("C-g" "‹Back" ignore :transient transient--do-return)
@@ -157,7 +156,7 @@
   ;; TODO: note no --beginning argument because I `calc-fin-rate' is broken.
 
   ["Rate of Return"
-   ("r" "Where payment made at end of period" casual--fin-rate-of-return :transient nil)]
+   ("r" "Where payment made at end of period" casual--fin-rate-of-return :transient t)]
 
   [:class transient-row
           ("C-g" "‹Back" ignore :transient transient--do-return)
@@ -191,7 +190,7 @@
     ("d" "deposit" "--deposit=" :prompt "deposit: ")]]
 
   ["Periods to Target"
-   ("n" "Periods" casual--fin-periods-to-reach-target :transient nil)]
+   ("n" "Periods" casual--fin-periods-to-reach-target :transient t)]
 
   ["" :class transient-row
    ("C-g" "‹Back" ignore :transient transient--do-return)
@@ -208,11 +207,10 @@
 
   ["Parameters"
    [("c" "cost" "--cost=" :prompt "cost: ")
-    ("p" "period" "--period=" :prompt "period (1..life)): ")]
-   [("s" "salvage" "--salvage=" :prompt "salvage: ")]
-   [("l" "life" "--life=" :prompt "life: ")]]
+    ("s" "salvage" "--salvage=" :prompt "salvage: ")]
+   [("l" "life" "--life=" :prompt "life: ")
+    ("p" "period" "--period=" :prompt "period (1..life)): ")]]
 
-  ;; TODO: investigate why setting :transient t does /not/ trigger a fatal Transient error.
   ["Depreciation"
    ("1" "Straight Line (c, s, l)" casual--fin-depreciation-straight-line :transient t)
    ("2" "Sum-of-Years Digits (c, s, l, p)" casual--fin-depreciation-sum-of-years :transient t)
@@ -277,7 +275,8 @@ value must be negative and at least one value must be positive.
   (interactive)
   (if (transient-arg-value "--beginning" (transient-args transient-current-command))
       (calc-inverse))
-  (call-interactively #'calc-fin-irr))
+  (call-interactively #'calc-fin-irr)
+  (calc-convert-percent))
 
 (defun casual--fin-fv-periodic ()
   "Future value given deposits over time.
@@ -297,8 +296,24 @@ value must be negative and at least one value must be positive.
 - info node `(calc) Future Value'.
 - `calc-fin-fv'"
   (interactive)
-  (let ((modifier (if (transient-arg-value "--beginning" (transient-args transient-current-command)) :inverse nil)))
-    (casual--fin-process-triplet-with-rate modifier #'calc-fin-fv '("rate" "periods" "amount"))))
+  (let* ((current-command (transient-args transient-current-command))
+         (rate (math-read-number-simple
+                (transient-arg-value "--rate=" current-command)))
+         (periods (math-read-number-simple
+                   (transient-arg-value "--periods=" current-command)))
+         (amount (math-read-number-simple
+                  (transient-arg-value "--amount=" current-command)))
+         (beginning (transient-arg-value "--beginning" current-command)))
+
+    (calc-push rate)
+    (calc-percent)
+    (calc-push periods)
+    (calc-push amount)
+
+    (calc-slow-wrapper
+     (if beginning
+         (calc-enter-result 3 "fvb" (cons #'calcFunc-fvb (calc-top-list-n 3)))
+       (calc-enter-result 3 "fv" (cons #'calcFunc-fv (calc-top-list-n 3)))))))
 
 (defun casual--fin-pv-periodic ()
   "Present value given deposits over time.
@@ -318,8 +333,24 @@ value must be negative and at least one value must be positive.
 - info node `(calc) Present Value'.
 - `calc-fin-pv'"
   (interactive)
-  (let ((modifier (if (transient-arg-value "--beginning" (transient-args transient-current-command)) :inverse nil)))
-    (casual--fin-process-triplet-with-rate modifier #'calc-fin-pv '("rate" "periods" "amount"))))
+  (let* ((current-command (transient-args transient-current-command))
+         (rate (math-read-number-simple
+                (transient-arg-value "--rate=" current-command)))
+         (periods (math-read-number-simple
+                   (transient-arg-value "--periods=" current-command)))
+         (amount (math-read-number-simple
+                  (transient-arg-value "--amount=" current-command)))
+         (beginning (transient-arg-value "--beginning" current-command)))
+
+    (calc-push rate)
+    (calc-percent)
+    (calc-push periods)
+    (calc-push amount)
+
+    (calc-slow-wrapper
+     (if beginning
+         (calc-enter-result 3 "pvb" (cons #'calcFunc-pvb (calc-top-list-n 3)))
+       (calc-enter-result 3 "pv" (cons #'calcFunc-pv (calc-top-list-n 3)))))))
 
 (defun casual--fin-fv-lump ()
   "Future value, lump sum.
@@ -337,7 +368,21 @@ value must be negative and at least one value must be positive.
 - info node `(calc) Future Value'.
 - `calc-fin-fv'"
   (interactive)
-  (casual--fin-process-triplet-with-rate :hyper #'calc-fin-fv '("rate" "periods" "amount")))
+  (let* ((current-command (transient-args transient-current-command))
+         (rate (math-read-number-simple
+                (transient-arg-value "--rate=" current-command)))
+         (periods (math-read-number-simple
+                   (transient-arg-value "--periods=" current-command)))
+         (amount (math-read-number-simple
+                  (transient-arg-value "--amount=" current-command))))
+
+    (calc-push rate)
+    (calc-percent)
+    (calc-push periods)
+    (calc-push amount)
+
+    (calc-slow-wrapper
+     (calc-enter-result 3 "fvl" (cons #'calcFunc-fvl (calc-top-list-n 3))))))
 
 (defun casual--fin-pv-lump ()
   "Present value, lump sum.
@@ -355,12 +400,29 @@ value must be negative and at least one value must be positive.
 - info node `(calc) Present Value'
 - `calc-fin-pv'"
   (interactive)
-  (casual--fin-process-triplet-with-rate :hyper #'calc-fin-pv '("rate" "periods" "amount")))
+  (let* ((current-command (transient-args transient-current-command))
+         (rate (math-read-number-simple
+                (transient-arg-value "--rate=" current-command)))
+         (periods (math-read-number-simple
+                   (transient-arg-value "--periods=" current-command)))
+         (amount (math-read-number-simple
+                  (transient-arg-value "--amount=" current-command))))
+
+    (calc-push rate)
+    (calc-percent)
+    (calc-push periods)
+    (calc-push amount)
+
+    (calc-slow-wrapper
+     (calc-enter-result 3 "pvl" (cons #'calcFunc-pvl (calc-top-list-n 3))))))
 
 (defun casual--fin-periodic-payment ()
   "Amount of periodic payment necessary to amortize a loan.
 \nThis command (suffix) is called from a Transient menu.
 \nMenu arguments:\n
+--rate=r    : % interest rate per period of time
+--periods=n : number of time periods for investment
+--amount=a  : loan amount
 --beginning : if set then calculate where payment is made at
               the start of a period, otherwise end.
 
@@ -368,8 +430,24 @@ value must be negative and at least one value must be positive.
 - info node `(calc) Related Financial Functions'
 - `calc-fin-pmt'"
   (interactive)
-  (let ((modifier (if (transient-arg-value "--beginning" (transient-args transient-current-command)) :inverse nil)))
-    (casual--fin-process-triplet-with-rate modifier #'calc-fin-pmt '("rate" "periods" "amount"))))
+  (let* ((current-command (transient-args transient-current-command))
+         (rate (math-read-number-simple
+                (transient-arg-value "--rate=" current-command)))
+         (periods (math-read-number-simple
+                   (transient-arg-value "--periods=" current-command)))
+         (amount (math-read-number-simple
+                  (transient-arg-value "--amount=" current-command)))
+         (beginning (transient-arg-value "--beginning" current-command)))
+
+    (calc-push rate)
+    (calc-percent)
+    (calc-push periods)
+    (calc-push amount)
+
+    (calc-slow-wrapper
+     (if beginning
+         (calc-enter-result 3 "pmtb" (cons #'calcFunc-pmtb (calc-top-list-n 3)))
+       (calc-enter-result 3 "pmt" (cons #'calcFunc-pmt (calc-top-list-n 3)))))))
 
 (defun casual--fin-number-of-payments ()
   "Number of regular payments to amortize a loan.
@@ -389,8 +467,24 @@ value must be negative and at least one value must be positive.
 - info node `(calc) Related Financial Functions'
 - `calc-fin-nper'"
   (interactive)
-  (let ((modifier (if (transient-arg-value "--beginning" (transient-args transient-current-command)) :inverse nil)))
-    (casual--fin-process-triplet-with-rate modifier #'calc-fin-nper '("rate" "payment" "amount"))))
+  (let* ((current-command (transient-args transient-current-command))
+         (rate (math-read-number-simple
+                (transient-arg-value "--rate=" current-command)))
+         (payment (math-read-number-simple
+                   (transient-arg-value "--payment=" current-command)))
+         (amount (math-read-number-simple
+                  (transient-arg-value "--amount=" current-command)))
+         (beginning (transient-arg-value "--beginning" current-command)))
+
+    (calc-push rate)
+    (calc-percent)
+    (calc-push payment)
+    (calc-push amount)
+
+    (calc-slow-wrapper
+     (if beginning
+         (calc-enter-result 3 "nprb" (cons #'calcFunc-nperb (calc-top-list-n 3)))
+       (calc-enter-result 3 "nper" (cons #'calcFunc-nper (calc-top-list-n 3)))))))
 
 (defun casual--fin-periods-to-reach-target ()
   "Number of periods to reach an investment target.
@@ -404,7 +498,20 @@ value must be negative and at least one value must be positive.
 - info node `(calc) Related Financial Functions'
 - `calc-fin-nper'"
   (interactive)
-  (casual--fin-process-triplet-with-rate :hyper #'calc-fin-nper '("rate" "target" "deposit")))
+  (let* ((current-command (transient-args transient-current-command))
+         (rate (math-read-number-simple
+                (transient-arg-value "--rate=" current-command)))
+         (target (math-read-number-simple
+                  (transient-arg-value "--target=" current-command)))
+         (deposit (math-read-number-simple
+                   (transient-arg-value "--deposit=" current-command))))
+    (calc-push rate)
+    (calc-percent)
+    (calc-push target)
+    (calc-push deposit)
+
+    (calc-slow-wrapper
+     (calc-enter-result 3 "nprl" (cons #'calcFunc-nperl (calc-top-list-n 3))))))
 
 (defun casual--fin-rate-of-return ()
   "Compute rate of return on investment.
@@ -417,9 +524,24 @@ value must be negative and at least one value must be positive.
 - info node `(calc) Related Financial Functions'
 - `calc-fin-rate'"
   (interactive)
-  ;; TODO: inverse calc-fin-rate is broken
-  (let ((modifier (if (transient-arg-value "--beginning" (transient-args transient-current-command)) :inverse nil)))
-    (casual--fin-process-triplet modifier #'calc-fin-rate '("periods" "payment" "pv"))))
+  (let* ((current-command (transient-args transient-current-command))
+         (periods (math-read-number-simple
+                   (transient-arg-value "--periods=" current-command)))
+         (payment (math-read-number-simple
+                   (transient-arg-value "--payment=" current-command)))
+         (pv (math-read-number-simple
+              (transient-arg-value "--pv=" current-command))))
+    (calc-push periods)
+    (calc-push payment)
+    (calc-push pv)
+
+    ;; TODO: inverse calc-fin-rate is broken
+    (calc-slow-wrapper
+     (calc-pop-push-record 3
+                           "rate"
+                           (calc-to-percentage
+                            (calc-normalize
+                             (cons #'calcFunc-rate (calc-top-list-n 3))))))))
 
 (defun casual--fin-depreciation-straight-line ()
   "Compute depreciation using “straight-line” method.
@@ -433,7 +555,7 @@ value must be negative and at least one value must be positive.
 - info node `(calc) Depreciation Functions'
 - `calc-fin-sln'"
   (interactive)
-  (casual--fin-process-depreciation nil #'calc-fin-sln))
+  (casual--fin-process-depreciation #'calc-fin-sln))
 
 (defun casual--fin-depreciation-sum-of-years ()
   "Compute depreciation using “sum-of-years-digits” method.
@@ -448,7 +570,7 @@ value must be negative and at least one value must be positive.
 - info node `(calc) Depreciation Functions'
 - `calc-fin-syd'"
   (interactive)
-  (casual--fin-process-depreciation nil #'calc-fin-syd))
+  (casual--fin-process-depreciation #'calc-fin-syd))
 
 (defun casual--fin-depreciation-double-declining-balance ()
   "Compute depreciation using “double-declining balance” method.
@@ -463,75 +585,11 @@ value must be negative and at least one value must be positive.
 - info node `(calc) Depreciation Functions'
 - `calc-fin-ddb'"
   (interactive)
-  (casual--fin-process-depreciation nil #'calc-fin-ddb))
+  (casual--fin-process-depreciation #'calc-fin-ddb))
 
-(defun casual--fin-process-triplet-with-rate (modifier fn argnames)
-  "Process financial prefix with MODIFIER, FN, and ARGNAMES.
-\nProcess Transient prefix arguments and invoke function using said arguments.
-MODIFIER : key value (either :hyper, :inverse, or nil)
-FN: calc function to invoke
-ARGNAMES: list of argument names
-\nThe Transient argument specified by the first element in ARGNAMES is
-converted to a percent value."
-  (let* ((arg1 (math-read-number-simple
-                (transient-arg-value
-                 (format "--%s=" (nth 0 argnames))
-                 (transient-args transient-current-command))))
-         (arg2 (math-read-number-simple
-                (transient-arg-value
-                 (format "--%s=" (nth 1 argnames))
-                 (transient-args transient-current-command))))
-         (arg3 (math-read-number-simple
-                (transient-arg-value
-                 (format "--%s=" (nth 2 argnames))
-                 (transient-args transient-current-command)))))
-
-    (calc-push arg1)
-    (calc-percent)
-    (calc-push arg2)
-    (calc-push arg3)
-
-    (cond
-     ((equal modifier :hyper) (calc-hyperbolic))
-     ((equal modifier :inverse) (calc-inverse))
-     (t (ignore))))
-
-  (funcall fn))
-
-(defun casual--fin-process-triplet (modifier fn argnames)
-  "Process financial prefix with MODIFIER, FN, and ARGNAMES.
-\nProcess Transient prefix arguments and invoke function using said arguments.
-MODIFIER : key value (either :hyper, :inverse, or nil)
-FN: calc function to invoke
-ARGNAMES: list of argument names"
-  (let* ((arg1 (math-read-number-simple
-                (transient-arg-value
-                 (format "--%s=" (nth 0 argnames))
-                 (transient-args transient-current-command))))
-         (arg2 (math-read-number-simple
-                (transient-arg-value
-                 (format "--%s=" (nth 1 argnames))
-                 (transient-args transient-current-command))))
-         (arg3 (math-read-number-simple
-                (transient-arg-value
-                 (format "--%s=" (nth 2 argnames))
-                 (transient-args transient-current-command)))))
-
-    (calc-push arg1)
-    (calc-push arg2)
-    (calc-push arg3)
-
-    (cond
-     ((equal modifier :hyper) (calc-hyperbolic))
-     ((equal modifier :inverse) (calc-inverse))
-     (t (ignore))))
-
-  (funcall fn))
-
-(defun casual--fin-process-depreciation (modifier fn)
+(defun casual--fin-process-depreciation (fn)
   "Process financial prefix with MODIFIER, FN.
 \nProcess Transient prefix arguments and invoke function using said arguments.
-MODIFIER : key value (either :hyper, :inverse, or nil)
 FN: calc function to invoke"
   (let* ((arg1 (math-read-number-simple
                 (transient-arg-value
@@ -556,12 +614,7 @@ FN: calc function to invoke"
     (if (not (eq fn #'calc-fin-sln))
         (calc-push arg4))
 
-    (cond
-     ((equal modifier :inverse) (calc-inverse))
-     ((equal modifier :hyper) (calc-hyperbolic))
-     (t (ignore))))
-
-  (call-interactively fn))
+    (funcall fn)))
 
 (provide 'casual-financial)
 ;;; casual-financial.el ends here

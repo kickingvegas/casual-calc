@@ -51,12 +51,14 @@
   (calc-push '(vec -2000 100 150 200 250 300 350 400 450 500 550 600))
   (casualt-testbench-calc-fn 'casual--fin-irr
                              '()
-                             '(float 974404201651 -13))
+                             '(calcFunc-percent
+	                       (float 974404201651 -11)))
 
   (calc-push '(vec -2000 100 150 200 250 300 350 400 450 500 550 600))
   (casualt-testbench-calc-fn 'casual--fin-irr
                              '("--beginning")
-                             '(float 974404201651 -13))
+                             '(calcFunc-percent
+	                       (float 974404201651 -11)))
   ;; TODO: same value, does inverse calc-fin-irr really work?
   (casualt-breakdown t))
 

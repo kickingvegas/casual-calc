@@ -5,7 +5,7 @@
 ;; Author: Charles Choi <kickingvegas@gmail.com>
 ;; URL: https://github.com/kickingvegas/casual
 ;; Keywords: tools
-;; Version: 1.3.1
+;; Version: 1.4.0
 ;; Package-Requires: ((emacs "29.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -34,6 +34,7 @@
 (require 'calc)
 (require 'calc-math) ; needed to reference some symbols not loaded in `calc'.
 (require 'transient)
+(require 'casual-calc)
 (require 'casual-version)
 (require 'casual-binary)
 (require 'casual-complex)
@@ -51,41 +52,24 @@
 (require 'casual-stack)
 (require 'casual-financial)
 
-;; Private functions to avoid using anonymous functions in Transients
-(defun casual--e-constant ()
-  "Constant 𝑒."
-  (interactive)
-  (calc-hyperbolic)
-  (calc-pi))
-
-(defun casual--stack-roll-all ()
-  "Roll entire stack."
-  (interactive)
-  (calc-roll-down (calc-stack-size)))
-
-(defun casual--stack-clear ()
-  "Clear entire stack."
-  (interactive)
-  (calc-pop-stack (calc-stack-size)))
-
 ;; Menus
 ;;;###autoload (autoload 'casual-main-menu "casual" nil t)
 (transient-define-prefix casual-main-menu ()
   "Casual main menu."
-  [["Calc"
+  [["Casual"
     :pad-keys t
-    ("&" "1/𝑥" calc-inv :transient nil)
-    ("Q" " √" calc-sqrt :transient nil)
-    ("n" "+∕− " calc-change-sign :transient nil)
-    ("^" "𝑦^𝑥" calc-power :transient nil)
-    ("=" " =" calc-evaluate :transient nil)]
+    ("&" "1/𝑥" casual-calc-inv :transient nil)
+    ("Q" " √" casual-calc-sqrt :transient nil)
+    ("n" "+∕− " casual-calc-change-sign :transient nil)
+    ("^" "𝑦^𝑥" casual-calc-power :transient nil)
+    ("=" " =" casual-calc-evaluate :transient nil)]
    [""
-    ("A" "|𝑥|" calc-abs :transient nil)
-    ("!" " !" calc-factorial :transient nil)
-    ("%" " ٪" calc-percent :transient nil)
-    ("D" " Δ%" calc-percent-change :transient nil)]
+    ("A" "|𝑥|" casual-calc-abs :transient nil)
+    ("!" " !" casual-calc-factorial :transient nil)
+    ("%" " ٪" casual-calc-percent :transient nil)
+    ("D" " Δ%" casual-calc-percent-change :transient nil)]
    ["Constants"
-    ("p" "𝜋" calc-pi :transient nil)
+    ("p" "𝜋" casual-calc-pi :transient nil)
     ("e" "𝑒" casual--e-constant :transient nil)]
    ["Settings"
     :pad-keys t
@@ -111,12 +95,12 @@
     ("g" "Graphics›" casual-plot-menu :transient nil)]
    ["Stack"
     :pad-keys t
-    ("s" "Swap" calc-roll-down :transient t)
+    ("s" "Swap" casual--stack-swap :transient t)
     ("r" "Roll" casual--stack-roll-all :transient t)
-    ("d" "Drop" calc-pop :transient t)
+    ("d" "Drop" casual--stack-drop :transient t)
     ("C" "Clear" casual--stack-clear :transient t)
-    ("L" "Last" calc-last-args :transient t)
-    ("y" "Copy to Buffer" calc-copy-to-buffer :transient nil)
+    ("L" "Last" casual--stack-last :transient t)
+    ("w" "Copy" casual-calc-copy-as-kill :transient nil)
     ("z" "Variables›" casual-variable-crud-menu :transient nil)]]
   [:class transient-row
           ;; Note: no need to C-g for main menu
@@ -124,16 +108,18 @@
           ("U" "Undo Stack" calc-undo :transient t)])
 
 (transient-define-prefix casual-variable-crud-menu ()
-  "Casual variable CRUD menu."
+  "Stored variable operations menu.
+Operations to store, recall, clear, and edit variables are provided by this
+menu."
   ["Variable Operations"
-   ("s" "Store (𝟣:)…" calc-store :transient t)
-   ("r" "Recall…" calc-recall :transient t)
-   ("c" "Clear…" calc-unstore :transient t)
-   ("e" "Edit…" calc-edit-variable :transient nil)
-   ("o" "Copy to other variable…" calc-copy-variable :transient t)
-   ("x" "Exchange (𝟣:) to variable…" calc-store-exchange :transient t)
-   ("p" "Persist…" calc-permanent-variable :transient t)
-   ("i" "Insert variables into buffer…" calc-insert-variables :transient t)]
+   ("s" "Store (𝟣:)…" casual-calc-store :transient t)
+   ("r" "Recall…" casual-calc-recall :transient t)
+   ("c" "Clear…" casual-calc-unstore :transient t)
+   ("e" "Edit…" casual-calc-edit-variable :transient nil)
+   ("o" "Copy to other variable…" casual-calc-copy-variable :transient t)
+   ("x" "Exchange (𝟣:) to variable…" casual-calc-store-exchange :transient t)
+   ("p" "Persist…" casual-calc-permanent-variable :transient t)
+   ("i" "Insert variables into buffer…" casual-calc-insert-variables :transient t)]
   [:class transient-row
           ("C-g" "‹Back" ignore :transient transient--do-return)
           ("q" "Dismiss" ignore :transient transient--do-exit)
