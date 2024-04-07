@@ -27,11 +27,14 @@ endif
 
 CASUAL_INCLUDES =				\
 casual-calc.el					\
+casual-calc-algebra.el				\
 casual-predicates.el				\
 casual-labels.el				\
 casual-radix.el					\
 casual-angle-measure.el				\
 casual-stack.el					\
+casual-variables.el				\
+casual-graphics.el				\
 casual-version.el
 
 CASUAL_PACKAGES=				\
@@ -48,8 +51,8 @@ casual-trail.el					\
 casual-trigonometric.el				\
 casual-units.el					\
 casual-vector.el				\
-casual-graphics.el				\
-casual-financial.el
+casual-financial.el				\
+casual-symbolic.el
 
 CASUAL_TEST_INCLUDES= \
 casual-test-utils.el
