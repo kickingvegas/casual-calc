@@ -26,6 +26,15 @@
 (require 'calc)
 (require 'calc-math)
 
+;; !!! While not a label function, it is called from modules that call labels.
+(defun casual-open-settings-file ()
+  "Open Calc settings file in other window.
+\nThis function opens in another window the file defined in
+`calc-settings-file'.  Persisted variables stored in this file
+can be subsequently edited or removed."
+  (interactive)
+  (find-file-other-window calc-settings-file))
+
 ;; Labels
 (defun casual-cmplx-or-polar-label ()
   "Label for either complex or polar mode."

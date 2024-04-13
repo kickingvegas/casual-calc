@@ -80,8 +80,8 @@
                                             "Thousands Separators"))
      :transient t)
     ;; TODO show current value thousands separators
-    ("," "Set Thousands Separator" calc-group-char :transient t)
-    ("." "Decimal Separator" calc-point-char :transient t)
+    ("," "Set Thousands Separator…" calc-group-char :transient t)
+    ("." "Decimal Separator…" calc-point-char :transient t)
     ("H" "ℎ𝑚𝑠 Format" calc-hms-notation
      :description (lambda ()
                     (format
@@ -90,7 +90,8 @@
      :transient t)]
 
    ["Reset"
-    ("C-M-r" "Calc Reset" calc-reset :transient t)]]
+    ("C-M-r" "Calc Reset" calc-reset :transient t)
+    ("O" "Open Calc Settings File" casual-open-settings-file :transient nil)]]
   [""
    :class transient-row
    ("C-g" "‹Back" ignore :transient transient--do-return)
