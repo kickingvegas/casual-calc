@@ -284,7 +284,7 @@ value must be negative and at least one value must be positive.
 \nMenu arguments:\n
 --rate=r    : % interest rate per period of time
 --periods=n : number of time periods to invest over
---amount=a  : deposit added at the end of each time period
+--amount=a  : deposit amount per time period
 --beginning : if set then calculate where payment is made at
               the start of a period, otherwise end.
 \nSetting the above values loads the stack accordingly:
@@ -321,7 +321,7 @@ value must be negative and at least one value must be positive.
 \nMenu arguments:\n
 --rate=r    : % interest rate per period of time
 --periods=n : number of time periods to invest over
---amount=a  : deposit added at the end of each time period
+--amount=a  : deposit amount per time period
 --beginning : if set then calculate where payment is made at
               the start of a period, otherwise end.
 \nSetting the above values loads the stack accordingly:
