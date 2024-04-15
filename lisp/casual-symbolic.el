@@ -31,9 +31,10 @@
 (require 'casual-calc)
 (require 'casual-calc-algebra)
 (require 'casual-variables)
+(require 'casual-fileio)
 
 (transient-define-prefix casual-symbolic-menu ()
-  "Symbolic Algebra Menu.
+  "Computer Algebra Menu.
 \nCommands to work with algebraic expressions. From here you can
 - Manipulate algebraic expressions
 - Manipulate polynomial expressions
@@ -41,7 +42,7 @@
 - Solve expressions either symbolically or numerically
 - Curve fit data
 - Perform summations"
-  ["Symbolic Algebra"
+  ["Computer Algebra"
    ["Manipulation"
     :pad-keys t
     ("E" "Simplify" casual-calc-alg-evaluate :transient t)
@@ -226,7 +227,8 @@ Commands to solve an algebraic expression numerically."
 Curve fit commands."
   ["Curve Fit"
    ("c" "Curve Fit" casual-calc-curve-fit :transient t)
-   ("p" "Polynomial Interpolation" casual-calc-poly-interp :transient t)]
+   ("p" "Polynomial Interpolation" casual-calc-poly-interp :transient t)
+   ("o" "Open Curve Fit Data…" casual-read-curvefit-data :transient t)]
 
   [""
    :class transient-row

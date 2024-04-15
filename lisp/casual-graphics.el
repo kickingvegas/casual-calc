@@ -27,6 +27,7 @@
 (require 'calc)
 (require 'calc-math) ; needed to reference some symbols not loaded in `calc'.
 (require 'transient)
+(require 'casual-fileio)
 
 ;; Push Example Functions
 (defun casual--push-natural-interval-0-100 ()
@@ -343,8 +344,10 @@ This string name is used in the canvas legend (key)."
     ("e" "Add 2D Equation" casual--graph-add-equation :transient t)
     ("A" "Add 3D" casual--graph-add-3d :transient t)
     ("d" "Delete" casual--graph-delete :transient t)
+    ("n" "Name…" casual--graph-name :transient t)
     ("j" "Juggle" casual--graph-juggle :transient t)
-    ("s" "Style›" casual-curve-style-menu :transient nil)]
+    ("s" "Style›" casual-curve-style-menu :transient nil)
+    ("o" "Open Plot Data…" casual-read-plot-data :transient t)]
    ["Canvas"
     ;;("f" "Plot 2D Fast" calc-graph-fast :transient t) ;; obsolete
     ;;("F" "Plot 3D Fast" calc-graph-fast-3d :transient t) ;; obsolete

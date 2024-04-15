@@ -30,6 +30,7 @@ casual-calc.el					\
 casual-calc-algebra.el				\
 casual-predicates.el				\
 casual-labels.el				\
+casual-fileio.el 				\
 casual-radix.el					\
 casual-angle-measure.el				\
 casual-stack.el					\
@@ -72,9 +73,9 @@ casual-test-utils.el
 -l $(patsubst %, ../tests/test-%, $<) \
 -f ert-run-tests-batch-and-exit
 
-tests: $(CASUAL_PACKAGES:.el=.elt) casual.elt
+tests: $(CASUAL_PACKAGES:.el=.elt) $(CASUAL_INCLUDES:.el=.elt) casual.elt
 
-compile: $(CASUAL_PACKAGES:.el=.elc) casual.elc
+compile: $(CASUAL_PACKAGES:.el=.elc) $(CASUAL_INCLUDES:.el=.elc) casual.elc
 
 casual.elc: casual.el
 	$(EXEC_NAME) -Q --batch $(patsubst %, -l %, $(CASUAL_INCLUDES)) \
