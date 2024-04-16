@@ -24,6 +24,10 @@
 
 ;;; Code:
 (require 'calc)
+(require 'calc-vec)
+(require 'calc-ext)
+
+
 
 (defun casual-datafile-to-matrix (filename)
   "Read data in FILENAME into a matrix list.

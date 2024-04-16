@@ -48,6 +48,59 @@
      ))
   (casualt-breakdown t))
 
+(ert-deftest test-casual-modes-menu ()
+  (casualt-setup)
+  (let ((test-vectors '(
+                        ;; ("Aq" . calc-algebraic-mode)
+                        ;; ("zq" . calc-leading-zeros)
+                        ;; ("Fq" . calc-frac-mode)
+                        ;; ("sq" . calc-symbolic-mode)
+                        ;; ("pq" . calc-polar-mode)
+                        ("cq" . casual-complex-format-menu)
+                        ;; ("Pq" . calc-precision)
+                        ("Iq" . casual-calc-infinite-mode)
+                        ;; ("Sq" . calc-save-modes)
+                        ("aq" . casual-angle-measure-menu)
+                        ("Rq" . casual-radix-menu)
+                        ("fq" . casual-float-format-menu)
+                        ;; ("gq" . calc-group-digits)
+                        ;; (",q" . calc-group-char)
+                        ;; (".q" . calc-point-char)
+                        ;; ("Hq" . calc-hms-notation)
+                        ;; ("C-M-r" . calc-reset)
+                        ("Oq" . casual-open-settings-file)
+                        )))
+    (casualt-suffix-testbench-runner test-vectors
+                                     #'casual-modes-menu
+                                     '(lambda () (random 5000))))
+  (casualt-breakdown t))
+
+;; TODO: stubbed in for later
+;; (ert-deftest casual-complex-format-menu ()
+;;   (casualt-setup)
+;;   (let ((test-vectors '(
+;;                         ;; ("c" . calc-complex-notation)
+;;                         ;; ("i" . calc-i-notation)
+;;                         ;; ("j" . calc-j-notation)
+;;                         )))
+;;     (casualt-suffix-testbench-runner test-vectors
+;;                                      #'casual-complex-format-menu
+;;                                      '(lambda () (random 5000))))
+;;   (casualt-breakdown t))
+
+;; TODO: stubbed in for later
+;; (ert-deftest casual-float-format-menu ()
+;;   (casualt-setup)
+;;   (let ((test-vectors '(
+;;                         ;; ("n" . calc-normal-notation)
+;;                         ;; ("f" . calc-fix-notation)
+;;                         ;; ("s" . calc-sci-notation)
+;;                         ;; ("e" . calc-eng-notation)]
+;;                         )))
+;;     (casualt-suffix-testbench-runner test-vectors
+;;                                      #'casual-float-format-menu
+;;                                      '(lambda () (random 5000))))
+;;   (casualt-breakdown t))
 
 (provide 'test-casual-settings)
 ;;; test-casual-settings.el ends here
