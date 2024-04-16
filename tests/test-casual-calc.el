@@ -24,7 +24,7 @@
 
 ;;; Code:
 (require 'ert)
-(require 'casual)
+;;(require 'casual)
 (require 'casual-test-utils)
 (require 'casual-calc)
 

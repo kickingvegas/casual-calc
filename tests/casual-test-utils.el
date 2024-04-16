@@ -26,6 +26,7 @@
 (require 'ert)
 (require 'calc)
 (require 'transient)
+(require 'kmacro)
 
 (defun casualt-setup ()
   "Casual menu test setup function."
@@ -163,6 +164,22 @@ appending \"q\" to the keysequence."
                                                   (funcall value-fn))))
           test-vectors))
 
+
+(defun casualt-macro-callable-symbol (command)
+  "Convert COMMAND to key string that can be passed into `kmacro'."
+  (concat
+   (seq-reduce 'concat
+               (mapcar (lambda (c)
+                         (concat (char-to-string c) " ") )
+                       (symbol-name command))
+               "M-x ")
+   "<return> "))
+
+(defun casualt-kmacro (command keys)
+  "Create `kmacro' instance invoking COMMAND and passing KEYS to drive it.
+COMMAND is an interactive function."
+  (let ((buf (concat (casualt-macro-callable-symbol command) keys)))
+    (kmacro buf)))
 
 (provide 'casual-test-utils)
 ;;; casual-test-utils.el ends here

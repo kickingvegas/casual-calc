@@ -27,6 +27,7 @@
 (require 'calc)
 (require 'calc-math) ; needed to reference some symbols not loaded in `calc'.
 (require 'transient)
+(require 'casual-fileio)
 
 ;; Push Example Functions
 (defun casual--push-natural-interval-0-100 ()
@@ -99,7 +100,9 @@ the canvas is updated to support interactive usage.  Invokes
 
 (defun casual--graph-add ()
   "Add 2D curve to Gnuplot canvas.
-This function adds the curve specified by the stack arguments 2: and 1:.
+\This function adds the curve specified by the stack
+arguments (2:) and (1:), prompting for a name to assign the
+curve.
 
 2: x-axis specification
 1: y-axis specification
@@ -120,6 +123,36 @@ calling `casual--graph-num-points'."
   ;; one should be able to define a vector [[a b] [c d] [e f]] where [a b],
   ;; [c d], [e f] are three separate points to plot.
   (interactive)
+  (call-interactively #'calc-graph-add)
+  (call-interactively #'calc-graph-name)
+  (casual--graph-refresh-plot))
+
+
+(defun casual--graph-add-equation ()
+  "Add 2D algebraic equation to Gnuplot canvas.
+\nThis function adds the curve specified in (1:), prompting the
+user for an interval and then a name to assign the curve.
+
+1: y-axis specification, typically an equation
+
+The y-axis specification can be either a vector or an algebraic formula with a
+single independent variable, typically 𝑥.
+
+Invoking this multiple times will for each time generate a new curve on the same
+canvas.  The last curve generated is referred to as the current curve.  The user
+can invoke `casual--graph-juggle' to rotate to an arbitrary curve to make it
+current.
+
+The number of sample points used to plot a curve can be set by
+calling `casual--graph-num-points'."
+  ;; OBSERVATION (kickingvegas): IMHO this is a poor fit for just vector data
+  ;; because it separates axis components into separate data structures. Ideally
+  ;; one should be able to define a vector [[a b] [c d] [e f]] where [a b],
+  ;; [c d], [e f] are three separate points to plot.
+  (interactive)
+
+  (calc-push (math-read-expr (read-string "Plot Interval: ")))
+  (calc-roll-down 2)
   (call-interactively #'calc-graph-add)
   (call-interactively #'calc-graph-name)
   (casual--graph-refresh-plot))
@@ -307,11 +340,14 @@ This string name is used in the canvas legend (key)."
   ["Graphics"
    ["Curve"
     :pad-keys t
-    ("a" "Add 2D" casual--graph-add :transient t)
+    ("a" "Add 2D Curve" casual--graph-add :transient t)
+    ("e" "Add 2D Equation" casual--graph-add-equation :transient t)
     ("A" "Add 3D" casual--graph-add-3d :transient t)
     ("d" "Delete" casual--graph-delete :transient t)
+    ("N" "Name…" casual--graph-name :transient t)
     ("j" "Juggle" casual--graph-juggle :transient t)
-    ("s" "Style›" casual-curve-style-menu :transient nil)]
+    ("s" "Style›" casual-curve-style-menu :transient nil)
+    ("o" "Open Plot Data…" casual-read-plot-data :transient t)]
    ["Canvas"
     ;;("f" "Plot 2D Fast" calc-graph-fast :transient t) ;; obsolete
     ;;("F" "Plot 3D Fast" calc-graph-fast-3d :transient t) ;; obsolete
@@ -330,7 +366,7 @@ This string name is used in the canvas legend (key)."
 
   ["Data"
    :pad-keys t
-   ("e" "Examples›" casual-graph-examples-menu :transient nil)]
+   ("E" "Examples›" casual-graph-examples-menu :transient nil)]
    ;;("v" "Vector/Matrix›" casual-vector-menu :transient nil)
   [:class transient-row
           ("C-g" "‹Back" ignore :transient transient--do-return)

@@ -29,6 +29,7 @@
 (require 'casual-version)
 (require 'casual-angle-measure)
 
+;; = Menus =
 (transient-define-prefix casual-modes-menu ()
   "Casual modes menu."
   [["Modes"
@@ -43,26 +44,33 @@
                     (casual--checkbox-label calc-leading-zeros
                                             "Leading Zeroes"))
      :transient t)
+
     ("F" calc-frac-mode :description casual-prefer-frac-label :transient t)
     ("s" calc-symbolic-mode :description casual-symbolic-mode-label :transient t)
     ("p" calc-polar-mode :description casual-cmplx-or-polar-label :transient t)
-    ;; ("m" calc-matrix-mode :description casual-matrix-mode-label :transient nil) ; this is really about symbolic computation
     ("c" "Complex Number Format›" casual-complex-format-menu
      :description (lambda ()
                     (format "Complex Number Format (now %s)›"
                             (casual-complex-format-label)))
      :transient t)
+    ;; ("m" calc-matrix-mode :description casual-matrix-mode-label :transient nil) ; this is really about symbolic computation
     ("P" calc-precision
      :description (lambda ()
                     (format "Precision (now %d)" calc-internal-prec))
      :transient t)
-    ("S" "Save Calc Settings" calc-save-modes :transient t)]
+    ("I" "Infinite Mode" casual-calc-infinite-mode
+     :description (lambda ()
+                    (casual--checkbox-label calc-infinite-mode
+                                            "Infinite Mode"))
+     :transient t)]
+
    ["Angular Measure"
     ("a" casual-angle-measure-menu
      :description (lambda ()
                     (format "Angle Measure (now %s)›"
                             (casual-angle-mode-label)))
      :transient t)]]
+
   [["Display"
     ("R" casual-radix-menu
      :description (lambda ()
@@ -77,20 +85,28 @@
      ;; TODO calc-group-digits can actually be an int 😦
      :description (lambda ()
                     (casual--checkbox-label calc-group-digits
-                                            "Thousands Separators"))
+                                            "Show Thousands Separators"))
      :transient t)
-    ;; TODO show current value thousands separators
-    ("," "Set Thousands Separator" calc-group-char :transient t)
-    ("." "Decimal Separator" calc-point-char :transient t)
+    ("," "Thousands Separator…" calc-group-char
+     :description (lambda ()
+                    (format "Set Thousands Separator (now %s)…" calc-group-char))
+     :transient t)
+    ("." "Decimal Separator…" calc-point-char
+     :description (lambda ()
+                    (format "Set Decimal Separator (now %s)…" calc-point-char))
+     :transient t)
     ("H" "ℎ𝑚𝑠 Format" calc-hms-notation
      :description (lambda ()
                     (format
-                     "ℎ𝑚𝑠 Format (%s)"
+                     "Set ℎ𝑚𝑠 Format (now %s)"
                      (format calc-hms-format "" "" "")))
      :transient t)]
 
-   ["Reset"
+   ["Settings"
+    ("S" "Save Calc Settings" calc-save-modes :transient t)
+    ("O" "Open Calc Settings File" casual-open-settings-file :transient nil)
     ("C-M-r" "Calc Reset" calc-reset :transient t)]]
+
   [""
    :class transient-row
    ("C-g" "‹Back" ignore :transient transient--do-return)
@@ -133,6 +149,8 @@
           ("q" "Dismiss" ignore :transient transient--do-exit)
           ("U" "Undo Stack" calc-undo :transient t)])
 
+
+;; = Functions =
 (defun casual-about-casual ()
   "Casual is an opinionated porcelain for Emacs Calc.
 
@@ -157,6 +175,22 @@ Thank you for using Casual and always choose love."
   "About information for Casual."
   (interactive)
   (describe-function 'casual-about-casual))
+
+(defun casual-calc-infinite-mode ()
+  "Toggle infinite mode on or off.
+
+Divide-by-zero (e.g. ‘1 / 0’) results are normally treated as
+errors; formulas like this are left in unsimplified form. An
+alternate behavior is to treat a divide-by-zero condition as an
+infinite result. This command toggles this behavior.
+
+This function is a wrapper over `calc-infinite-mode'.
+
+* References
+- info node `(calc) Infinite Mode'
+- `calc-infinite-mode'"
+  (interactive)
+  (call-interactively #'calc-infinite-mode))
 
 (provide 'casual-settings)
 ;;; casual-settings.el ends here

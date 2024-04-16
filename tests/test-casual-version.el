@@ -1,4 +1,4 @@
-;;; casual-version.el --- Casual Version             -*- lexical-binding: t; -*-
+;;; test-casual-version.el --- Casual Version Tests  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024  Charles Choi
 
@@ -20,15 +20,12 @@
 
 ;;; Commentary:
 
+;;
+
+
 ;;; Code:
 
-(defconst casual-version "1.5.0"
-  "Casual Version.")
 
-(defun casual-version ()
-  "Show current version of Casual."
-  (interactive)
-  (message casual-version))
 
-(provide 'casual-version)
-;;; casual-version.el ends here
+(provide 'test-casual-version)
+;;; test-casual-version.el ends here
