@@ -344,7 +344,7 @@ This string name is used in the canvas legend (key)."
     ("e" "Add 2D Equation" casual--graph-add-equation :transient t)
     ("A" "Add 3D" casual--graph-add-3d :transient t)
     ("d" "Delete" casual--graph-delete :transient t)
-    ("n" "Name…" casual--graph-name :transient t)
+    ("N" "Name…" casual--graph-name :transient t)
     ("j" "Juggle" casual--graph-juggle :transient t)
     ("s" "Style›" casual-curve-style-menu :transient nil)
     ("o" "Open Plot Data…" casual-read-plot-data :transient t)]
