@@ -41,6 +41,10 @@
 1) an interval that specifies the range of interest to find a minimum value.
 2) the variable of interest to find the minimum for.
 
+This command returns a vector containing the value of the
+variable which minimizes the formula's value, along with the
+minimum value itself.
+
 This function is a wrapper over `calc-find-minimum'.
 
 * References
@@ -52,10 +56,14 @@ This function is a wrapper over `calc-find-minimum'.
   (call-interactively #'calc-find-minimum))
 
 (defun casual-calc-find-maximum ()
-  "Find maximum value of a an algebraic equation.
+  "Find maximum value of an algebraic equation.
 \nThis command issues two interactive prompts:
 1) an interval that specifies the range of interest to find a maximum value.
 2) the variable of interest to find the maximum for.
+
+This command returns a vector containing the value of the
+variable which maximizes the formula's value, along with the
+maximum value itself.
 
 This function is a wrapper over `calc-find-maximum'.
 
