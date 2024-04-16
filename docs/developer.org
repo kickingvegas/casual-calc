@@ -48,6 +48,33 @@ For example, in the ~lisp/~ directory, run this command to exercise all tests fo
 
 
 * External Pull Requests
-Users who wish to submit a pull request to Casual must make it against the ~development~ branch on GitHub. If the pull request is made against ~main~ but can be re-targeted to ~development~, it will be reviewed. A pull request with merge conflicts to ~development~ will be summarily rejected.
 
-All pull requests must pass test regression.
+Before you submit a pull request (PR):
+
+- If it is a *new* feature, please propose an [[https://github.com/kickingvegas/Casual/issues][enhancement issue]] instead.
+  - Your enhancement issue should be in the form of a products requirement document (PRD).
+  - PRs without an approved PRD associated with it will be summarily rejected.
+  - Contributing to code development for a PRD requires advance approval from the maintainer. PRs submitted outside of this flow will be rejected.
+- PRs must pass the test regression suite.
+  - New behavior introduced in a PR should have unit tests associated with it.
+    - Typically this entails exercising all items in a Transient menu. Look at usage of ~casualt-suffix-testbench-runner~ in ~tests/casual-test-utils.el~ to see how this is done.
+- PRs must be made against the ~development~ branch on GitHub.
+  - If the pull request is made against ~main~ but can be re-targeted to ~development~, it will be reviewed.
+  - A pull request with merge conflicts to ~development~ will be summarily rejected.
+      
+All of the above is intended to ensure that Casual releases are of high quality.
+
+* UX Guidelines
+
+- Menus must not exceed 80 characters in length.
+  - Rationale: Casual follows suit with current Elisp format to conform to the line width of an ADM-3A terminal.
+- Casual UX does not use the Calc /inverse/ or /hyperbolic/ key modifier.
+  - Calc functions requiring such modifiers are "flattened" into workflows that obviate them.
+    - Example: implement the menu item /arcsin/ instead of /inverse sin/.
+  - Rationale: Calc's support for /inverse/ and /hyperbolic/ keys is itself an emulation of Hewlett-Packard (HP) calculator behavior which was designed to compensate for its finite number of hardware buttons. As Casual is a software menu porcelain, there are no such UX restrictions so it makes no effort to emulate hardware key modifiers. Furthermore, the semantics of /inverse/ and /hyperbolic/ only apply to some functions, but Calc has overused them to support functions where it semantically makes no sense (e.g. ~inverse calc-fin-fv~ to get the future value at the beginning of a payment interval). Casual takes the opportunity to cease this practice.
+- Calc commands must be wrapped to include:
+  - A docstring describing its behavior and a reference section linking to:
+    - a Calc Info page describing the behavior of the wrapped function.
+    - a link to the Help of the wrapped command (while not documented, help will provide a link to the source).
+  - Rationale: Calc made the decision to implement its own non-standard help system and as such chose to /not/ create docstrings for its functions. This decision unfortunately breaks an assumption made by the Transient help feature which depend on said docstrings for commands associated with a menu item.
+
