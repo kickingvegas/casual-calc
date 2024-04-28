@@ -1,0 +1,14 @@
+** 中文菜单
+[[file:/lisp/zh-cn/example.png][例子]]
+** 使用
+#+begin_src emacs-lisp
+(use-package casual
+  :ensure t
+  :config
+  (use-package casual-zh-cn
+    :ensure nil
+    :bind (:map calc-mode-map
+                ("C-o" . casual-zh-cn-main-menu)))
+  )
+;; 使用愉快
+#+end_src

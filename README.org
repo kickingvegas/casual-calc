@@ -1,4 +1,7 @@
 [[https://melpa.org/#/casual][file:https://melpa.org/packages/casual-badge.svg]]
+
+[[file:/lisp/zh-cn/README.zh-cn.org][中文语言]]
+
 * Casual
 An opinionated [[https://github.com/magit/transient][Transient]]-based porcelain to support the casual usage of Emacs [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][Calc]].
 
