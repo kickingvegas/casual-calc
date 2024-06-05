@@ -26,37 +26,37 @@ else
 endif
 
 CASUAL_INCLUDES =				\
-casual-calc.el					\
+casual-calc--calc.el				\
 casual-calc-algebra.el				\
-casual-predicates.el				\
-casual-labels.el				\
-casual-fileio.el 				\
-casual-radix.el					\
-casual-angle-measure.el				\
-casual-stack.el					\
-casual-variables.el				\
-casual-graphics.el				\
-casual-version.el
+casual-calc-predicates.el			\
+casual-calc-labels.el				\
+casual-calc-fileio.el				\
+casual-calc-radix.el				\
+casual-calc-angle-measure.el			\
+casual-calc-stack.el				\
+casual-calc-variables.el			\
+casual-calc-graphics.el				\
+casual-calc-version.el
 
 CASUAL_PACKAGES=				\
-casual-binary.el				\
-casual-complex.el				\
-casual-conversion.el				\
-casual-logarithmic.el				\
-casual-random.el				\
-casual-rounding.el				\
-casual-rounding.el				\
-casual-settings.el				\
-casual-time.el					\
-casual-trail.el					\
-casual-trigonometric.el				\
-casual-units.el					\
-casual-vector.el				\
-casual-financial.el				\
-casual-symbolic.el
+casual-calc-binary.el				\
+casual-calc-complex.el				\
+casual-calc-conversion.el			\
+casual-calc-logarithmic.el			\
+casual-calc-random.el				\
+casual-calc-rounding.el				\
+casual-calc-rounding.el				\
+casual-calc-settings.el				\
+casual-calc-time.el				\
+casual-calc-trail.el				\
+casual-calc-trigonometric.el			\
+casual-calc-units.el				\
+casual-calc-vector.el				\
+casual-calc-financial.el			\
+casual-calc-symbolic.el
 
 CASUAL_TEST_INCLUDES= \
-casual-test-utils.el
+casual-calc-test-utils.el
 
 .PHONY: tests compile regression
 
@@ -87,7 +87,7 @@ casual.elt: casual.el
 $(patsubst %, -l %, $(CASUAL_INCLUDES)) \
 $(patsubst %, -l %, $(CASUAL_PACKAGES)) \
 -l $< \
--l ../tests/casual-test-utils.el \
+-l ../tests/casual-calc-test-utils.el \
 -l $(patsubst %, ../tests/test-%, $<) \
 -f ert-run-tests-batch-and-exit
 

@@ -44,7 +44,7 @@
 
 CASUAL_LISP_DIR=./lisp
 CASUAL_EL=$(CASUAL_LISP_DIR)/casual.el
-CASUAL_VERSION_EL=$(CASUAL_LISP_DIR)/casual-version.el
+CASUAL_VERSION_EL=$(CASUAL_LISP_DIR)/casual-calc-version.el
 
 TIMESTAMP := $(shell /bin/date "+%Y%m%d_%H%M%S")
 CASUAL_VERSION := $(shell ./scripts/read-version.sh $(CASUAL_EL))
@@ -74,7 +74,7 @@ tests:
 ## Bump Patch Version
 bump-casual:
 	sed -i 's/;; Version: $(CASUAL_VERSION)/;; Version: $(CASUAL_VERSION_BUMP)/' $(CASUAL_EL)
-	sed -i 's/(defconst casual-version "$(CASUAL_VERSION)"/(defconst casual-version "$(CASUAL_VERSION_BUMP)"/' $(CASUAL_VERSION_EL)
+	sed -i 's/(defconst casual-calc-version "$(CASUAL_VERSION)"/(defconst casual-calc-version "$(CASUAL_VERSION_BUMP)"/' $(CASUAL_VERSION_EL)
 
 bump: checkout-development bump-casual
 	git commit -m 'Bump version to $(CASUAL_VERSION_BUMP)' $(CASUAL_EL) $(CASUAL_VERSION_EL)
