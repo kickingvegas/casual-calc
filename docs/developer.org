@@ -1,10 +1,10 @@
-* Casual Development
-Casual is an open source project and as such is always open for contributors to its development.
+* Casual Calc Development
+Casual Calc is an open source project and as such is always open for contributors to its development.
 
 This document provides guidance on how to contribute to its development from a programming perspective.
 
 * Development Environment
-Casual is developed primarily using a GNU toolchain. GNU tools required are:
+Casual Calc is developed primarily using a GNU toolchain. GNU tools required are:
 
 - make
 - awk
@@ -13,16 +13,16 @@ Casual is developed primarily using a GNU toolchain. GNU tools required are:
 
 Also needed is the Python [[https://pypi.org/project/semver/][semver]] module. This will require an installation of Python 3.x, ideally at 3.9 or higher.
 
-For source code management, Casual uses ~git~.
+For source code management, Casual Calc uses ~git~.
 
 Given a clone of this repository, ensure that the directory holding ~casual.el~ is in your ~info-path~. Add the following lines to your Emacs initialization file.
 #+begin_src elisp :lexical no
   (require 'casual)
-  (define-key calc-mode-map (kbd "C-o") 'casual-main-menu)
+  (define-key calc-mode-map (kbd "C-o") #'casual-calc-tmenu)
 #+end_src
 
 * Branches
-For Casual development, there are two git branches of note:
+For Casual Calc development, there are two git branches of note:
 
 - [[https://github.com/kickingvegas/Casual/tree/main][main]] for releases to the general public.
 - [[https://github.com/kickingvegas/Casual/tree/development][development]] for staging of stable pre-release functionality.
@@ -30,13 +30,13 @@ For Casual development, there are two git branches of note:
 Planned changes for the next release are done on feature branches that are merged via pull request into ~development~. Upon QA of ~development~, those changes are merged to ~main~ for release to the general public.
 
 * Test Regression
-Running the Casual test regression suite is done via Makefile. In the top-level directory of Casual, run this from the command line.
+Running the Casual Calc test regression suite is done via Makefile. In the top-level directory of Casual Calc, run this from the command line.
 
 #+begin_src text
   $ make tests
 #+end_src
 
-Casual uses the [[https://www.gnu.org/software/emacs/manual/html_node/ert/][ERT]] framework to compose and manage tests.
+Casual Calc uses the [[https://www.gnu.org/software/emacs/manual/html_node/ert/][ERT]] framework to compose and manage tests.
 
 One can run a test for a single file by using a "phony" target with a suffix of ~.elt~ in the ~lisp/~ directory containing all the source files.
 
@@ -62,16 +62,16 @@ Before you submit a pull request (PR):
   - If the pull request is made against ~main~ but can be re-targeted to ~development~, it will be reviewed.
   - A pull request with merge conflicts to ~development~ will be summarily rejected.
       
-All of the above is intended to ensure that Casual releases are of high quality.
+All of the above is intended to ensure that Casual Calc releases are of high quality.
 
 * UX Guidelines
 
 - Menus must not exceed 80 characters in length.
-  - Rationale: Casual follows suit with current Elisp format to conform to the line width of an ADM-3A terminal.
-- Casual UX does not use the Calc /inverse/ or /hyperbolic/ key modifier.
+  - Rationale: Casual Calc follows suit with current Elisp format to conform to the line width of an ADM-3A terminal.
+- Casual Calc UX does not use the Calc /inverse/ or /hyperbolic/ key modifier.
   - Calc functions requiring such modifiers are "flattened" into workflows that obviate them.
     - Example: implement the menu item /arcsin/ instead of /inverse sin/.
-  - Rationale: Calc's support for /inverse/ and /hyperbolic/ keys is itself an emulation of Hewlett-Packard (HP) calculator behavior which was designed to compensate for its finite number of hardware buttons. As Casual is a software menu porcelain, there are no such UX restrictions so it makes no effort to emulate hardware key modifiers. Furthermore, the semantics of /inverse/ and /hyperbolic/ only apply to some functions, but Calc has overused them to support functions where it semantically makes no sense (e.g. ~inverse calc-fin-fv~ to get the future value at the beginning of a payment interval). Casual takes the opportunity to cease this practice.
+  - Rationale: Calc's support for /inverse/ and /hyperbolic/ keys is itself an emulation of Hewlett-Packard (HP) calculator behavior which was designed to compensate for its finite number of hardware buttons. As Casual Calc is a software menu porcelain, there are no such UX restrictions so it makes no effort to emulate hardware key modifiers. Furthermore, the semantics of /inverse/ and /hyperbolic/ only apply to some functions, but Calc has overused them to support functions where it semantically makes no sense (e.g. ~inverse calc-fin-fv~ to get the future value at the beginning of a payment interval). Casual Calc takes the opportunity to cease this practice.
 - Calc commands must be wrapped to include:
   - A docstring describing its behavior and a reference section linking to:
     - a Calc Info page describing the behavior of the wrapped function.
