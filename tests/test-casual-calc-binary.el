@@ -27,24 +27,124 @@
 (require 'casual-calc-test-utils)
 (require 'casual-calc-binary)
 
-(ert-deftest test-casual-calc-binary-tmenu ()
+(ert-deftest test-casual-calc-binary-tmenu-bindings ()
+  (casualt-setup)
+  (let ((test-vectors '(("a" . casual-calc--calc-and)
+                        ("o" . casual-calc--calc-or)
+                        ("x" . casual-calc--calc-xor)
+                        ("-" . casual-calc--calc-diff)
+                        ("!" . casual-calc--calc-not)
+
+                        ("lq" . casual-calc--calc-lshift-binary)
+                        ("rq" . casual-calc--calc-rshift-binary)
+
+                        ("ìq" . casual-calc--calc-lshift-arith)
+                        ("òq" . casual-calc--calc-rshift-arith)
+                        ("q" . casual-calc--calc-rotate-binary)
+
+                        ("Rq" . casual-calc-radix-tmenu)
+                        ("wq" . casual-calc--calc-word-size)
+                        ("u" . casual-calc--calc-unpack-bits)
+                        ("p" . casual-calc--calc-pack-bits))))
+
+    (casualt-suffix-testbench-runner test-vectors
+                                     #'casual-calc-binary-tmenu
+                                     '(lambda () (random 5000))))
+  (casualt-breakdown t))
+
+
+(ert-deftest test-casual-calc--calc-and ()
+  (casualt-setup)
+  (calc-push 11)
+  (calc-push 12)
+  (call-interactively #'casual-calc--calc-and)
+  (should (= (calc-top) 8))
+
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-or ()
+  (casualt-setup)
+  (calc-push 11)
+  (calc-push 12)
+  (call-interactively #'casual-calc--calc-or)
+  (should (= (calc-top) 15))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-xor ()
+  (casualt-setup)
+  (calc-push 11)
+  (calc-push 12)
+  (call-interactively #'casual-calc--calc-xor)
+  (should (= (calc-top) 7))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-diff ()
+  (casualt-setup)
+  (calc-push 11)
+  (calc-push 12)
+  (call-interactively #'casual-calc--calc-diff)
+  (should (= (calc-top) 3))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-not ()
   (casualt-setup)
   (calc-word-size 8)
-  (casualt-run-menu-input-testcases
-   'casual-calc-binary-tmenu
-   '(("a" (11 12) 8)
-     ("o" (11 12) 15)
-     ("x" (11 12) 7)
-     ("-" (11 12) 3)
-     ("!" (11) 244)
-     ("l" (12) 24)
-     ("r" (24) 12)
-     ([134217836] (12) 24) ; (read-kbd-macro "M-l") evals to [134217836]
-     ([134217842] (24) 12) ; (read-kbd-macro "M-r") evals to [134217842]
-     ([18] (24) 48) ; (read-kbd-macro "C-r") evals to [18]
-     ))
-  (calc-word-size 32)
+  (calc-push 11)
+  (call-interactively #'casual-calc--calc-not)
+  (should (= (calc-top) 244))
   (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-lshift-binary ()
+  (casualt-setup)
+  (calc-word-size 8)
+  (calc-push 12)
+  (call-interactively #'casual-calc--calc-lshift-binary)
+  (should (= (calc-top) 24))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-rshift-binary ()
+  (casualt-setup)
+  (calc-word-size 8)
+  (calc-push 24)
+  (call-interactively #'casual-calc--calc-rshift-binary)
+  (should (= (calc-top) 12))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-lshift-arith ()
+  (casualt-setup)
+  (calc-word-size 8)
+  (calc-push 12)
+  (call-interactively #'casual-calc--calc-lshift-arith)
+  (should (= (calc-top) 24))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-rshift-arith ()
+  (casualt-setup)
+  (calc-word-size 8)
+  (calc-push 24)
+  (call-interactively #'casual-calc--calc-rshift-arith)
+  (should (= (calc-top) 12))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-rotate-binary ()
+  (casualt-setup)
+  (calc-word-size 8)
+  (calc-push 24)
+  (call-interactively #'casual-calc--calc-rotate-binary)
+  (should (= (calc-top) 48))
+  (casualt-breakdown t))
+
+;; (ert-deftest test-casual-calc--calc-word-size ()
+;;   (casualt-setup)
+;;   (casualt-breakdown t))
+
+;; (ert-deftest test-casual-calc--calc-unpack-bits ()
+;;   (casualt-setup)
+;;   (casualt-breakdown t))
+
+;; (ert-deftest test-casual-calc--calc-pack-bits ()
+;;   (casualt-setup)
+;;   (casualt-breakdown t))
 
 (provide 'test-casual-calc-binary)
 ;;; test-casual-calc-binary.el ends here
