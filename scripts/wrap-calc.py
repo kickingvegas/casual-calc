@@ -64,7 +64,7 @@ class Application:
             self.stdout = outfile
 
         self.wrappedCalcFunctionTemplate = Template(
-"""(defun casual-$fn ()
+"""(defun casual-calc--$fn ()
     "TODO: This function does not yet have a docstring.
 \\nStack Arguments:
 1: n
@@ -79,10 +79,10 @@ This function is a wrapper over `$fn'.
         )
 
         self.wrappedCalcFunctionTestTemplate = Template(
-            """;; (ert-deftest test-casual-$fn ()
+            """;; (ert-deftest test-casual-calc--$fn ()
 ;;   (casualt-setup)
 ;;   (calc-push 10)
-;;   (casualt-testbench-calc-fn #'casual-$fn
+;;   (casualt-testbench-calc-fn #'casual-calc--$fn
 ;;                              '()
 ;;                              '(float 647943975411 -8))
 ;;   (casualt-breakdown t))"""

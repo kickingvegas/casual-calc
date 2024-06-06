@@ -161,7 +161,7 @@ appending \"q\" to the keysequence."
               (casualt-testbench-transient-suffix menu
                                                   key
                                                   cmd
-                                                  (funcall value-fn))))
+                                                  (funcall-interactively value-fn))))
           test-vectors))
 
 
