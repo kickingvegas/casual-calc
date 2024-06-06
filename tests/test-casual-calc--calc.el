@@ -1,0 +1,145 @@
+;;; test-casual-calc--calc.el --- Casual Wrapped Casual Tests  -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2024  Charles Choi
+
+;; Author: Charles Choi <kickingvegas@gmail.com>
+;; Keywords: tools
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;;
+
+;;; Code:
+(require 'ert)
+;;(require 'casual)
+(require 'casual-calc-test-utils)
+(require 'casual-calc--calc)
+
+;;; Tests
+
+(ert-deftest test-casual-calc--calc-inv ()
+  (casualt-setup)
+  (calc-push 10)
+  (casualt-testbench-calc-fn #'casual-calc--calc-inv
+                             '()
+                             '(float 1 -1))
+  (casualt-breakdown t))
+
+
+(ert-deftest test-casual-calc--calc-sqrt ()
+  (casualt-setup)
+  (calc-push 25)
+  (casualt-testbench-calc-fn #'casual-calc--calc-sqrt
+                             '()
+                             5)
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-change-sign ()
+  (casualt-setup)
+  (calc-push 10)
+  (casualt-testbench-calc-fn #'casual-calc--calc-change-sign
+                             '()
+                             -10)
+  (casualt-breakdown t))
+
+
+(ert-deftest test-casual-calc--calc-power ()
+  (casualt-setup)
+  (calc-push 2)
+  (calc-push 3)
+  (casualt-testbench-calc-fn #'casual-calc--calc-power
+                             '()
+                             8)
+  (casualt-breakdown t))
+
+
+(ert-deftest test-casual-calc--calc-abs ()
+  (casualt-setup)
+  (calc-push -10)
+  (casualt-testbench-calc-fn #'casual-calc--calc-abs
+                             '()
+                             10)
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-factorial ()
+  (casualt-setup)
+  (calc-push 10)
+  (casualt-testbench-calc-fn #'casual-calc--calc-factorial
+                             '()
+                             3628800)
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-percent ()
+  (casualt-setup)
+  (calc-push 10)
+  (casualt-testbench-calc-fn #'casual-calc--calc-percent
+                             '()
+                             '(calcFunc-percent 10))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-percent-change ()
+  (casualt-setup)
+  (calc-push 40)
+  (calc-push 50)
+  (casualt-testbench-calc-fn #'casual-calc--calc-percent-change
+                             '()
+                             '(calcFunc-percent 25))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-pi ()
+  (casualt-setup)
+  (casualt-testbench-calc-fn #'casual-calc--calc-pi
+                             '()
+                             '(float 314159265359 -11))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--calc-evaluate ()
+  (casualt-setup)
+  (calc-push '(* 10 (var x var-x)))
+  (casualt-testbench-calc-fn #'casual-calc--calc-evaluate
+                             '()
+                             '(* 10 (var x var-x)))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--stack-swap ()
+  (casualt-setup)
+  (calc-push 10)
+  (calc-push 20)
+  (casualt-testbench-calc-fn #'casual-calc--stack-swap
+                             '()
+                             10)
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--stack-drop ()
+  (casualt-setup)
+  (calc-push 19)
+  (calc-push 20)
+  (casualt-testbench-calc-fn #'casual-calc--stack-drop
+                             '()
+                             19)
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc--stack-last ()
+  (casualt-setup)
+  (calc-push 225)
+  (call-interactively #'calc-pop)
+  (casualt-testbench-calc-fn #'casual-calc--stack-last
+                             '()
+                             225)
+  (casualt-breakdown t))
+
+(provide 'test-casual-calc--calc)
+;;; test-casual-calc--calc.el ends here
