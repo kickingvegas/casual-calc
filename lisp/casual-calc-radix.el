@@ -25,6 +25,7 @@
 ;;; Code:
 (require 'calc)
 (require 'transient)
+(require 'casual-calc-utils)
 
 (transient-define-prefix casual-calc-radix-tmenu ()
   "Casual radix functions menu."
@@ -35,9 +36,9 @@
    ("6" "Hexadecimal" calc-hex-radix :transient nil)
    ("n" "Other base 𝑛" calc-radix :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (provide 'casual-calc-radix)
 ;;; casual-calc-radix.el ends here

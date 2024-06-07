@@ -27,6 +27,7 @@
 (require 'transient)
 (require 'casual-calc-labels)
 (require 'casual-calc-radix)
+(require 'casual-calc-utils)
 
 (transient-define-prefix casual-calc-binary-tmenu ()
   "Casual binary functions menu."
@@ -61,9 +62,9 @@
     ("u" "Unpack Bits" casual-calc--calc-unpack-bits :transient nil)
     ("p" "Pack Bits" casual-calc--calc-pack-bits :transient nil)]]
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 
 ;; Wrapped Calc Functions

@@ -26,6 +26,7 @@
 (require 'calc)
 (require 'transient)
 (require 'casual-calc-labels)
+(require 'casual-calc-utils)
 
 (transient-define-prefix casual-calc-angle-measure-tmenu ()
   "Casual angle measure functions menu."
@@ -37,9 +38,9 @@
    ("r" "Radians" calc-radians-mode :transient nil)
    ("h" "Degrees-Minutes-Seconds" calc-hms-mode :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (provide 'casual-calc-angle-measure)
 ;;; casual-calc-angle-measure.el ends here

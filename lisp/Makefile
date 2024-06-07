@@ -25,17 +25,18 @@ else
   EXEC_NAME=emacs
 endif
 
-CASUAL_INCLUDES =				\
-casual-calc--calc.el				\
-casual-calc-algebra.el				\
-casual-calc-predicates.el			\
-casual-calc-labels.el				\
-casual-calc-fileio.el				\
-casual-calc-radix.el				\
-casual-calc-angle-measure.el			\
-casual-calc-stack.el				\
-casual-calc-variables.el			\
-casual-calc-graphics.el				\
+CASUAL_INCLUDES =					\
+casual-calc-utils.el					\
+casual-calc--calc.el					\
+casual-calc-algebra.el					\
+casual-calc-predicates.el				\
+casual-calc-labels.el					\
+casual-calc-fileio.el					\
+casual-calc-radix.el					\
+casual-calc-angle-measure.el				\
+casual-calc-stack.el					\
+casual-calc-variables.el				\
+casual-calc-graphics.el					\
 casual-calc-version.el
 
 CASUAL_PACKAGES=				\

@@ -32,6 +32,7 @@
 (require 'casual-calc-algebra)
 (require 'casual-calc-variables)
 (require 'casual-calc-fileio)
+(require 'casual-calc-utils)
 
 (transient-define-prefix casual-calc-symbolic-tmenu ()
   "Computer Algebra Menu.
@@ -91,9 +92,9 @@
 
   [""
    :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
-   ("U" "Undo Stack" calc-undo :transient t)])
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)
+   (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-subformula-tmenu ()
   "Sub-formula Menu.
@@ -137,9 +138,9 @@
 
   [""
    :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
-   ("U" "Undo Stack" calc-undo :transient t)])
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)
+   (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-symbolic-manipulation-tmenu ()
   "Symbolic Manipulation Menu.
@@ -153,9 +154,9 @@ Commands to manipulate a symbolic expression."
 
   [""
    :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
-   ("U" "Undo Stack" calc-undo :transient t)])
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)
+   (casual-calc-undo-suffix)])
 
 
 (transient-define-prefix casual-calc-polynomial-tmenu ()
@@ -174,9 +175,9 @@ Commands to manipulate a polynomial expression."
 
   [""
    :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
-   ("U" "Undo Stack" calc-undo :transient t)])
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)
+   (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc--calculus-tmenu ()
   "Calculus Menu.
@@ -189,9 +190,9 @@ Commands to perform Calculus."
 
   [""
    :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
-   ("U" "Undo Stack" calc-undo :transient t)])
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)
+   (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-solve-symbolic-tmenu ()
   "Symbolic Solve Menu.
@@ -202,9 +203,9 @@ Commands to solve an algebraic expression symbolically."
 
   [""
    :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
-   ("U" "Undo Stack" calc-undo :transient t)])
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)
+   (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-solve-numeric-tmenu ()
   "Numerica Solve Menu.
@@ -218,9 +219,9 @@ Commands to solve an algebraic expression numerically."
 
   [""
    :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
-   ("U" "Undo Stack" calc-undo :transient t)])
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)
+   (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-curve-fit-tmenu ()
   "Curve Fit Menu.
@@ -232,9 +233,9 @@ Curve fit commands."
 
   [""
    :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
-   ("U" "Undo Stack" calc-undo :transient t)])
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)
+   (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-summations-tmenu ()
   "Summations Menu.
@@ -247,9 +248,9 @@ Summation commands."
 
   [""
    :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
-   ("U" "Undo Stack" calc-undo :transient t)])
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)
+   (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-symbolic-logic-tmenu ()
   "Symbolic Logic Menu.
@@ -276,9 +277,9 @@ Symbolic logic commands."
 
   [""
    :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
-   ("U" "Undo Stack" calc-undo :transient t)])
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)
+   (casual-calc-undo-suffix)])
 
 
 (provide 'casual-calc-symbolic)

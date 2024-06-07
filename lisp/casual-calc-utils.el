@@ -1,4 +1,4 @@
-;;; casual-calc-conversion.el --- Casual Conversion Menu  -*- lexical-binding: t; -*-
+;;; casual-calc-utils.el --- Casual Calc Utils       -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024  Charles Choi
 
@@ -25,20 +25,31 @@
 ;;; Code:
 (require 'calc)
 (require 'transient)
-(require 'casual-calc-utils)
 
-(transient-define-prefix casual-calc-conversions-tmenu ()
-  "Casual conversion functions menu."
-  ["Conversions"
-   ("d" "To Degrees" calc-to-degrees :transient nil)
-   ("r" "To Radians" calc-to-radians :transient nil)
-   ("h" "To HMS" calc-to-hms :transient nil)
-   ("f" "To Float" calc-float :transient nil)
-   ("F" "To Fraction" calc-fraction :transient nil)]
-  [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
-          (casual-calc-undo-suffix)])
+;; Transient Navigation
+(transient-define-suffix casual-calc-quit-all ()
+  "Dismiss all menus."
+  :transient nil
+  :key "C-q"
+  :description "Dismiss"
+  (interactive)
+  (transient-quit-all))
 
-(provide 'casual-calc-conversion)
-;;; casual-calc-conversion.el ends here
+(transient-define-suffix casual-calc-quit-one ()
+  "Go back to previous menu."
+  :transient nil
+  :key "C-g"
+  :description "‹Back"
+  (interactive)
+  (transient-quit-one))
+
+(transient-define-suffix casual-calc-undo-suffix ()
+  "Undo stack."
+  :transient t
+  :key "U"
+  :description "Undo Stack"
+  (interactive)
+  (call-interactively #'calc-undo))
+
+(provide 'casual-calc-utils)
+;;; casual-calc-utils.el ends here

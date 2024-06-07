@@ -5,7 +5,7 @@
 ;; Author: Charles Choi <kickingvegas@gmail.com>
 ;; URL: https://github.com/kickingvegas/casual
 ;; Keywords: tools
-;; Version: 1.6.0
+;; Version: 1.7.0
 ;; Package-Requires: ((emacs "29.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -34,6 +34,7 @@
 (require 'calc)
 (require 'calc-math) ; needed to reference some symbols not loaded in `calc'.
 (require 'transient)
+(require 'casual-calc-utils)
 (require 'casual-calc--calc)
 (require 'casual-calc-version)
 (require 'casual-calc-binary)
@@ -109,8 +110,9 @@
 
   [:class transient-row
           ;; Note: no need to C-g for main menu
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)
+          ("q" "Quit Calc" calc-quit)])
 
 ;;;###autoload (autoload 'casual-main-menu "casual" nil t)
 (transient-define-prefix casual-main-menu ()
@@ -118,8 +120,8 @@
 
   [:class transient-row
           ;; Note: no need to C-g for main menu
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (define-obsolete-function-alias #'casual-main-menu #'casual-calc-tmenu
   "v1.6.0"

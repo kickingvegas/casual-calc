@@ -1,4 +1,4 @@
-;;; casual-calc-conversion.el --- Casual Conversion Menu  -*- lexical-binding: t; -*-
+;;; test-casual-calc-utils.el --- Casual Calc Utils Tests  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024  Charles Choi
 
@@ -23,22 +23,9 @@
 ;;
 
 ;;; Code:
-(require 'calc)
-(require 'transient)
-(require 'casual-calc-utils)
+(require 'ert)
+(require 'casual-calc-test-utils)
 
-(transient-define-prefix casual-calc-conversions-tmenu ()
-  "Casual conversion functions menu."
-  ["Conversions"
-   ("d" "To Degrees" calc-to-degrees :transient nil)
-   ("r" "To Radians" calc-to-radians :transient nil)
-   ("h" "To HMS" calc-to-hms :transient nil)
-   ("f" "To Float" calc-float :transient nil)
-   ("F" "To Fraction" calc-fraction :transient nil)]
-  [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
-          (casual-calc-undo-suffix)])
 
-(provide 'casual-calc-conversion)
-;;; casual-calc-conversion.el ends here
+(provide 'test-casual-calc-utils)
+;;; test-casual-calc-utils.el ends here
