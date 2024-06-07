@@ -28,6 +28,7 @@
 (require 'casual-calc-labels)
 (require 'casual-calc-version)
 (require 'casual-calc-angle-measure)
+(require 'casual-calc-utils)
 
 ;; = Menus =
 (transient-define-prefix casual-calc-modes-tmenu ()
@@ -109,10 +110,10 @@
 
   [""
    :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
    ("v" "Version" casual-calc-version :transient nil)
-   ("M-a" "About" casual-calc-about :transient nil)])
+   ("M-a" "About" casual-calc-about :transient nil)
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)])
 
 (transient-define-prefix casual-calc-complex-format-tmenu ()
   "Casual complex formats menu."
@@ -132,9 +133,9 @@
     :description "𝑗 notation"
     :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 
 (transient-define-prefix casual-calc-float-format-tmenu ()
@@ -145,9 +146,9 @@
    ("s" "Scientific" calc-sci-notation :transient nil)
    ("e" "Engineering" calc-eng-notation :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 
 ;; = Functions =

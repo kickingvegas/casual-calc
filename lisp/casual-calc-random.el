@@ -26,6 +26,7 @@
 (require 'calc)
 (require 'calc-comb)
 (require 'transient)
+(require 'casual-calc-utils)
 
 (defun casual-calc--random-interval-0-to-m ()
   "Generate natural random number [0..m)."
@@ -50,9 +51,9 @@
 
   [("a" "Random number again" calc-random-again :transient t)]
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 
 (provide 'casual-calc-random)

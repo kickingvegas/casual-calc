@@ -27,6 +27,7 @@
 (require 'calc-ext)
 (require 'transient)
 (require 'casual-calc-stack)
+(require 'casual-calc-utils)
 
 (transient-define-prefix casual-calc-financial-tmenu ()
   "Casual financial menu.
@@ -57,9 +58,9 @@
    ("d" "Depreciation" casual-calc-fin-depreciation-tmenu :transient nil)]
 
   ["" :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
-   ("U" "Undo Stack" calc-undo :transient t)])
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)
+   (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-npv-tmenu ()
   "Casual menu to calculate net present value.
@@ -73,9 +74,9 @@
   [("n" "Net Present Value (1:)" casual-calc--fin-npv :transient nil)]
 
   ["" :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
-   ("U" "Undo Stack" calc-undo :transient t)])
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)
+   (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-pv-fv-tmenu ()
   "Casual menu for periodic present or future value functions.
@@ -101,9 +102,9 @@
     ("P" "Lump Sum" casual-calc--fin-pv-lump :transient t)]
 
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-periodic-payments-tmenu ()
   "Casual periodic payments menu.
@@ -120,9 +121,9 @@
     ("p" "Payment" casual-calc--fin-periodic-payment :transient t)]
 
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-number-of-payments-tmenu ()
   "Casual periodic payments menu.
@@ -139,9 +140,9 @@
     ("n" "Number of Payments" casual-calc--fin-number-of-payments :transient t)]
 
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-rate-of-return-tmenu ()
   "Casual rate of return menu.
@@ -159,9 +160,9 @@
    ("r" "Where payment made at end of period" casual-calc--fin-rate-of-return :transient t)]
 
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-irr-tmenu ()
   "Casual internal rate of return menu.
@@ -174,9 +175,9 @@
   [("i" "Internal Rate of Return (1:)" casual-calc--fin-irr :transient nil)]
 
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-periods-to-target-tmenu ()
   "Casual periods to target menu.
@@ -193,9 +194,9 @@
    ("n" "Periods" casual-calc--fin-periods-to-reach-target :transient t)]
 
   ["" :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
-   ("U" "Undo Stack" calc-undo :transient t)])
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)
+   (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-depreciation-tmenu ()
   "Casual depreciation menu.
@@ -217,9 +218,9 @@
    ("3" "Double Declining Balance (c, s, l, p)" casual-calc--fin-depreciation-double-declining-balance :transient t)]
 
   ["" :class transient-row
-   ("C-g" "‹Back" ignore :transient transient--do-return)
-   ("q" "Dismiss" ignore :transient transient--do-exit)
-   ("U" "Undo Stack" calc-undo :transient t)])
+   (casual-calc-quit-one)
+   (casual-calc-quit-all)
+   (casual-calc-undo-suffix)])
 
 ;; Wrapped Functions -----
 

@@ -27,6 +27,7 @@
 (require 'transient)
 (require 'casual-calc-labels)
 (require 'casual-calc--calc)
+(require 'casual-calc-utils)
 
 (transient-define-prefix casual-calc-variable-crud-tmenu ()
   "Stored variable operations menu.
@@ -43,9 +44,9 @@ menu."
    ("O" "Open Calc Settings File" casual-calc-open-settings-file :transient nil)
    ("i" "Insert variables into buffer…" casual-calc--calc-insert-variables :transient t)]
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (provide 'casual-calc-variables)
 ;;; casual-calc-variables.el ends here
