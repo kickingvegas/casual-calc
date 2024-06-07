@@ -50,9 +50,9 @@
      :transient nil)]]
   [("h" "Hyperbolic›" casual-calc-hyperbolic-trig-tmenu :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-leave)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-hyperbolic-trig-tmenu ()
   "Casual hyperbolic trigonometric functions menu."
@@ -65,9 +65,9 @@
     ("C" "arccosh" calc-arccosh :transient nil)
     ("T" "arctanh" calc-arctanh :transient nil)]]
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-leave)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 
 (provide 'casual-calc-trigonometric)

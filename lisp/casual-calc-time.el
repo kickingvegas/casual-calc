@@ -25,6 +25,7 @@
 ;;; Code:
 (require 'calc)
 (require 'transient)
+(require 'casual-calc-utils)
 
 (transient-define-prefix casual-calc-time-tmenu ()
   "Casual time functions menu."
@@ -36,9 +37,9 @@
    ("+" "Add Business Days" calc-business-days-plus :transient nil)
    ("-" "Subtract Business Days" calc-business-days-minus :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-first-day-tmenu ()
   "Casual time first day of menu."
@@ -47,9 +48,9 @@
    ("m" "Month" calc-new-month :transient nil)
    ("y" "Year" calc-new-year :transient nil)]
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (provide 'casual-calc-time)
 ;;; casual-calc-time.el ends here

@@ -28,6 +28,7 @@
 (require 'calc-math) ; needed to reference some symbols not loaded in `calc'.
 (require 'transient)
 (require 'casual-calc-fileio)
+(require 'casual-calc-utils)
 
 ;; Push Example Functions
 (defun casual-calc--push-natural-interval-0-100 ()
@@ -371,9 +372,9 @@ This string name is used in the canvas legend (key)."
    ("E" "Examples›" casual-calc-graph-examples-tmenu :transient nil)]
    ;;("v" "Vector/Matrix›" casual-calc-vector-tmenu :transient nil)
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-plot-options-tmenu ()
   "Casual plot options menu."
@@ -405,9 +406,9 @@ This string name is used in the canvas legend (key)."
     ("1" "Toggle 𝑥" casual-calc--graph-zero-x :transient t); refactor to new menu
     ("2" "Toggle 𝑦" casual-calc--graph-zero-y :transient t)]]
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-graph-examples-tmenu ()
   "Menu of plot examples."
@@ -441,9 +442,9 @@ This string name is used in the canvas legend (key)."
     ("7" "𝑥³ + 𝑥² + 𝟣" casual-calc--push-polynomial-order-3 :transient t)]]
 
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)
-          ("U" "Undo Stack" calc-undo :transient t)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)
+          (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-graph-settings-tmenu ()
   "Graphics settings menu."
@@ -457,8 +458,8 @@ This string name is used in the canvas legend (key)."
     ("Q" "Quit Gnuplot Session" calc-graph-quit :transient nil)
    ]
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)])
 
 (transient-define-prefix casual-calc-curve-style-tmenu ()
   "Style curve menu."
@@ -468,8 +469,8 @@ This string name is used in the canvas legend (key)."
    ["Point"
     ("p" "Toggle Point" casual-calc--graph-toggle-point-style :transient t)]]
   [:class transient-row
-          ("C-g" "‹Back" ignore :transient transient--do-return)
-          ("q" "Dismiss" ignore :transient transient--do-exit)])
+          (casual-calc-quit-one)
+          (casual-calc-quit-all)])
 
 
 ;; (transient-define-prefix casual-calc-curve-style-tmenu ()
@@ -487,9 +488,9 @@ This string name is used in the canvas legend (key)."
 ;;    ]
 
 ;;   [:class transient-row
-;;           ("C-g" "‹Back" ignore :transient transient--do-return)
-;;           ("q" "Dismiss" ignore :transient transient--do-exit)
-;;           ("U" "Undo Stack" calc-undo :transient t)])
+;;           (casual-calc-quit-one)
+;;           (casual-calc-quit-all)
+;;           (casual-calc-undo-suffix)])
 
 (provide 'casual-calc-graphics)
 ;;; casual-calc-graphics.el ends here
