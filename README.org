@@ -2,7 +2,7 @@
 * Casual Calc
 An opinionated [[https://github.com/magit/transient][Transient]]-based porcelain to support the casual usage of Emacs [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][Calc]].
 
-[[file:docs/images/casual-main-menu.png]]
+[[file:docs/images/casual-calc-tmenu.png]]
 
 * Motivation
 While Emacs Calc has an embarrassingly rich feature set, for many users this capability is inaccessible due the overwhelming number of keybindings used to access them. These keybindings have a steep learning curve that is quickly lost if not in constant use.
@@ -16,33 +16,34 @@ Menus are a user interface (UI) affordance that offer users discoverability and 
 ** Non-Goals
 - Full coverage of all Calc commands. Casual is not intended to be a power user tool.
 - Strict adherence to default Calc keybindings. Calc’s prompt-first interface resulted in a command keybinding design that embeds context in the key sequence (e.g. ~v~ for vector, ~b~ for binary). Hierarchical menus make this context implicit, allowing for key reuse in different contexts.
-- Strict adherence to Calc command naming. While Casual is mostly in alignment with Calc’s command naming, there are cases where it will make an opinionated change if  the name is deemed too vague or idiomatic.
-- UX Stability (for now). Given that Casual is early in its life-cycle, expect changes to its user experience in terms of menu hierarchy and keybinding choices in future releases.
+- Strict adherence to Calc command naming. While Casual Calc is mostly in alignment with Calc’s command naming, there are cases where it will make an opinionated change if  the name is deemed too vague or idiomatic.
+- UX Stability (for now). Given that Casual Calc is early in its life-cycle, expect changes to its user experience in terms of menu hierarchy and keybinding choices in future releases.
 
 * Asks
-As Casual is new, we are looking for early adopters! Your [[https://github.com/kickingvegas/Casual/issues][feedback]] is welcome as it will likely impact Casual's evolution, particularly with regards to UI.
+As Casual Calc is new, we are looking for early adopters! Your [[https://github.com/kickingvegas/casual-calc/issues][feedback]] is welcome as it will likely impact Casual's evolution, particularly with regards to UI.
 
 * Install
-Casual is available on [[https://melpa.org/#/casual][MELPA]].
+Casual Calc is available on [[https://melpa.org/#/casual-calc][MELPA]].
 
 If installed via ~list-packages~ then add this line to your Emacs initialization file.
 #+begin_src elisp :lexical no
-  (require 'casual) ;; optional
-  (define-key calc-mode-map (kbd "C-o") #'casual-calc-tmenu)
+  (require 'casual-calc) ;; optional
+  (keymap-set calc-mode-map "C-o" #'casual-calc-tmenu)
+  (keymap-set calc-alg-map "C-o" #'casual-calc-tmenu)
 #+end_src
 
 If you use ~use-package~, here is the recipe for installing it.
 #+begin_src elisp :lexical no
-  (use-package casual
+  (use-package casual-calc
     :ensure t
     :bind (:map calc-mode-map ("C-o" . #'casual-calc-tmenu)))
 #+end_src
 
-Casual requires Emacs 29.1+.
+Casual Calc requires Emacs 29.1+.
 
 * Usage
 1. Invoke ~M-x calc~ to launch Calc.
-2. When the point is in the Calc window, invoke ~C-o~ (or a binding of your choosing) to launch the Casual menu.
+2. When the point is in the Calc window, invoke ~C-o~ (or a binding of your choosing) to launch the Casual Calc menu.
 
 * Common Menu Actions
 Casual Calc is built using Transient menus and as such adopts much of its default behavior.
@@ -93,7 +94,7 @@ It helps to know some basics about Calc.
 For users who wish to help contribute to Casual Calc or personally customize it for their own usage, please read the [[docs/developer.org][developer documentation]].
 
 * Sponsorship
-If you enjoy using Casual, consider making a modest financial contribution to help support its development and maintenance.
+If you enjoy using Casual Calc, consider making a modest financial contribution to help support its development and maintenance.
 
 [[https://www.buymeacoffee.com/kickingvegas][file:docs/images/default-yellow.png]]
 
@@ -103,7 +104,7 @@ If you like Casual Calc, these other Emacs packages might interest you:
 - [[https://github.com/kickingvegas/casual-dired][Casual Dired]] - an opinionated Transient porcelain for the file manager Dired.
 - [[https://github.com/kickingvegas/casual-info][Casual Info]] - an opinionated Transient porcelain for the Info reader.
 - [[https://github.com/kickingvegas/casual-avy][Casual Avy]] - an opinionated Transient porcelain for Avy, a package for jumping to visible text using a char-based decision tree.
-- [[https://github.com/kickingvegas/cc-isearch-menu][cc-isearch-menu]] - A Transient menu for I-Search.
+- [[https://github.com/kickingvegas/casual-isearch][Casual I-Search]] - A Transient menu for I-Search.
 
 * Acknowledgments
 A heartfelt thanks to all the contributors to Calc and Transit. Casual would not be possible without your efforts.

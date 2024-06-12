@@ -43,7 +43,7 @@
 #   $ make new-sprint
 
 CASUAL_LISP_DIR=./lisp
-CASUAL_EL=$(CASUAL_LISP_DIR)/casual.el
+CASUAL_EL=$(CASUAL_LISP_DIR)/casual-calc.el
 CASUAL_VERSION_EL=$(CASUAL_LISP_DIR)/casual-calc-version.el
 
 TIMESTAMP := $(shell /bin/date "+%Y%m%d_%H%M%S")

@@ -1,9 +1,9 @@
-;;; casual.el --- Transient UI for Calc              -*- lexical-binding: t; -*-
+;;; casual-calc.el --- Transient UI for Calc              -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024  Charles Choi
 
 ;; Author: Charles Choi <kickingvegas@gmail.com>
-;; URL: https://github.com/kickingvegas/casual
+;; URL: https://github.com/kickingvegas/casual-calc
 ;; Keywords: tools
 ;; Version: 1.7.0
 ;; Package-Requires: ((emacs "29.1"))
@@ -26,8 +26,9 @@
 ;; Casual Calc is an opinionated Transient-based porcelain for Emacs Calc.
 
 ;; INSTALLATION
-;; (require 'casual)
-;; (define-key calc-mode-map (kbd "C-o") #'casual-calc-tmenu)
+;; (require 'casual-calc)
+;; (keymap-set calc-mode-map "C-o" #'casual-calc-tmenu)
+;; (keymap-set calc-alg-map "C-o" #'casual-calc-tmenu)
 
 ;;; Code:
 
@@ -56,7 +57,7 @@
 (require 'casual-calc-variables)
 
 ;; Menus
-;;;###autoload (autoload 'casual-calc-tmenu "casual" nil t)
+;;;###autoload (autoload 'casual-calc-tmenu "casual-calc" nil t)
 (transient-define-prefix casual-calc-tmenu ()
   "Casual main menu."
   [["Casual"
@@ -114,18 +115,5 @@
           (casual-calc-undo-suffix)
           ("q" "Quit Calc" calc-quit)])
 
-;;;###autoload (autoload 'casual-main-menu "casual" nil t)
-(transient-define-prefix casual-main-menu ()
-  "OBSOLETE: Use `casual-calc-tmenu' instead."
-
-  [:class transient-row
-          ;; Note: no need to C-g for main menu
-          (casual-calc-quit-all)
-          (casual-calc-undo-suffix)])
-
-(define-obsolete-function-alias #'casual-main-menu #'casual-calc-tmenu
-  "v1.6.0"
-  "Naming changed to conform with Casual Suite.")
-
-(provide 'casual)
-;;; casual.el ends here
+(provide 'casual-calc)
+;;; casual-calc.el ends here

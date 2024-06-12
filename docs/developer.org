@@ -17,15 +17,16 @@ For source code management, Casual Calc uses ~git~.
 
 Given a clone of this repository, ensure that the directory holding ~casual.el~ is in your ~info-path~. Add the following lines to your Emacs initialization file.
 #+begin_src elisp :lexical no
-  (require 'casual)
-  (define-key calc-mode-map (kbd "C-o") #'casual-calc-tmenu)
+  (require 'casual-calc)
+  (keymap-set calc-mode-map "C-o" #'casual-calc-tmenu)
+  (keymap-set calc-alg-map "C-o" #'casual-calc-tmenu)
 #+end_src
 
 * Branches
 For Casual Calc development, there are two git branches of note:
 
-- [[https://github.com/kickingvegas/Casual/tree/main][main]] for releases to the general public.
-- [[https://github.com/kickingvegas/Casual/tree/development][development]] for staging of stable pre-release functionality.
+- [[https://github.com/kickingvegas/casual-calc/tree/main][main]] for releases to the general public.
+- [[https://github.com/kickingvegas/casual-calc/tree/development][development]] for staging of stable pre-release functionality.
 
 Planned changes for the next release are done on feature branches that are merged via pull request into ~development~. Upon QA of ~development~, those changes are merged to ~main~ for release to the general public.
 
@@ -51,7 +52,7 @@ For example, in the ~lisp/~ directory, run this command to exercise all tests fo
 
 Before you submit a pull request (PR):
 
-- If it is a *new* feature, please propose an [[https://github.com/kickingvegas/Casual/issues][enhancement issue]] instead.
+- If it is a *new* feature, please propose an [[https://github.com/kickingvegas/casual-calc/issues][enhancement issue]] instead.
   - Your enhancement issue should be in the form of a products requirement document (PRD).
   - PRs without an approved PRD associated with it will be summarily rejected.
   - Contributing to code development for a PRD requires advance approval from the maintainer. PRs submitted outside of this flow will be rejected.
