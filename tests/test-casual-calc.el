@@ -1,4 +1,4 @@
-;;; test-casual.el --- Tests for casual  -*- lexical-binding: t; -*-
+;;; test-casual-calc.el --- Tests for Casual Calc  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024  Charles Choi
 
@@ -43,7 +43,7 @@
 
 ;;; Code:
 (require 'ert)
-(require 'casual)
+(require 'casual-calc)
 (require 'casual-calc-test-utils)
 
 ;;; Tests
@@ -99,5 +99,5 @@
                (= (calc-top-n 2) 2)))
   (casualt-breakdown t))
 
-(provide 'test-casual)
-;;; test-casual.el ends here
+(provide 'test-casual-calc)
+;;; test-casual-calc.el ends here

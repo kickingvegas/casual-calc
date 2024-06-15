@@ -74,16 +74,16 @@ casual-calc-test-utils.el
 -l $(patsubst %, ../tests/test-%, $<) \
 -f ert-run-tests-batch-and-exit
 
-tests: $(CASUAL_PACKAGES:.el=.elt) $(CASUAL_INCLUDES:.el=.elt) casual.elt
+tests: $(CASUAL_PACKAGES:.el=.elt) $(CASUAL_INCLUDES:.el=.elt) casual-calc.elt
 
-compile: $(CASUAL_PACKAGES:.el=.elc) $(CASUAL_INCLUDES:.el=.elc) casual.elc
+compile: $(CASUAL_PACKAGES:.el=.elc) $(CASUAL_INCLUDES:.el=.elc) casual-calc.elc
 
-casual.elc: casual.el
+casual-calc.elc: casual-calc.el
 	$(EXEC_NAME) -Q --batch $(patsubst %, -l %, $(CASUAL_INCLUDES)) \
 $(patsubst %, -l %, $(CASUAL_PACKAGES)) \
 -f batch-byte-compile $<
 
-casual.elt: casual.el
+casual-calc.elt: casual-calc.el
 	$(EXEC_NAME) -Q --batch \
 $(patsubst %, -l %, $(CASUAL_INCLUDES)) \
 $(patsubst %, -l %, $(CASUAL_PACKAGES)) \
