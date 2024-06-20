@@ -25,6 +25,7 @@
 ;;; Code:
 (require 'calc)
 (require 'transient)
+(require 'casual-lib)
 (require 'casual-calc-labels)
 (require 'casual-calc-utils)
 
@@ -38,8 +39,8 @@
    ("r" "Radians" calc-radians-mode :transient nil)
    ("h" "Degrees-Minutes-Seconds" calc-hms-mode :transient nil)]
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 (provide 'casual-calc-angle-measure)

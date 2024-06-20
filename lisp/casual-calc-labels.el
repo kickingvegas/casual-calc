@@ -102,24 +102,5 @@ If INCLUDE-PRECISION is non-nil, then add precision to label."
         (format "%s %d" mode precision)
       (format "%s" mode))))
 
-(defun casual-calc--variable-to-checkbox (v)
-  "Checkbox string representation of variable V.
-V is either nil or non-nil."
-  (if (display-graphic-p)
-      (if v "☑︎" "◻︎")
-    (if v "[x]" "[ ]")))
-
-(defun casual-calc--prefix-label (label prefix)
-  "Label constructed with PREFIX and LABEL separated by a space."
-  (format "%s %s" prefix label))
-
-(defun casual-calc--suffix-label (label suffix)
-  "Label constructed with LABEL and SUFFIX separated by a space."
-  (format "%s %s" label suffix))
-
-(defun casual-calc--checkbox-label (v label)
-  "Casual checkbox label using variable V and LABEL."
-  (casual-calc--prefix-label label (casual-calc--variable-to-checkbox v)))
-
 (provide 'casual-calc-labels)
 ;;; casual-calc-labels.el ends here

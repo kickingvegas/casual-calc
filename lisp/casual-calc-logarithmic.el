@@ -25,6 +25,7 @@
 ;;; Code:
 (require 'calc)
 (require 'transient)
+(require 'casual-lib)
 (require 'casual-calc-utils)
 
 (transient-define-prefix casual-calc-logarithmic-tmenu ()
@@ -37,8 +38,8 @@
     ("M-l" "𝑙𝑜𝑔" calc-log :transient nil)
     ("M-e" "𝑒^𝑥 - 𝟣" calc-expm1 :transient nil)]
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 (provide 'casual-calc-logarithmic)

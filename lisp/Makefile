@@ -25,21 +25,23 @@ else
   EXEC_NAME=emacs
 endif
 
-CASUAL_INCLUDES =					\
-casual-calc-utils.el					\
-casual-calc--calc.el					\
-casual-calc-algebra.el					\
-casual-calc-predicates.el				\
-casual-calc-labels.el					\
-casual-calc-fileio.el					\
-casual-calc-radix.el					\
-casual-calc-angle-measure.el				\
-casual-calc-stack.el					\
-casual-calc-variables.el				\
-casual-calc-graphics.el					\
+PACKAGE_NAME=casual-calc
+
+ELISP_INCLUDES =				\
+casual-calc-utils.el				\
+casual-calc--calc.el				\
+casual-calc-algebra.el				\
+casual-calc-predicates.el			\
+casual-calc-labels.el				\
+casual-calc-fileio.el				\
+casual-calc-radix.el				\
+casual-calc-angle-measure.el			\
+casual-calc-stack.el				\
+casual-calc-variables.el			\
+casual-calc-graphics.el				\
 casual-calc-version.el
 
-CASUAL_PACKAGES=				\
+ELISP_PACKAGES=					\
 casual-calc-binary.el				\
 casual-calc-complex.el				\
 casual-calc-conversion.el			\
@@ -56,40 +58,52 @@ casual-calc-vector.el				\
 casual-calc-financial.el			\
 casual-calc-symbolic.el
 
-CASUAL_TEST_INCLUDES= \
-casual-calc-test-utils.el
+ELISP_TEST_INCLUDES=casual-calc-test-utils.el
+
+CASUAL_BASE_DIR=$(HOME)/Projects/elisp
+CASUAL_LIB_DIR=$(CASUAL_BASE_DIR)/casual-lib
+CASUAL_LIB_LISP_DIR=$(CASUAL_LIB_DIR)/lisp
+CASUAL_LIB_TEST_INCLUDES=$(CASUAL_LIB_DIR)/tests/casual-lib-test-utils.el
+EMACS_CONFIG_DIR=$(HOME)/.config/emacs
+PACKAGE_PATHS=-L $(CASUAL_LIB_LISP_DIR)
 
 .PHONY: tests compile regression
 
 .SUFFIXES: .el .elc .elt
 
 .el.elc :
-	$(EXEC_NAME) -Q --batch $(patsubst %, -l %, $(CASUAL_INCLUDES)) \
+	$(EXEC_NAME) -Q --batch $(patsubst %, -l %, $(ELISP_INCLUDES)) \
 -f batch-byte-compile $<
 
 .el.elt :
-	$(EXEC_NAME) -Q --batch $(patsubst %, -l %, $(CASUAL_INCLUDES)) \
--l $< \
--l $(patsubst %, ../tests/%, $(CASUAL_TEST_INCLUDES)) \
--l $(patsubst %, ../tests/test-%, $<) \
+	$(EXEC_NAME) -Q --batch				\
+$(PACKAGE_PATHS)					\
+$(patsubst %, -l %, $(ELISP_INCLUDES))			\
+-l $<							\
+-l $(CASUAL_LIB_TEST_INCLUDES)				\
+-l $(patsubst %, ../tests/%, $(ELISP_TEST_INCLUDES))	\
+-l $(patsubst %, ../tests/test-%, $<)			\
 -f ert-run-tests-batch-and-exit
 
-tests: $(CASUAL_PACKAGES:.el=.elt) $(CASUAL_INCLUDES:.el=.elt) casual-calc.elt
+tests: $(ELISP_PACKAGES:.el=.elt) $(ELISP_INCLUDES:.el=.elt) $(PACKAGE_NAME).elt
 
-compile: $(CASUAL_PACKAGES:.el=.elc) $(CASUAL_INCLUDES:.el=.elc) casual-calc.elc
+compile: $(ELISP_PACKAGES:.el=.elc) $(ELISP_INCLUDES:.el=.elc) $(PACKAGE_NAME).elc
 
-casual-calc.elc: casual-calc.el
-	$(EXEC_NAME) -Q --batch $(patsubst %, -l %, $(CASUAL_INCLUDES)) \
-$(patsubst %, -l %, $(CASUAL_PACKAGES)) \
+$(PACKAGE_NAME).elc: $(PACKAGE_NAME).el
+	$(EXEC_NAME) -Q --batch $(patsubst %, -l %, $(ELISP_INCLUDES))	\
+$(patsubst %, -l %, $(ELISP_PACKAGES))					\
+$(PACKAGE_PATHS)							\
 -f batch-byte-compile $<
 
-casual-calc.elt: casual-calc.el
-	$(EXEC_NAME) -Q --batch \
-$(patsubst %, -l %, $(CASUAL_INCLUDES)) \
-$(patsubst %, -l %, $(CASUAL_PACKAGES)) \
--l $< \
--l ../tests/casual-calc-test-utils.el \
--l $(patsubst %, ../tests/test-%, $<) \
+$(PACKAGE_NAME).elt: $(PACKAGE_NAME).el
+	$(EXEC_NAME) -Q --batch			\
+$(PACKAGE_PATHS)				\
+$(patsubst %, -l %, $(ELISP_INCLUDES))		\
+$(patsubst %, -l %, $(ELISP_PACKAGES))		\
+-l $<						\
+-l $(CASUAL_LIB_TEST_INCLUDES)			\
+-l ../tests/$(ELISP_TEST_INCLUDES)		\
+-l $(patsubst %, ../tests/test-%, $<)		\
 -f ert-run-tests-batch-and-exit
 
 regression: clean compile tests
