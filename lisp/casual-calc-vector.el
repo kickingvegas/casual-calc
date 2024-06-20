@@ -25,6 +25,7 @@
 ;;; Code:
 (require 'calc)
 (require 'transient)
+(require 'casual-lib)
 (require 'casual-calc-predicates)
 (require 'casual-calc-utils)
 
@@ -53,8 +54,8 @@
     ("u" "Unpack" calc-unpack :transient nil)]]
 
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-vector-building-tmenu ()
@@ -81,8 +82,8 @@
     ("f" "Vector Find (𝟣:)" calc-vector-find :transient nil)
     ("h" "Histogram" calc-histogram :transient nil)]]
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-vector-arithmetic-tmenu ()
@@ -100,8 +101,8 @@
     ("l" "LU Decomposition" calc-mlud :inapt-if-not casual-calc-square-matrixp :transient nil)
     ("T" "Trace" calc-mtrace :inapt-if-not casual-calc-square-matrixp :transient nil)]]
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 ;; TODO: add Transient prefix arguments n
@@ -131,8 +132,8 @@
     ("6" "Population Covariance" calc-vector-pop-covariance :transient nil)
     ("7" "Correlation" calc-vector-correlation :transient nil)]]
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-set-operations-tmenu ()
@@ -146,8 +147,8 @@
     ("~" "Complement" calc-set-complement :transient nil)
     ("#" "Cardinality" calc-set-cardinality :transient nil)]
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-map-and-reduce-tmenu ()
@@ -158,8 +159,8 @@
    ("a" "apply" calc-apply :transient nil)
    ("A" "accumulate" calc-accumulate :transient nil)]
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 ;;; Wrapped Functions

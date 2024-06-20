@@ -126,22 +126,5 @@
   (should (equal (casual-calc-float-format-label) "Normal"))
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc--prefix-label ()
-  (should (equal (casual-calc--prefix-label "fred" "jane")
-                 "jane fred")))
-
-(ert-deftest test-casual-calc--suffix-label ()
-  (should (equal (casual-calc--suffix-label "fred" "jane")
-                 "fred jane")))
-
-(ert-deftest test-casual-calc--checkbox-label ()
-  (let ((var t))
-    (should (equal (casual-calc--checkbox-label var "mary")
-                   "[x] mary"))
-    (setq var nil)
-    (should (equal (casual-calc--checkbox-label var "min")
-                   "[ ] min"))))
-
-
 (provide 'test-casual-calc-labels)
 ;;; test-casual-calc-labels.el ends here
