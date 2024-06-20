@@ -25,6 +25,7 @@
 ;;; Code:
 (require 'calc)
 (require 'transient)
+(require 'casual-lib)
 (require 'casual-calc-labels)
 (require 'casual-calc-version)
 (require 'casual-calc-angle-measure)
@@ -37,12 +38,12 @@
     :pad-keys t
     ("A" calc-algebraic-mode
      :description (lambda ()
-                    (casual-calc--checkbox-label calc-algebraic-mode
-                                            "Algebraic Mode"))
+                    (casual-lib-checkbox-label calc-algebraic-mode
+                                               "Algebraic Mode"))
      :transient t)
     ("z" "Leading Zeroes" calc-leading-zeros
      :description (lambda ()
-                    (casual-calc--checkbox-label calc-leading-zeros
+                    (casual-lib-checkbox-label calc-leading-zeros
                                             "Leading Zeroes"))
      :transient t)
 
@@ -61,7 +62,7 @@
      :transient t)
     ("I" "Infinite Mode" casual-calc--calc-infinite-mode
      :description (lambda ()
-                    (casual-calc--checkbox-label calc-infinite-mode
+                    (casual-lib-checkbox-label calc-infinite-mode
                                             "Infinite Mode"))
      :transient t)]
 
@@ -85,7 +86,7 @@
     ("g" calc-group-digits
      ;; TODO calc-group-digits can actually be an int 😦
      :description (lambda ()
-                    (casual-calc--checkbox-label calc-group-digits
+                    (casual-lib-checkbox-label calc-group-digits
                                             "Show Thousands Separators"))
      :transient t)
     ("," "Thousands Separator…" calc-group-char
@@ -106,14 +107,20 @@
    ["Settings"
     ("S" "Save Calc Settings" calc-save-modes :transient t)
     ("O" "Open Calc Settings File" casual-calc-open-settings-file :transient nil)
-    ("C-M-r" "Calc Reset" calc-reset :transient t)]]
+    ("C-M-r" "Calc Reset" calc-reset :transient t)
+    ("u" "Use Unicode Symbols"
+     casual-lib-customize-casual-lib-use-unicode
+     :description (lambda ()
+                    (casual-lib-checkbox-label
+                     casual-lib-use-unicode
+                     "Use Unicode Symbols")))]]
 
   [""
    :class transient-row
+   (casual-lib-quit-one)
    ("v" "Version" casual-calc-version :transient nil)
    ("M-a" "About" casual-calc-about :transient nil)
-   (casual-calc-quit-one)
-   (casual-calc-quit-all)])
+   (casual-lib-quit-all)])
 
 (transient-define-prefix casual-calc-complex-format-tmenu ()
   "Casual complex formats menu."
@@ -133,8 +140,8 @@
     :description "𝑗 notation"
     :transient nil)]
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 
@@ -146,10 +153,9 @@
    ("s" "Scientific" calc-sci-notation :transient nil)
    ("e" "Engineering" calc-eng-notation :transient nil)]
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
-
 
 ;; = Functions =
 (defun casual-calc-about-casual ()

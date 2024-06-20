@@ -26,6 +26,7 @@
 (require 'calc)
 (require 'calc-comb)
 (require 'transient)
+(require 'casual-lib)
 (require 'casual-calc-utils)
 
 (defun casual-calc--random-interval-0-to-m ()
@@ -51,8 +52,8 @@
 
   [("a" "Random number again" calc-random-again :transient t)]
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 

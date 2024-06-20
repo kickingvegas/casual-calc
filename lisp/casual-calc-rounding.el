@@ -25,6 +25,7 @@
 ;;; Code:
 (require 'calc)
 (require 'transient)
+(require 'casual-lib)
 (require 'casual-calc-utils)
 
 (transient-define-prefix casual-calc-rounding-tmenu ()
@@ -35,8 +36,8 @@
    ("c" "Ceiling" calc-ceiling :transient nil)
    ("t" "Truncate" calc-trunc :transient nil)]
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 (provide 'casual-calc-rounding)

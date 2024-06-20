@@ -25,24 +25,9 @@
 ;;; Code:
 (require 'calc)
 (require 'transient)
+(require 'casual-lib)
 
 ;; Transient Navigation
-(transient-define-suffix casual-calc-quit-all ()
-  "Dismiss all menus."
-  :transient nil
-  :key "C-q"
-  :description "Dismiss"
-  (interactive)
-  (transient-quit-all))
-
-(transient-define-suffix casual-calc-quit-one ()
-  "Go back to previous menu."
-  :transient nil
-  :key "C-g"
-  :description "‹Back"
-  (interactive)
-  (transient-quit-one))
-
 (transient-define-suffix casual-calc-undo-suffix ()
   "Undo stack."
   :transient t

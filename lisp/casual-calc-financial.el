@@ -26,6 +26,7 @@
 (require 'calc)
 (require 'calc-ext)
 (require 'transient)
+(require 'casual-lib)
 (require 'casual-calc-stack)
 (require 'casual-calc-utils)
 
@@ -58,8 +59,8 @@
    ("d" "Depreciation" casual-calc-fin-depreciation-tmenu :transient nil)]
 
   ["" :class transient-row
-   (casual-calc-quit-one)
-   (casual-calc-quit-all)
+   (casual-lib-quit-one)
+   (casual-lib-quit-all)
    (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-npv-tmenu ()
@@ -74,8 +75,8 @@
   [("n" "Net Present Value (1:)" casual-calc--fin-npv :transient nil)]
 
   ["" :class transient-row
-   (casual-calc-quit-one)
-   (casual-calc-quit-all)
+   (casual-lib-quit-one)
+   (casual-lib-quit-all)
    (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-pv-fv-tmenu ()
@@ -102,8 +103,8 @@
     ("P" "Lump Sum" casual-calc--fin-pv-lump :transient t)]
 
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-periodic-payments-tmenu ()
@@ -121,8 +122,8 @@
     ("p" "Payment" casual-calc--fin-periodic-payment :transient t)]
 
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-number-of-payments-tmenu ()
@@ -140,8 +141,8 @@
     ("n" "Number of Payments" casual-calc--fin-number-of-payments :transient t)]
 
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-rate-of-return-tmenu ()
@@ -160,8 +161,8 @@
    ("r" "Where payment made at end of period" casual-calc--fin-rate-of-return :transient t)]
 
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-irr-tmenu ()
@@ -175,8 +176,8 @@
   [("i" "Internal Rate of Return (1:)" casual-calc--fin-irr :transient nil)]
 
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-periods-to-target-tmenu ()
@@ -194,8 +195,8 @@
    ("n" "Periods" casual-calc--fin-periods-to-reach-target :transient t)]
 
   ["" :class transient-row
-   (casual-calc-quit-one)
-   (casual-calc-quit-all)
+   (casual-lib-quit-one)
+   (casual-lib-quit-all)
    (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-fin-depreciation-tmenu ()
@@ -218,8 +219,8 @@
    ("3" "Double Declining Balance (c, s, l, p)" casual-calc--fin-depreciation-double-declining-balance :transient t)]
 
   ["" :class transient-row
-   (casual-calc-quit-one)
-   (casual-calc-quit-all)
+   (casual-lib-quit-one)
+   (casual-lib-quit-all)
    (casual-calc-undo-suffix)])
 
 ;; Wrapped Functions -----

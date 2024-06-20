@@ -25,6 +25,7 @@
 ;;; Code:
 (require 'calc)
 (require 'transient)
+(require 'casual-lib)
 (require 'casual-calc-labels)
 (require 'casual-calc-angle-measure)
 
@@ -50,8 +51,8 @@
      :transient nil)]]
   [("h" "Hyperbolic›" casual-calc-hyperbolic-trig-tmenu :transient nil)]
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 (transient-define-prefix casual-calc-hyperbolic-trig-tmenu ()
@@ -65,8 +66,8 @@
     ("C" "arccosh" calc-arccosh :transient nil)
     ("T" "arctanh" calc-arctanh :transient nil)]]
   [:class transient-row
-          (casual-calc-quit-one)
-          (casual-calc-quit-all)
+          (casual-lib-quit-one)
+          (casual-lib-quit-all)
           (casual-calc-undo-suffix)])
 
 
