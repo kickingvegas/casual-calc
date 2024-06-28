@@ -108,19 +108,14 @@
     ("S" "Save Calc Settings" calc-save-modes :transient t)
     ("O" "Open Calc Settings File" casual-calc-open-settings-file :transient nil)
     ("C-M-r" "Calc Reset" calc-reset :transient t)
-    ("u" "Use Unicode Symbols"
-     casual-lib-customize-casual-lib-use-unicode
-     :description (lambda ()
-                    (casual-lib-checkbox-label
-                     casual-lib-use-unicode
-                     "Use Unicode Symbols")))]]
+    (casual-lib-customize-unicode)
+    (casual-lib-customize-hide-navigation)]]
 
-  [""
-   :class transient-row
-   (casual-lib-quit-one)
-   ("v" "Version" casual-calc-version :transient nil)
-   ("M-a" "About" casual-calc-about :transient nil)
-   (casual-lib-quit-all)])
+  [:class transient-row
+          (casual-lib-quit-one)
+          ("v" "Version" casual-calc-version :transient nil)
+          ("M-a" "About" casual-calc-about :transient nil)
+          (casual-lib-quit-all)])
 
 (transient-define-prefix casual-calc-complex-format-tmenu ()
   "Casual complex formats menu."
