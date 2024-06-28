@@ -194,7 +194,7 @@
   ["Periods to Target"
    ("n" "Periods" casual-calc--fin-periods-to-reach-target :transient t)]
 
-  ["" :class transient-row
+  [:class transient-row
    (casual-lib-quit-one)
    (casual-lib-quit-all)
    (casual-calc-undo-suffix)])
@@ -218,7 +218,7 @@
    ("2" "Sum-of-Years Digits (c, s, l, p)" casual-calc--fin-depreciation-sum-of-years :transient t)
    ("3" "Double Declining Balance (c, s, l, p)" casual-calc--fin-depreciation-double-declining-balance :transient t)]
 
-  ["" :class transient-row
+  [:class transient-row
    (casual-lib-quit-one)
    (casual-lib-quit-all)
    (casual-calc-undo-suffix)])
