@@ -5,8 +5,8 @@
 ;; Author: Charles Choi <kickingvegas@gmail.com>
 ;; URL: https://github.com/kickingvegas/casual-calc
 ;; Keywords: tools
-;; Version: 1.9.0
-;; Package-Requires: ((emacs "29.1") (casual-lib "1.0.0"))
+;; Version: 1.10.0
+;; Package-Requires: ((emacs "29.1") (casual-lib "1.1.0"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -111,8 +111,7 @@
     ("z" "Variables›" casual-calc-variable-crud-tmenu :transient nil)]]
 
   [:class transient-row
-          ;; Note: no need to C-g for main menu
-          (casual-lib-quit-all)
+          (casual-lib-quit-one)
           (casual-calc-undo-suffix)
           ("q" "Quit Calc" calc-quit)])
 
