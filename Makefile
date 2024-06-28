@@ -124,3 +124,6 @@ create-release-tag: checkout-main
 
 create-gh-release: create-release-tag
 	gh release create -t v$(CASUAL_VERSION) --notes-from-tag $(CASUAL_VERSION)
+
+status:
+	git status
