@@ -1,6 +1,6 @@
 [[https://melpa.org/#/casual][file:https://melpa.org/packages/casual-badge.svg]]
 * Casual Calc
-An opinionated [[https://github.com/magit/transient][Transient]]-based porcelain to support the casual usage of Emacs [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][Calc]].
+An opinionated [[https://github.com/magit/transient][Transient]]-based user interface to support the casual usage of Emacs [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][Calc]].
 
 [[file:docs/images/casual-calc-tmenu.png]]
 
@@ -34,16 +34,31 @@ If installed via ~list-packages~ then add this line to your Emacs initialization
 
 If you use ~use-package~, here is the recipe for installing it.
 #+begin_src elisp :lexical no
+  (use-package calc
+    :defer t)
+
   (use-package casual-calc
-    :ensure t
-    :bind (:map calc-mode-map ("C-o" . #'casual-calc-tmenu)))
+    :ensure nil
+    :bind (:map
+           calc-mode-map
+           ("C-o" . casual-calc-tmenu)
+           :map
+           calc-alg-map
+           ("C-o" . casual-calc-tmenu)))
+    :after (calc))
 #+end_src
 
 Casual Calc requires Emacs 29.1+.
 
 * Usage
 1. Invoke ~M-x calc~ to launch Calc.
-2. When the point is in the Calc window, invoke ~C-o~ (or a binding of your choosing) to launch the Casual Calc menu.
+2. When the point is in the Calc window, invoke ~C-o~ (or a binding of your choosing) to launch the Casual Calc interface.
+
+Once raised, the Casual Calc interface can be dismissed via:
+- ~C-g~ to dismiss the current menu.
+- ~C-q~ to dismiss the interface completely.
+
+For nearly all menus, algebraic entry via the ~'~ binding is available, as well as basic calculator operations (addition, subtraction, multiplication, division) and stack operations (pop, enter).
 
 * Common Menu Actions
 Casual Calc is built using Transient menus and as such adopts much of its default behavior.
@@ -58,7 +73,7 @@ Pressing the ~?~ key will toggle help for all the menu items. Press the key of i
 
 Some menus have arguments (example ~--rate=~) which you can set. You can persist these settings by typing ~C-x C-s~.
 
-** Menu item notation
+ Menu item notation
 The following conventions are used to denote menu items.
 
 If the label ends with a ~›~, it is a sub-menu.
@@ -99,12 +114,22 @@ If you enjoy using Casual Calc, consider making a modest financial contribution 
 [[https://www.buymeacoffee.com/kickingvegas][file:docs/images/default-yellow.png]]
 
 * See Also
-If you like Casual Calc, these other Emacs packages might interest you:
+Casual Calc is part of a suite of user interfaces for different Emacs packages.
 
-- [[https://github.com/kickingvegas/casual-dired][Casual Dired]] - an opinionated Transient porcelain for the file manager Dired.
-- [[https://github.com/kickingvegas/casual-info][Casual Info]] - an opinionated Transient porcelain for the Info reader.
-- [[https://github.com/kickingvegas/casual-avy][Casual Avy]] - an opinionated Transient porcelain for Avy, a package for jumping to visible text using a char-based decision tree.
-- [[https://github.com/kickingvegas/casual-isearch][Casual I-Search]] - A Transient menu for I-Search.
+To get all current and future Casual user interfaces, please install [[https://github.com/kickingvegas/casual-suite][Casual Suite]] from [[https://melpa.org/#/casual-suite][MELPA]].
+
+User Interfaces currently supported by Casual are listed below:
+
+- [[https://github.com/kickingvegas/casual-isearch][Casual I-Search]] - a Transient menu for I-Search.
+- [[https://github.com/kickingvegas/casual-dired][Casual Dired]] - a Transient user interface for the Dired file manager.
+- [[https://github.com/kickingvegas/casual-info][Casual Info]] - a Transient user interface for Info.  
+- [[https://github.com/kickingvegas/casual-bookmarks][Casual Bookmarks]] - a Transient user interface for Bookmarks.
+- [[https://github.com/kickingvegas/casual-ibuffer][Casual IBuffer]] - a Transient user interface for IBuffer.
+- [[https://github.com/kickingvegas/casual-re-builder][Casual RE-Builder]] - a Transient user interface for RE-Builder.  
+- [[https://github.com/kickingvegas/casual-avy][Casual Avy]] - a Transient user interface for Avy.
+
+Users who prefer finer grained control over package installation can install each user interface above individually.
+
 
 * Acknowledgments
 A heartfelt thanks to all the contributors to Calc and Transit. Casual would not be possible without your efforts.

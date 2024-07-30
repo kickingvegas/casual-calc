@@ -33,11 +33,11 @@
   "Casual vector and matrix functions top-level menu."
   ["Vector & Matrix Functions (index is 1-offset)\n"
    ["Categories"
-   ("b" "Building›" casual-calc-vector-building-tmenu :transient nil)
-   ("a" "Arithmetic›" casual-calc-vector-arithmetic-tmenu :transient nil)
-   ("s" "Statistics›" casual-calc-statistics-tmenu :transient nil)
-   ("S" "Set Operations›" casual-calc-set-operations-tmenu :transient nil)
-   ("m" "Map, Reduce, Apply›" casual-calc-map-and-reduce-tmenu :transient nil)]
+   ("b" "Building›" casual-calc-vector-building-tmenu)
+   ("a" "Arithmetic›" casual-calc-vector-arithmetic-tmenu)
+   ("s" "Statistics›" casual-calc-statistics-tmenu)
+   ("S" "Set Operations›" casual-calc-set-operations-tmenu)
+   ("m" "Map, Reduce, Apply›" casual-calc-map-and-reduce-tmenu)]
 
    ["Manipulate"
     :pad-keys t
@@ -48,124 +48,116 @@
     ("d" "Deduplicate" calc-remove-duplicates :transient t)]
 
    ["Extract and Pack"
-    ("r" "Extract Row…" calc-mrow :transient nil)
-    ("c" "Extract Column…" calc-mcol :transient nil)
-    ("p" "Pack (𝑛)" calc-pack :transient nil)
-    ("u" "Unpack" calc-unpack :transient nil)]]
+    ("r" "Extract Row…" calc-mrow :transient t)
+    ("c" "Extract Column…" calc-mcol :transient t)
+    ("p" "Pack (𝑛)" calc-pack :transient t)
+    ("u" "Unpack" calc-unpack :transient t)]
 
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+   casual-calc-operators-group]
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-vector-building-tmenu ()
   "Casual vector building functions menu."
   ["Vector Building (index is 1-offset, 𝑛 is a prompt value)\n"
    ["Build"
-    ("|" "Concat" calc-concat :transient nil)
-    ("i" "index (1..𝑛)…" calc-index :transient nil)
-    ("e" "Enumerate Interval" calc-set-enumerate :transient nil)
-    ("I" "Identity 𝑛…" calc-ident :transient nil)
-    ("d" "Diagonal (𝟣:)" calc-diag :transient nil)
-    ("b" "Build Vector 𝑛…" calc-build-vector :transient nil)]
+    ("|" "Concat" calc-concat :transient t)
+    ("i" "index (1..𝑛)…" calc-index :transient t)
+    ("e" "Enumerate Interval" calc-set-enumerate :transient t)
+    ("I" "Identity 𝑛…" calc-ident :transient t)
+    ("d" "Diagonal (𝟣:)" calc-diag :transient t)
+    ("b" "Build Vector 𝑛…" calc-build-vector :transient t)]
 
    ["Manipulate"
-    ("t" "Transpose" calc-transpose :transient nil)
-    ("r" "Reverse" calc-reverse-vector :transient nil)
-    ("a" "Vector Arrange" calc-arrange-vector :transient nil)
-    ("s" "Sort" calc-sort :transient nil)
-    ("p" "Deduplicate" calc-remove-duplicates :transient nil)]
+    ("t" "Transpose" calc-transpose :transient t)
+    ("r" "Reverse" calc-reverse-vector :transient t)
+    ("a" "Vector Arrange" calc-arrange-vector :transient t)
+    ("s" "Sort" calc-sort :transient t)
+    ("p" "Deduplicate" calc-remove-duplicates :transient t)]
 
    ["Miscellaneous"
-    ("l" "Length" calc-vlength :transient nil)
-    ("c" "Vector Count" calc-vector-count :transient nil)
-    ("f" "Vector Find (𝟣:)" calc-vector-find :transient nil)
-    ("h" "Histogram" calc-histogram :transient nil)]]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+    ("l" "Length" calc-vlength :transient t)
+    ("c" "Vector Count" calc-vector-count :transient t)
+    ("f" "Vector Find (𝟣:)" calc-vector-find :transient t)
+    ("h" "Histogram" calc-histogram :transient t)]
+
+   casual-calc-operators-group]
+
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-vector-arithmetic-tmenu ()
   "Casual vector arithmetic functions menu."
   [["Arithmetic (index is 1-offset)\n"
-    ("t" "Conjugate Transpose" calc-conj-transpose :transient nil)
-    ("A" "Frobenius Norm (|𝑛|)" calc-abs :transient nil)
-    ("r" "Row Norm" calc-rnorm :transient nil)
-    ("c" "Column Norm" calc-cnorm :transient nil)
-    ("p" "RH Cross Product" calc-cross :inapt-if-not casual-calc-crossp :transient nil)
-    ("k" "Kronecker Product" calc-kron :inapt-if-not casual-calc-matrixmultp :transient nil)]
+    ("t" "Conjugate Transpose" calc-conj-transpose :transient t)
+    ("A" "Frobenius Norm (|𝑛|)" calc-abs :transient t)
+    ("r" "Row Norm" calc-rnorm :transient t)
+    ("c" "Column Norm" calc-cnorm :transient t)
+    ("p" "RH Cross Product" calc-cross :inapt-if-not casual-calc-crossp :transient t)
+    ("k" "Kronecker Product" calc-kron :inapt-if-not casual-calc-matrixmultp :transient t)]
    ["Square Matrix"
-    ("&" "Inverse" calc-inv :inapt-if-not casual-calc-square-matrixp :transient nil)
-    ("d" "Determinant" calc-mdet :inapt-if-not casual-calc-square-matrixp  :transient nil)
-    ("l" "LU Decomposition" calc-mlud :inapt-if-not casual-calc-square-matrixp :transient nil)
-    ("T" "Trace" calc-mtrace :inapt-if-not casual-calc-square-matrixp :transient nil)]]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+    ("&" "Inverse" calc-inv :inapt-if-not casual-calc-square-matrixp :transient t)
+    ("d" "Determinant" calc-mdet :inapt-if-not casual-calc-square-matrixp  :transient t)
+    ("l" "LU Decomposition" calc-mlud :inapt-if-not casual-calc-square-matrixp :transient t)
+    ("T" "Trace" calc-mtrace :inapt-if-not casual-calc-square-matrixp :transient t)]
+   casual-calc-operators-group]
+
+  casual-calc-navigation-group)
 
 ;; TODO: add Transient prefix arguments n
 (transient-define-prefix casual-calc-statistics-tmenu ()
   "Casual statistic functions menu."
   ["Statistics (index is 1-offset, 𝑛 is 𝟣: on stack)\n"
    ["Mean and Error"
-    ("c" "Vector Count" calc-vector-count :transient nil)
-    ("s" "Sum" calc-vector-sum :transient nil)
-    ("x" "Max" calc-vector-max :transient nil)
-    ("m" "Mean" calc-vector-mean :transient nil)
-    ("h" "Histogram…" casual-calc--calc-histogram :transient nil)
-    ("e" "Mean Error" calc-vector-mean-error :transient nil)
-    ("M" "Median" calc-vector-median :transient nil)
-    ("H" "Harmonic Mean" calc-vector-harmonic-mean :transient nil)
-    ("g" "Geometric Mean" calc-vector-geometric-mean :transient nil)]
+    ("c" "Vector Count" calc-vector-count :transient t)
+    ("s" "Sum" calc-vector-sum :transient t)
+    ("x" "Max" calc-vector-max :transient t)
+    ("m" "Mean" calc-vector-mean :transient t)
+    ("h" "Histogram…" casual-calc--histogram :transient t)
+    ("e" "Mean Error" calc-vector-mean-error :transient t)
+    ("M" "Median" calc-vector-median :transient t)
+    ("H" "Harmonic Mean" calc-vector-harmonic-mean :transient t)
+    ("g" "Geometric Mean" calc-vector-geometric-mean :transient t)]
 
    ["Deviation and Variance"
-    ("r" "Root Mean Square" calc-vector-rms :transient nil)
-    ("1" "Standard Deviation" calc-vector-sdev :transient nil)
-    ("2" "Population Standard Deviation" calc-vector-pop-sdev :transient nil)
-    ("3" "Variance" calc-vector-variance :transient nil)
-    ("4" "Population Variance" calc-vector-pop-variance :transient nil)]
+    ("r" "Root Mean Square" calc-vector-rms :transient t)
+    ("1" "Standard Deviation" calc-vector-sdev :transient t)
+    ("2" "Population Standard Deviation" calc-vector-pop-sdev :transient t)
+    ("3" "Variance" calc-vector-variance :transient t)
+    ("4" "Population Variance" calc-vector-pop-variance :transient t)]
 
    ["Paired-Sample Statistics" ; predicate for two vectors of the same size
-    ("5" "Covariance" calc-vector-covariance :transient nil)
-    ("6" "Population Covariance" calc-vector-pop-covariance :transient nil)
-    ("7" "Correlation" calc-vector-correlation :transient nil)]]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+    ("5" "Covariance" calc-vector-covariance :transient t)
+    ("6" "Population Covariance" calc-vector-pop-covariance :transient t)
+    ("7" "Correlation" calc-vector-correlation :transient t)]
+   casual-calc-operators-group]
+
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-set-operations-tmenu ()
   "Casual set functions menu."
-  ["Set Operations"
-    ("d" "Deduplicate" calc-remove-duplicates :transient nil)
-    ("u" "Union" calc-set-union :transient nil)
-    ("i" "Intersect" calc-set-intersect :transient nil)
-    ("-" "Difference" calc-set-difference :transient nil)
-    ("x" "xor" calc-set-xor :transient nil)
-    ("~" "Complement" calc-set-complement :transient nil)
-    ("#" "Cardinality" calc-set-cardinality :transient nil)]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+  [["Set Operations"
+    ("d" "Deduplicate" calc-remove-duplicates :transient t)
+    ("u" "Union" calc-set-union :transient t)
+    ("i" "Intersect" calc-set-intersect :transient t)
+    ("D" "Difference" calc-set-difference :transient t)
+    ("x" "xor" calc-set-xor :transient t)
+    ("~" "Complement" calc-set-complement :transient t)
+    ("#" "Cardinality" calc-set-cardinality :transient t)]
+   casual-calc-operators-group]
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-map-and-reduce-tmenu ()
   "Casual functional operations (map, reduce, apply) menu."
-  ["Functional Operators"
-   ("m" "map" calc-map :transient nil)
-   ("r" "reduce" calc-reduce :transient nil)
-   ("a" "apply" calc-apply :transient nil)
-   ("A" "accumulate" calc-accumulate :transient nil)]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+  [["Functional Operators"
+   ("m" "map" calc-map :transient t)
+   ("r" "reduce" calc-reduce :transient t)
+   ("a" "apply" calc-apply :transient t)
+   ("A" "accumulate" calc-accumulate :transient t)]
+   casual-calc-operators-group]
+  casual-calc-navigation-group)
 
 ;;; Wrapped Functions
 
-(defun casual-calc--calc-histogram ()
+(defun casual-calc--histogram ()
   "Build histogram of (1:).
 \nGiven a vector data set in (1:), this command will prompt the
 user for a bin specification vector, where each element of the

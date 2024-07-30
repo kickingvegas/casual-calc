@@ -26,6 +26,5 @@
 (require 'ert)
 (require 'casual-calc-test-utils)
 
-
 (provide 'test-casual-calc-utils)
 ;;; test-casual-calc-utils.el ends here

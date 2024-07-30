@@ -29,28 +29,38 @@
 
 (ert-deftest test-casual-calc-time-tmenu ()
   (casualt-setup)
-  (casualt-run-menu-assert-testcases
-   'casual-calc-time-tmenu
-   '(("n" () (lambda () (should (math-floatp (calc-top)))))))
-
-  (casualt-run-menu-input-testcases
-   'casual-calc-time-tmenu
-   '(("i" ((date (float 738944382662 -6))) (date (float 738973382662 -6)))
-     ("u" ((date (float 738973382662 -6))) 1711642262)
-     ("+" ((date (float 738973382662 -6)) 14) (date (float 738993382662 -6)))
-     ("-" ((date (float 738973382662 -6)) 14) (date (float 738953382662 -6)))))
-
-  (casualt-breakdown t))
+  (cl-letf
+      (((symbol-function #'calc-now) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-inc-month) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-unix-time) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-business-days-plus) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-business-days-minus) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("n" . calc-now)
+                           ("f" . casual-calc-first-day-tmenu)
+                           ("i" . calc-inc-month)
+                           ("u" . calc-unix-time)
+                           ("a" . calc-business-days-plus)
+                           ("s" . calc-business-days-minus)))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-time-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
 
 (ert-deftest test-casual-calc-first-day-tmenu ()
   (casualt-setup)
-  (casualt-run-menu-input-testcases
-   'casual-calc-first-day-tmenu
-   '(("w" ((date (float 738953382662 -6))) (date 738948))
-     ("m" ((date (float 738953382662 -6))) (date 738946))
-     ("y" ((date (float 738953382662 -6))) (date 738886))))
-  (casualt-breakdown t))
-
+  (cl-letf
+      (((symbol-function #'calc-new-week) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-new-month) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-new-year) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("w" . calc-new-week)
+                           ("m" . calc-new-month)
+                           ("y" . calc-new-year)))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-first-day-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
 
 (provide 'test-casual-calc-time)
 ;;; test-casual-calc-time.el ends here

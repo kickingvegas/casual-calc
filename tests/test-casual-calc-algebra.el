@@ -27,22 +27,22 @@
 (require 'casual-calc-test-utils)
 (require 'casual-calc-algebra)
 
-(ert-deftest test-casual-calc--calc-alg-evaluate ()
+(ert-deftest test-casual-calc--alg-evaluate ()
   (casualt-setup)
   (calc-push '(* (+ (var x var-x) 2)
                  (+ (var x var-x) 3)))
-  (casualt-testbench-calc-fn #'casual-calc--calc-alg-evaluate
+  (casualt-testbench-calc-fn #'casual-calc--alg-evaluate
                              '()
                              '(* (+ (var x var-x) 2)
                                  (+ (var x var-x) 3)))
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc--calc-alt-summation ()
+(ert-deftest test-casual-calc--alt-summation ()
   (casualt-setup)
   (calc-push '(* (+ (var x var-x) 2)
                  (+ (var x var-x) 3)))
   (defalias 'inception
-    (casualt-kmacro #'casual-calc--calc-alt-summation
+    (casualt-kmacro #'casual-calc--alt-summation
                     "x <return> 1 <return> 5 <return>"))
 
   ;; WINNER!

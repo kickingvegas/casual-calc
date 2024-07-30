@@ -27,7 +27,7 @@
 (require 'casual-calc-test-utils)
 (require 'casual-calc-variables)
 
-(ert-deftest test-casual-calc-variable-crud-tmenu ()
+(ert-deftest test-casual-calc-variable-crud-tmenu-integration ()
   (casualt-setup)
 
   (calc-push-list '(25))
@@ -59,20 +59,21 @@
   ;; TODO: punting on calc-insert-variables
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc-variable-crud-tmenu2 ()
+(ert-deftest test-casual-calc-variable-crud-tmenu ()
   (casualt-setup)
-  (let ((test-vectors '(("sq" . casual-calc--calc-store)
-                        ("rq" . casual-calc--calc-recall)
-                        ("cq" . casual-calc--calc-unstore)
-                        ("e" . casual-calc--calc-edit-variable)
-                        ("oq" . casual-calc--calc-copy-variable)
-                        ("xq" . casual-calc--calc-store-exchange)
-                        ("pq" . casual-calc--calc-permanent-variable)
-                        ("iq" . casual-calc--calc-insert-variables))))
+  (let ((test-vectors '(("s" . casual-calc--store)
+                        ("r" . casual-calc--recall)
+                        ("c" . casual-calc--unstore)
+                        ("e" . casual-calc--edit-variable)
+                        ("o" . casual-calc--copy-variable)
+                        ("x" . casual-calc--store-exchange)
+                        ("p" . casual-calc--permanent-variable)
+                        ("O" . casual-calc-open-settings-file)
+                        ("i" . casual-calc--insert-variables))))
     (casualt-suffix-testbench-runner test-vectors
                                      #'casual-calc-variable-crud-tmenu
                                      '(lambda () (random 5000))))
-  (casualt-breakdown t))
+  (casualt-breakdown t t))
 
 (provide 'test-casual-calc-variables)
 ;;; test-casual-calc-variables.el ends here

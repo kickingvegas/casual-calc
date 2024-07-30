@@ -27,7 +27,7 @@
 (require 'casual-calc-test-utils)
 (require 'casual-calc-settings)
 
-(ert-deftest test-casual-calc-complex-format-tmenu ()
+(ert-deftest test-casual-calc-complex-format-tmenu-integration ()
   (casualt-setup) ;; calc-number-radix
   (casualt-run-menu-assert-testcases
    'casual-calc-complex-format-tmenu
@@ -37,7 +37,7 @@
   (casualt-breakdown t))
 
 
-(ert-deftest test-casual-calc-float-format-tmenu ()
+(ert-deftest test-casual-calc-float-format-tmenu-integration ()
   (casualt-setup) ;; calc-number-radix
   (casualt-run-menu-assert-testcases
    'casual-calc-float-format-tmenu
@@ -50,58 +50,78 @@
 
 (ert-deftest test-casual-calc-modes-tmenu ()
   (casualt-setup)
-  (let ((test-vectors '(
-                        ;; ("Aq" . calc-algebraic-mode)
-                        ;; ("zq" . calc-leading-zeros)
-                        ;; ("Fq" . calc-frac-mode)
-                        ;; ("sq" . calc-symbolic-mode)
-                        ;; ("pq" . calc-polar-mode)
-                        ("cq" . casual-calc-complex-format-tmenu)
-                        ;; ("Pq" . calc-precision)
-                        ("Iq" . casual-calc--calc-infinite-mode)
-                        ;; ("Sq" . calc-save-modes)
-                        ("aq" . casual-calc-angle-measure-tmenu)
-                        ("Rq" . casual-calc-radix-tmenu)
-                        ("fq" . casual-calc-float-format-tmenu)
-                        ("u" . casual-lib-customize-casual-lib-use-unicode)
-                        ;; ("gq" . calc-group-digits)
-                        ;; (",q" . calc-group-char)
-                        ;; (".q" . calc-point-char)
-                        ;; ("Hq" . calc-hms-notation)
-                        ;; ("C-M-r" . calc-reset)
-                        ("Oq" . casual-calc-open-settings-file)
-                        )))
-    (casualt-suffix-testbench-runner test-vectors
-                                     #'casual-calc-modes-tmenu
-                                     '(lambda () (random 5000))))
+  (cl-letf
+      (((symbol-function #'calc-algebraic-mode) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-leading-zeros) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-frac-mode) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-symbolic-mode) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-polar-mode) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-precision) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-group-digits) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-group-char) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-point-char) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-hms-notation) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-save-modes) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-reset) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("A" . calc-algebraic-mode)
+                           ("z" . calc-leading-zeros)
+                           ("F" . calc-frac-mode)
+                           ("s" . calc-symbolic-mode)
+                           ("p" . calc-polar-mode)
+                           ("c" . casual-calc-complex-format-tmenu)
+                           ("P" . calc-precision)
+                           ("I" . casual-calc--infinite-mode)
+                           ("a" . casual-calc-angle-measure-tmenu)
+                           ("R" . casual-calc-radix-tmenu)
+                           ("f" . casual-calc-float-format-tmenu)
+                           ("g" . calc-group-digits)
+                           ("," . calc-group-char)
+                           ("." . calc-point-char)
+                           ("H" . calc-hms-notation)
+                           ("C" . casual-calc--customize-group)
+                           ("S" . calc-save-modes)
+                           ("O" . casual-calc-open-settings-file)
+                           ("" . calc-reset)
+                           ("v" . casual-calc-version)
+                           ("á" . casual-calc-about))))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-modes-tmenu
+                                       '(lambda () (random 5000)))))
   (casualt-breakdown t))
 
-;; TODO: stubbed in for later
-;; (ert-deftest casual-calc-complex-format-tmenu ()
-;;   (casualt-setup)
-;;   (let ((test-vectors '(
-;;                         ;; ("c" . calc-complex-notation)
-;;                         ;; ("i" . calc-i-notation)
-;;                         ;; ("j" . calc-j-notation)
-;;                         )))
-;;     (casualt-suffix-testbench-runner test-vectors
-;;                                      #'casual-calc-complex-format-tmenu
-;;                                      '(lambda () (random 5000))))
-;;   (casualt-breakdown t))
 
-;; TODO: stubbed in for later
-;; (ert-deftest casual-calc-float-format-tmenu ()
-;;   (casualt-setup)
-;;   (let ((test-vectors '(
-;;                         ;; ("n" . calc-normal-notation)
-;;                         ;; ("f" . calc-fix-notation)
-;;                         ;; ("s" . calc-sci-notation)
-;;                         ;; ("e" . calc-eng-notation)]
-;;                         )))
-;;     (casualt-suffix-testbench-runner test-vectors
-;;                                      #'casual-calc-float-format-tmenu
-;;                                      '(lambda () (random 5000))))
-;;   (casualt-breakdown t))
+(ert-deftest test-casual-calc-complex-format-tmenu ()
+  (casualt-setup)
+  (cl-letf
+      (((symbol-function #'calc-complex-notation) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-i-notation) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-j-notation) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("c" . calc-complex-notation)
+                           ("i" . calc-i-notation)
+                           ("j" . calc-j-notation))))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-complex-format-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t))
+
+(ert-deftest test-casual-calc-float-format-tmenu ()
+  (casualt-setup)
+  (cl-letf
+      (((symbol-function #'calc-normal-notation) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-fix-notation) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-sci-notation) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-eng-notation) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(
+                           ("n" . calc-normal-notation)
+                           ("f" . calc-fix-notation)
+                           ("s" . calc-sci-notation)
+                           ("e" . calc-eng-notation))))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-float-format-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t))
+
+
 
 (provide 'test-casual-calc-settings)
 ;;; test-casual-calc-settings.el ends here

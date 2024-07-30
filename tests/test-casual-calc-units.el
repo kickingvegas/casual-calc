@@ -27,8 +27,7 @@
 (require 'casual-calc-test-utils)
 (require 'casual-calc-units)
 
-
-(ert-deftest test-casual-calc-units-tmenu ()
+(ert-deftest test-casual-calc-units-tmenu-integration ()
   (casualt-setup)
   (casualt-run-menu-input-testcases
    'casual-calc-units-tmenu
@@ -40,6 +39,28 @@
      ("x" ((* 100 (var km var-km))) (var km var-km))))
   ;; TODO: test "v"
   (casualt-breakdown t))
+
+(ert-deftest test-casual-calc-units-tmenu ()
+  (casualt-setup)
+  (cl-letf
+      (((symbol-function #'calc-convert-units) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-convert-temperature) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-base-units) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-remove-units) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-extract-units) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-view-units-table) (lambda (x) (interactive)(print "WARNING: override"))))
+
+    (let* ((test-vectors '(("c" . calc-convert-units)
+                           ("t" . calc-convert-temperature)
+                           ("b" . calc-base-units)
+                           ("r" . calc-remove-units)
+                           ("x" . calc-extract-units)
+                           ("v" . calc-view-units-table)))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-units-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
 
 
 (provide 'test-casual-calc-units)

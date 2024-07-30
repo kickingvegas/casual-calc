@@ -34,11 +34,11 @@
   "Casual financial menu.
 \nTop-level menu of financial functions."
   [["Compound Interest"
-    ("f" "Future/Present Value›" casual-calc-fin-pv-fv-tmenu :transient nil)
-    ("p" "Periodic Payment›" casual-calc-fin-periodic-payments-tmenu :transient nil)
-    ("n" "# of Payments›" casual-calc-fin-number-of-payments-tmenu :transient nil)
-    ("t" "# of Periods To Reach Target›" casual-calc-fin-periods-to-target-tmenu :transient nil)
-    ("r" "Rate of Return›" casual-calc-fin-rate-of-return-tmenu :transient nil)]
+    ("f" "Future/Present Value›" casual-calc-fin-pv-fv-tmenu)
+    ("p" "Periodic Payment›" casual-calc-fin-periodic-payments-tmenu)
+    ("n" "# of Payments›" casual-calc-fin-number-of-payments-tmenu)
+    ("t" "# of Periods To Reach Target›" casual-calc-fin-periods-to-target-tmenu)
+    ("r" "Rate of Return›" casual-calc-fin-rate-of-return-tmenu)]
 
    ["Percentages"
     ("%" "%" calc-percent :transient t)
@@ -47,37 +47,34 @@
     ("=" "=" calc-evaluate :transient t)]
 
    ["Display"
-    ("M-s" "Stack" casual-calc-stack-display-tmenu :transient t)
+    ("M-s" "Stack" casual-calc-stack-display-tmenu)
     ("R" "Refresh" calc-refresh :transient t)
-    ("L" "Last" calc-last-args :transient t)]]
+    ("L" "Last" calc-last-args :transient t)]
+
+   casual-calc-basic-operators-group]
 
   ["Discounted Cash Flow Analysis"
-   ("v" "Net Present Value›" casual-calc-fin-npv-tmenu :transient nil)
-   ("i" "Internal Rate of Return" casual-calc-fin-irr-tmenu :transient nil)]
+   ("v" "Net Present Value›" casual-calc-fin-npv-tmenu)
+   ("i" "Internal Rate of Return›" casual-calc-fin-irr-tmenu)]
 
   ["Depreciation"
-   ("d" "Depreciation" casual-calc-fin-depreciation-tmenu :transient nil)]
+   ("d" "Depreciation›" casual-calc-fin-depreciation-tmenu)]
 
-  ["" :class transient-row
-   (casual-lib-quit-one)
-   (casual-lib-quit-all)
-   (casual-calc-undo-suffix)])
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-fin-npv-tmenu ()
   "Casual menu to calculate net present value.
 \nProvides menu argument support for the following function:
 - `casual-calc--fin-npv'"
-  ["Net Present Value with Irregular Deposits"
+  [["Net Present Value with Irregular Deposits"
    :class transient-row
    ("r" "Interest Rate (%)" "--rate=" :prompt "Interest Rate: ")
    ("b" "Beginning" "--beginning")]
+   casual-calc-basic-operators-group]
 
-  [("n" "Net Present Value (1:)" casual-calc--fin-npv :transient nil)]
+  [("n" "Net Present Value (1:)" casual-calc--fin-npv :transient t)]
 
-  ["" :class transient-row
-   (casual-lib-quit-one)
-   (casual-lib-quit-all)
-   (casual-calc-undo-suffix)])
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-fin-pv-fv-tmenu ()
   "Casual menu for periodic present or future value functions.
@@ -92,7 +89,8 @@
    [("r" "Interest Rate (%)" "--rate=" :prompt "Interest Rate: ")
     ("n" "Number of Periods" "--periods=" :prompt "Number of Time Periods: ")]
    [("a" "Amount" "--amount=" :prompt "Amount: ")
-    ("b" "Beginning" "--beginning")]]
+    ("b" "Beginning" "--beginning")]
+   casual-calc-basic-operators-group]
 
   ["Future Value"
    ("f" "Periodic" casual-calc--fin-fv-periodic :transient t)
@@ -102,10 +100,9 @@
     ("p" "Periodic" casual-calc--fin-pv-periodic :transient t)
     ("P" "Lump Sum" casual-calc--fin-pv-lump :transient t)]
 
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+  casual-calc-navigation-group)
+
+
 
 (transient-define-prefix casual-calc-fin-periodic-payments-tmenu ()
   "Casual periodic payments menu.
@@ -116,15 +113,13 @@
     ("a" "Loan Amount" "--amount=" :prompt "Loan Amount: ")
     ("r" "Interest Rate per Period (in %)" "--rate=" :prompt "Interest Rate (%): ")
     ("n" "Number of Periods" "--periods=" :prompt "Number of periods in loan: ")
-    ("b" "Beginning" "--beginning")]]
+    ("b" "Beginning" "--beginning")]
+   casual-calc-basic-operators-group]
 
   ["Projected payment per period"
-    ("p" "Payment" casual-calc--fin-periodic-payment :transient t)]
+   ("p" "Payment" casual-calc--fin-periodic-payment :transient t)]
 
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-fin-number-of-payments-tmenu ()
   "Casual periodic payments menu.
@@ -135,15 +130,13 @@
     ("a" "Loan Amount" "--amount=" :prompt "Loan Amount: ")
     ("r" "Interest Rate per Period (in %)" "--rate=" :prompt "Interest Rate (%): ")
     ("p" "Payment" "--payment=" :prompt "Payment: ")
-    ("b" "Beginning" "--beginning")]]
+    ("b" "Beginning" "--beginning")]
+   casual-calc-basic-operators-group]
 
   ["Projected number of payments"
     ("n" "Number of Payments" casual-calc--fin-number-of-payments :transient t)]
 
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-fin-rate-of-return-tmenu ()
   "Casual rate of return menu.
@@ -154,16 +147,14 @@
     :class transient-row
     ("n" "periods" "--periods=" :prompt "Number of Periods: ")
     ("p" "payment" "--payment=" :prompt "Payment: ")
-    ("v" "present value" "--pv=" :prompt "Present value: ")]]
+    ("v" "present value" "--pv=" :prompt "Present value: ")]
+   casual-calc-basic-operators-group]
   ;; TODO: note no --beginning argument because I `calc-fin-rate' is broken.
 
   ["Rate of Return"
    ("r" "Where payment made at end of period" casual-calc--fin-rate-of-return :transient t)]
 
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-fin-irr-tmenu ()
   "Casual internal rate of return menu.
@@ -171,14 +162,12 @@
 - `casual-calc--fin-irr'"
   ["Internal Rate of Return for Irregular Payments"
    ["Parameters"
-    ("b" "Beginning" "--beginning")]]
+    ("b" "Beginning" "--beginning")]
+   casual-calc-basic-operators-group]
 
-  [("i" "Internal Rate of Return (1:)" casual-calc--fin-irr :transient nil)]
+  [("i" "Internal Rate of Return (1:)" casual-calc--fin-irr :transient t)]
 
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-fin-periods-to-target-tmenu ()
   "Casual periods to target menu.
@@ -189,15 +178,13 @@
     :class transient-row
     ("t" "target" "--target=" :prompt "target amount: ")
     ("r" "rate" "--rate=" :prompt "rate (%): ")
-    ("d" "deposit" "--deposit=" :prompt "deposit: ")]]
+    ("d" "deposit" "--deposit=" :prompt "deposit: ")]
+   casual-calc-basic-operators-group]
 
   ["Periods to Target"
    ("n" "Periods" casual-calc--fin-periods-to-reach-target :transient t)]
 
-  [:class transient-row
-   (casual-lib-quit-one)
-   (casual-lib-quit-all)
-   (casual-calc-undo-suffix)])
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-fin-depreciation-tmenu ()
   "Casual depreciation menu.
@@ -211,17 +198,15 @@
    [("c" "cost" "--cost=" :prompt "cost: ")
     ("s" "salvage" "--salvage=" :prompt "salvage: ")]
    [("l" "life" "--life=" :prompt "life: ")
-    ("p" "period" "--period=" :prompt "period (1..life)): ")]]
+    ("p" "period" "--period=" :prompt "period (1..life)): ")]
+   casual-calc-basic-operators-group]
 
   ["Depreciation"
    ("1" "Straight Line (c, s, l)" casual-calc--fin-depreciation-straight-line :transient t)
    ("2" "Sum-of-Years Digits (c, s, l, p)" casual-calc--fin-depreciation-sum-of-years :transient t)
    ("3" "Double Declining Balance (c, s, l, p)" casual-calc--fin-depreciation-double-declining-balance :transient t)]
 
-  [:class transient-row
-   (casual-lib-quit-one)
-   (casual-lib-quit-all)
-   (casual-calc-undo-suffix)])
+  casual-calc-navigation-group)
 
 ;; Wrapped Functions -----
 

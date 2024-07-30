@@ -27,7 +27,7 @@
 (require 'casual-calc-test-utils)
 (require 'casual-calc-trigonometric)
 
-(ert-deftest test-casual-calc-trig-tmenu ()
+(ert-deftest test-casual-calc-trig-tmenu-integration ()
   (casualt-setup)
   (calc-degrees-mode 1)
   (casualt-run-menu-input-testcases
@@ -40,7 +40,7 @@
      ("T" (1) 45)))
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc-hyperbolic-trig-tmenu ()
+(ert-deftest test-casual-calc-hyperbolic-trig-tmenu-integration ()
   (casualt-setup)
   (calc-degrees-mode 1)
   (casualt-run-menu-input-testcases
@@ -53,6 +53,55 @@
      ("T" ((float 318520776903 -12)) (float 33 -2))))
   (casualt-breakdown t))
 
+(ert-deftest test-casual-calc-trig-tmenu ()
+  (casualt-setup)
+  (cl-letf
+      (((symbol-function #'calc-sin) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-cos) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-tan) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-arcsin) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-arccos) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-arctan) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-to-degrees) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-to-radians) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("s" . calc-sin)
+                           ("c" . calc-cos)
+                           ("t" . calc-tan)
+                           ("S" . calc-arcsin)
+                           ("C" . calc-arccos)
+                           ("T" . calc-arctan)
+                           ("p" . casual-calc--pi)
+                           ("d" . calc-to-degrees)
+                           ("r" . calc-to-radians)
+                           ("a" . casual-calc-angle-measure-tmenu)
+                           ("h" . casual-calc-hyperbolic-trig-tmenu)
+                           ))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-trig-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
+
+(ert-deftest test-casual-calc-hyperbolic-trig-tmenu ()
+  (casualt-setup)
+  (cl-letf
+      (((symbol-function #'calc-sinh) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-cosh) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-tanh) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-arcsinh) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-arccosh) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-arctanh) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("s" . calc-sinh)
+                           ("c" . calc-cosh)
+                           ("t" . calc-tanh)
+                           ("S" . calc-arcsinh)
+                           ("C" . calc-arccosh)
+                           ("T" . calc-arctanh)))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-hyperbolic-trig-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
 
 (provide 'test-casual-calc-trigonometric)
 ;;; test-casual-calc-trigonometric.el ends here

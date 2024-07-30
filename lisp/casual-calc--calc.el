@@ -29,9 +29,131 @@
 ;; Wrapped Functions
 ;; Shortdoc
 ;;(define-short-documentation-group casual "Casual Shortdoc")
-;;(shortdoc-add-function 'casual "Constants" '(casual-calc--calc-pi :no-manual))
+;;(shortdoc-add-function 'casual "Constants" '(casual-calc--pi :no-manual))
 
-(defun casual-calc--calc-pi ()
+(defun casual-calc--round ()
+    "TODO: This function does not yet have a docstring.
+\nStack Arguments:
+1: n
+
+This function is a wrapper over `calc-round'.
+
+* References
+- info node `(calc) Integer Truncation'
+- `calc-round'"
+ (interactive)
+ (call-interactively #'calc-round))
+
+(defun casual-calc--floor ()
+    "TODO: This function does not yet have a docstring.
+\nStack Arguments:
+1: n
+
+This function is a wrapper over `calc-floor'.
+
+* References
+- info node `(calc) Integer Truncation'
+- `calc-floor'"
+ (interactive)
+ (call-interactively #'calc-floor))
+
+(defun casual-calc--ceiling ()
+    "TODO: This function does not yet have a docstring.
+\nStack Arguments:
+1: n
+
+This function is a wrapper over `calc-ceiling'.
+
+* References
+- info node `(calc) Integer Truncation'
+- `calc-ceiling'"
+ (interactive)
+ (call-interactively #'calc-ceiling))
+
+(defun casual-calc--trunc ()
+    "TODO: This function does not yet have a docstring.
+\nStack Arguments:
+1: n
+
+This function is a wrapper over `calc-trunc'.
+
+* References
+- info node `(calc) Integer Truncation'
+- `calc-trunc'"
+ (interactive)
+ (call-interactively #'calc-trunc))
+
+
+(defun casual-calc--plus ()
+  "Add the top two numbers on the stack and leave the result at the top (a+b).
+
+Stack Arguments:
+2: a
+1: b
+
+This function is a wrapper over `calc-plus'.
+
+* References
+- info node `(calc) Basic Arithmetic'
+- `calc-plus'"
+ (interactive)
+ (call-interactively #'calc-plus))
+
+(defun casual-calc--minus ()
+  "Subtract the top two numbers on the stack and leave the result at the top (a-b).
+
+Stack Arguments:
+2: a
+1: b
+
+This function is a wrapper over `calc-minus'.
+
+* References
+- info node `(calc) Basic Arithmetic'
+- `calc-minus'"
+ (interactive)
+ (call-interactively #'calc-minus))
+
+(defun casual-calc--times ()
+    "TODO: This function does not yet have a docstring.
+\nStack Arguments:
+1: n
+
+This function is a wrapper over `calc-times'.
+
+* References
+- info node `(calc) Basic Arithmetic'
+- `calc-times'"
+ (interactive)
+ (call-interactively #'calc-times))
+
+(defun casual-calc--divide ()
+    "TODO: This function does not yet have a docstring.
+\nStack Arguments:
+1: n
+
+This function is a wrapper over `calc-divide'.
+
+* References
+- info node `(calc) Basic Arithmetic'
+- `calc-divide'"
+ (interactive)
+ (call-interactively #'calc-divide))
+
+(defun casual-calc--mod ()
+    "TODO: This function does not yet have a docstring.
+\nStack Arguments:
+1: n
+
+This function is a wrapper over `calc-mod'.
+
+* References
+- info node `(calc) Basic Arithmetic'
+- `calc-mod'"
+ (interactive)
+ (call-interactively #'calc-mod))
+
+(defun casual-calc--pi ()
   "Push the value of 𝜋 at the current precision onto the stack.
 \nIf in symbolic mode, this command instead pushes the actual
 variable \\='pi\\='.
@@ -46,21 +168,15 @@ This function is a wrapper over `calc-pi'.
 
 (defun casual-calc--e-constant ()
   "Constant 𝑒.
-\nIf in symbolic mode, this command instead pushes the actual
-variable \\='e\\='.
 
-This function is a wrapper over `calc-pi'.
-
-* References
-- info node `(calc) Scientific Functions'
-- `calc-pi'"
+Depending on value of `calc-symbolic-mode', either enter numeric
+or symbolic value of e."
   (interactive)
-  ;; !!!: Do not use this function in persisted Transient.
-  (calc-hyperbolic)
-  (calc-pi))
+  (if calc-symbolic-mode
+      (calc-pop-push-record 0 "e" '(var e var-e))
+    (calc-pop-push-record 0 "e" (math-e))))
 
-
-(defun casual-calc--calc-inv ()
+(defun casual-calc--inv ()
   "Invert the value n at the top of the stack.
 \nIf n is a number, then compute its reciprocal. If n is a square
 matrix, then compute the inverse of the matrix.
@@ -75,7 +191,7 @@ This function is a wrapper over `calc-inv'.
   (interactive)
   (call-interactively #'calc-inv))
 
-(defun casual-calc--calc-sqrt ()
+(defun casual-calc--sqrt ()
   "Compute the square root of a number.
 \nFor a negative real argument, the result will be a complex
 number whose form is determined by the current Polar mode.
@@ -90,7 +206,7 @@ This function is a wrapper over `calc-sqrt'.
   (interactive)
   (call-interactively #'calc-sqrt))
 
-(defun casual-calc--calc-change-sign ()
+(defun casual-calc--change-sign ()
   "Negate the number on the top of the stack.
 \nThis works on numbers, vectors and matrices, HMS forms, date
 forms, error forms, intervals, and modulo forms.
@@ -106,7 +222,7 @@ This function is a wrapper over `calc-change-sign'.
   (interactive)
   (call-interactively #'calc-change-sign))
 
-(defun casual-calc--calc-power ()
+(defun casual-calc--power ()
   "Raise a number 𝑦 to a power 𝑥.
 \nIf the power is an integer, an exact result is computed using
 repeated multiplications. For non-integer powers, Calc uses
@@ -126,7 +242,7 @@ This function is a wrapper over `calc-power'.
   (interactive)
   (call-interactively #'calc-power))
 
-(defun casual-calc--calc-abs ()
+(defun casual-calc--abs ()
   "Compute the absolute value of a number.
 \nThe result is always a nonnegative real number: With a complex
 argument, it computes the complex magnitude. With a vector or
@@ -148,7 +264,7 @@ This function is a wrapper over `calc-abs'.
   (call-interactively #'calc-abs))
 
 
-(defun casual-calc--calc-factorial ()
+(defun casual-calc--factorial ()
   "Compute the factorial of the number at the top of the stack.
 \nIf the number is an integer, the result is an exact integer. If
 the number is an integer-valued float, the result is a
@@ -169,7 +285,7 @@ This function is a wrapper over `calc-factorial'.
   (interactive)
   (call-interactively #'calc-factorial))
 
-(defun casual-calc--calc-percent ()
+(defun casual-calc--percent ()
   "Convert top of the stack into a percentage formula where the '%' is appended.
 \nThe '%' operator means “the preceding value divided by 100”.
 
@@ -184,7 +300,7 @@ This function is a wrapper over `calc-percent'.
   (interactive)
   (call-interactively #'calc-percent))
 
-(defun casual-calc--calc-percent-change ()
+(defun casual-calc--percent-change ()
   "Calculate the percentage change from one number to another.
 \nCalculates the percentage change from a previous value (p) to a
 current value (c).
@@ -200,7 +316,7 @@ This function is a wrapper over `calc-percent-change'.
   (interactive)
   (call-interactively #'calc-percent-change))
 
-(defun casual-calc--calc-evaluate ()
+(defun casual-calc--evaluate ()
   "Evaluate a formula by replacing all variables with their stored values.
 \nIf a variable in the formula does not have a stored value, it is left alone.
 \nStack Arguments:
@@ -214,7 +330,7 @@ This function is a wrapper over `calc-evaluate'.
   (interactive)
   (call-interactively #'calc-evaluate))
 
-(defun casual-calc--calc-store ()
+(defun casual-calc--store ()
   "Store the value at the top of the stack into a specified variable.
 \nStack Arguments:
 1: n
@@ -227,10 +343,10 @@ This function is a wrapper over `calc-store'.
   (interactive)
   (call-interactively #'calc-store))
 
-(defun casual-calc--calc-recall ()
+(defun casual-calc--recall ()
   "Recall a stored variable.
 \nThis command prompts for a variable name that was stored
-using `casual-calc--calc-store'.
+using `casual-calc--store'.
 \nThis function is a wrapper over `calc-recall'.
 
 * References
@@ -239,9 +355,9 @@ using `casual-calc--calc-store'.
   (interactive)
   (call-interactively #'calc-recall))
 
-(defun casual-calc--calc-unstore ()
+(defun casual-calc--unstore ()
   "Unstore (clears) a stored variable.
-\nComplimentary command to `casual-calc--calc-store'.
+\nComplimentary command to `casual-calc--store'.
 \nThis function is a wrapper over `calc-unstore'.
 
 * References
@@ -250,7 +366,7 @@ using `casual-calc--calc-store'.
   (interactive)
   (call-interactively #'calc-unstore))
 
-(defun casual-calc--calc-edit-variable ()
+(defun casual-calc--edit-variable ()
   "Edits the stored value of a variable.
 \nThe value of the stored variable is modified without putting
 the value on the stack or simplifying or evaluating the value.
@@ -263,7 +379,7 @@ This command will prompt for the name of the variable to edit.
   (interactive)
   (call-interactively #'calc-edit-variable))
 
-(defun casual-calc--calc-copy-variable ()
+(defun casual-calc--copy-variable ()
   "Copies the stored value of one variable to another.
 \nThis function is a wrapper over `calc-copy-variable'.
 
@@ -273,7 +389,7 @@ This command will prompt for the name of the variable to edit.
   (interactive)
   (call-interactively #'calc-copy-variable))
 
-(defun casual-calc--calc-store-exchange ()
+(defun casual-calc--store-exchange ()
   "Exchanges the value of a stored variable with the top of the stack.
 \nStack Arguments:
 1: n
@@ -286,7 +402,7 @@ This function is a wrapper over `calc-store-exchange'.
   (interactive)
   (call-interactively #'calc-store-exchange))
 
-(defun casual-calc--calc-permanent-variable ()
+(defun casual-calc--permanent-variable ()
   "Persist a stored variable so that it is available across restarts of Emacs.
 \nTypically file stored variables are persisted to is
 ‘~/<emacs config path>/calc.el’.
@@ -299,7 +415,7 @@ To remove a persisted stored variable, one must edit this file.
   (interactive)
   (call-interactively #'calc-permanent-variable))
 
-(defun casual-calc--calc-insert-variables ()
+(defun casual-calc--insert-variables ()
   "Write all stored variables into a specified buffer.
 \nThe variables are written with the prefix ‘var-’ in the form of
 Lisp ‘setq’ commands which store the values in string form.
