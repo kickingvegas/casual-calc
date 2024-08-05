@@ -23,27 +23,30 @@
 ;;
 
 ;;; Code:
+(require 'cl-lib)
 (require 'ert)
 (require 'casual-calc-test-utils)
 (require 'casual-calc-logarithmic)
 
 (ert-deftest test-casual-calc-logarithmic-tmenu ()
   (casualt-setup)
-  (casualt-run-menu-input-testcases
-   'casual-calc-logarithmic-tmenu
-   '(
-     ("l" ((float 109663315843 -8)) (float 7 0))
-     ("e" ((float 7 0)) (float 109663315843 -8))
-     ("L" ((float 100 0)) (float 2 0))
-     ;; (read-kbd-macro "M-l") evals to [134217836]
-     ([134217836] (8 2) 3)
-     ;; (read-kbd-macro "M-e") evals to [134217829]
-     ([134217829] (3) (float 190855369232 -10))))
-  (casualt-breakdown t))
-
-
-
-
+  (cl-letf
+      (((symbol-function #'calc-ln) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-lnp1) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-log10) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-log) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-exp) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-expm1) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let ((test-vectors '(("l" . calc-ln)
+                          ("p" . calc-lnp1)
+                          ("1" . calc-log10)
+                          ("L" . calc-log)
+                          ("^" . calc-exp)
+                          ("m" . calc-expm1))))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-logarithmic-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
 
 (provide 'test-casual-calc-logarithmic)
 ;;; test-casual-calc-logarithmic.el ends here

@@ -23,19 +23,41 @@
 ;;
 
 ;;; Code:
+(require 'cl-lib)
 (require 'ert)
 (require 'calc)
 (require 'transient)
 (require 'kmacro)
 
+(defvar casualt-test-operators-group
+  '(("+" . casual-calc--plus)
+    ("-" . casual-calc--minus)
+    ("*" . casual-calc--times)
+    ("/" . casual-calc--divide)
+    ("%" . casual-calc--mod)))
+
+(defvar casualt-test-basic-operators-group
+  '(("+" . casual-calc--plus)
+    ("-" . casual-calc--minus)
+    ("*" . casual-calc--times)
+    ("/" . casual-calc--divide)))
+
+(defvar casualt-test-navigation-group
+  '(("U" . calc-undo)
+    ("`" . calc-algebraic-entry)
+    ("" . calc-pop)
+    ("" . calc-enter)))
+
 (defun casualt-setup ()
   "Casual menu test setup function."
   (calc-create-buffer))
 
-(defun casualt-breakdown (&optional clear)
+(defun casualt-breakdown (&optional clear dismiss)
   "Casual menu test breakdown function, if CLEAR is non-nil then clear stack."
   (if clear
       (calc-pop-stack (calc-stack-size)))
+  (if dismiss
+      (execute-kbd-macro ""))
   (calc-quit nil))
 
 (defun casualt-menu-input-testcase (menu keyseq init value)
@@ -125,12 +147,12 @@ associated with that binding is overridden to instead push a
 value to the top of the Calc stack. This value is then tested."
   (defun casualt-stub ()
     (calc-push value))
+  (print (format "testing %s binding: %s for %s" menu binding cmd))
   (advice-add cmd :override #'casualt-stub)
   (funcall menu)
   (execute-kbd-macro binding)
   (should (equal value (calc-top)))
   (advice-remove cmd #'casualt-stub))
-
 
 (defun casualt-suffix-testbench-runner (test-vectors menu value-fn)
   "Test runner for suffixes in MENU specified in TEST-VECTORS testing VALUE-FN.

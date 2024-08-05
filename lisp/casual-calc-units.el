@@ -30,20 +30,18 @@
 
 (transient-define-prefix casual-calc-units-tmenu ()
   "Casual unit conversions menu."
-  ["Unit Conversions"
-   ("c" "Convert" calc-convert-units :transient nil)
-   ("t" "Convert Temperature" calc-convert-temperature :transient nil)
-   ("b" "Convert to Base Unit" calc-base-units :transient nil)
+  [["Unit Conversions"
+   ("c" "Convert" calc-convert-units :transient t)
+   ("t" "Convert Temperature" calc-convert-temperature :transient t)
+   ("b" "Convert to Base Unit" calc-base-units :transient t)
    ;; TODO: display current autorange state
-   ;;("a" "Autorange" calc-autorange-units :transient nil)
-   ("r" "Remove Units" calc-remove-units :transient nil)
-   ("x" "Extract Units" calc-extract-units :transient nil)
-   ("v" "View Units" calc-view-units-table :transient nil)]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+   ;;("a" "Autorange" calc-autorange-units :transient t)
+   ("r" "Remove Units" calc-remove-units :transient t)
+   ("x" "Extract Units" calc-extract-units :transient t)
+   ("v" "View Units" calc-view-units-table :transient t)]
+   casual-calc-operators-group]
 
+  casual-calc-navigation-group)
 
 (provide 'casual-calc-units)
 ;;; casual-calc-units.el ends here

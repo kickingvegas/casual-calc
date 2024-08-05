@@ -88,7 +88,7 @@ to a Calc matrix."
 
 This command reads a data file for curve fitting, pushing its
 contents on the stack in a form that is consumable by
-`casual-calc--calc-curve-fit'.
+`casual-calc--curve-fit'.
 
 Data in the file are separated using the following regexp: \"[ \\f\\t\\v,]+\"
 This regexp accepts the following separators:
@@ -99,7 +99,7 @@ This regexp accepts the following separators:
 - vertical tab
 
 * References
-- `casual-calc--calc-curve-fit'"
+- `casual-calc--curve-fit'"
   (interactive "fCurvefit Data File: ")
   (calc-transpose
    (calc-push

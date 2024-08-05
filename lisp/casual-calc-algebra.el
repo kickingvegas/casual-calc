@@ -35,7 +35,7 @@
   (let* ((interval (math-read-expr (read-string "Interval: "))))
     (calc-push interval)))
 
-(defun casual-calc--calc-find-minimum ()
+(defun casual-calc--find-minimum ()
   "Find minimum value of an algebraic equation.
 \nThis command issues two interactive prompts:
 1) an interval that specifies the range of interest to find a minimum value.
@@ -55,7 +55,7 @@ This function is a wrapper over `calc-find-minimum'.
   (calc-push (math-read-expr (read-string "Interval to find minimum: ")))
   (call-interactively #'calc-find-minimum))
 
-(defun casual-calc--calc-find-maximum ()
+(defun casual-calc--find-maximum ()
   "Find maximum value of an algebraic equation.
 \nThis command issues two interactive prompts:
 1) an interval that specifies the range of interest to find a maximum value.
@@ -75,7 +75,7 @@ This function is a wrapper over `calc-find-maximum'.
   (calc-push (math-read-expr (read-string "Interval to find maximum: ")))
   (call-interactively #'calc-find-maximum))
 
-(defun casual-calc--calc-curve-fit ()
+(defun casual-calc--curve-fit ()
   "Fit a set of data (‘x’ and ‘y’ vectors of numbers) to an equation.
 \nThis command attempts to fit a set of data (‘x’ and ‘y’ vectors
 of numbers) to a straight line, polynomial, or other function of ‘x’.
@@ -123,7 +123,7 @@ This function is a wrapper over `calc-curve-fit'.
   (call-interactively #'calc-curve-fit))
 
 
-(defun casual-calc--calc-alg-evaluate ()
+(defun casual-calc--alg-evaluate ()
   "Perform the normal default simplications on a formula.
 \nStack Arguments:
 1: formula
@@ -136,7 +136,7 @@ This function is a wrapper over `calc-alg-evaluate'.
   (interactive)
   (call-interactively #'calc-alg-evaluate))
 
-(defun casual-calc--calc-alt-summation ()
+(defun casual-calc--alt-summation ()
   "Computes alternating sum of a formula over a certain range of index values.
 \nSuccessive terms of the sequence are given alternating
 signs, with the first term (corresponding to the lower index value)
@@ -154,7 +154,7 @@ This function is a wrapper over `calc-alt-summation'.
   (interactive)
   (call-interactively #'calc-alt-summation))
 
-(defun casual-calc--calc-apart ()
+(defun casual-calc--apart ()
   "Expand a rational function by partial fractions.
 \nA rational function is the quotient of
 two polynomials; ‘apart’ pulls this apart into a sum of rational
@@ -170,7 +170,7 @@ This function is a wrapper over `calc-apart'.
   (interactive)
   (call-interactively #'calc-apart))
 
-(defun casual-calc--calc-clear-selections ()
+(defun casual-calc--clear-selections ()
   "Unselect all selections.
 \nThis function is a wrapper over `calc-clear-selections'.
 
@@ -180,7 +180,7 @@ This function is a wrapper over `calc-apart'.
   (interactive)
   (call-interactively #'calc-clear-selections))
 
-(defun casual-calc--calc-collect ()
+(defun casual-calc--collect ()
   "Rearrange a formula in decreasing powers of a variable.
 \nThis command rearranges a formula as a polynomial in a given
 variable, ordered in decreasing powers of that variable.
@@ -195,7 +195,7 @@ This function is a wrapper over `calc-collect'.
   (interactive)
   (call-interactively #'calc-collect))
 
-(defun casual-calc--calc-commute-left ()
+(defun casual-calc--commute-left ()
   "Move the selected sub-formula to the left in its surrounding formula.
 \nGenerally the selection is one term of a sum or product; the
 sum or product is rearranged according to the commutative laws of
@@ -209,7 +209,7 @@ This function is a wrapper over `calc-commute-left'.
   (interactive)
   (call-interactively #'calc-commute-left))
 
-(defun casual-calc--calc-commute-right ()
+(defun casual-calc--commute-right ()
   "Move the selected sub-formula to the right in its surrounding formula.
 \nGenerally the selection is one term of a sum or product; the
 sum or product is rearranged according to the commutative laws of
@@ -223,7 +223,7 @@ This function is a wrapper over `calc-commute-right'.
   (interactive)
   (call-interactively #'calc-commute-right))
 
-(defun casual-calc--calc-copy-selection ()
+(defun casual-calc--copy-selection ()
   "Copy the selected portion of the formula.
 \nThis command copies the selected portion of the formula indicated
 by the cursor, or, in the absence of a selection, the entire
@@ -237,7 +237,7 @@ This function is a wrapper over `calc-copy-selection'.
   (interactive)
   (call-interactively #'calc-copy-selection))
 
-(defun casual-calc--calc-del-selection ()
+(defun casual-calc--del-selection ()
   "Delete the selected portion of the formula.
 \nThis command deletes the selected portion of the formula
 indicated by the cursor, or, in the absence of a selection, it
@@ -251,7 +251,7 @@ This function is a wrapper over `calc-del-selection'.
   (interactive)
   (call-interactively #'calc-del-selection))
 
-(defun casual-calc--calc-derivative ()
+(defun casual-calc--derivative ()
   "Compute the deriviative of a formula with respect to a specified variable.
 \nThis command computes the derivative of the expression on the
 top of the stack with respect to some variable, which it will
@@ -267,7 +267,7 @@ This function is a wrapper over `calc-derivative'.
   (interactive)
   (call-interactively #'calc-derivative))
 
-(defun casual-calc--calc-edit-selection ()
+(defun casual-calc--edit-selection ()
   "Edit the selected sub-formula in a separate buffer.
 
 This function is a wrapper over `calc-edit-selection'.
@@ -278,7 +278,7 @@ This function is a wrapper over `calc-edit-selection'.
   (interactive)
   (call-interactively #'calc-edit-selection))
 
-(defun casual-calc--calc-enter-selection ()
+(defun casual-calc--enter-selection ()
   "Replace selected sub-formula via algebraic entry.
 \nThis command does an algebraic entry just like the regular ‘'’
 key.  When you press <RET>, the formula you type replaces the
@@ -295,7 +295,7 @@ This function is a wrapper over `calc-enter-selection'.
   (interactive)
   (call-interactively #'calc-enter-selection))
 
-(defun casual-calc--calc-equal-to ()
+(defun casual-calc--equal-to ()
   "Compare top two elements in the stack if they are equal.
 \nTest if the top two elements in the stack are equal, either
 because they are identical expressions, or because they are
@@ -317,7 +317,7 @@ This function is a wrapper over `calc-equal-to'.
   (interactive)
   (call-interactively #'calc-equal-to))
 
-(defun casual-calc--calc-expand ()
+(defun casual-calc--expand ()
   "Expand an expression by applying the distributive law everywhere.
 \nThis command applies to products, quotients, and powers
 involving sums.  By default, it fully distributes all parts of
@@ -333,7 +333,7 @@ This function is a wrapper over `calc-expand'.
   (interactive)
   (call-interactively #'calc-expand))
 
-(defun casual-calc--calc-expand-formula ()
+(defun casual-calc--expand-formula ()
   "Expands functions into their defining formulas wherever possible.
 \nStack Argument:
 1: formula
@@ -346,7 +346,7 @@ This function is a wrapper over `calc-expand-formula'.
   (interactive)
   (call-interactively #'calc-expand-formula))
 
-(defun casual-calc--calc-factor ()
+(defun casual-calc--factor ()
   "Factor a polynomial expression into a product of terms.
 \nStack Argument:
 1: expression
@@ -359,7 +359,7 @@ This function is a wrapper over `calc-factor'.
   (interactive)
   (call-interactively #'calc-factor))
 
-(defun casual-calc--calc-find-root ()
+(defun casual-calc--find-root ()
   "Find a numerical solution (or “root”) of an equation.
 \nThis command treats inequalities the same as equations.  If the
 input is any other kind of formula, it is interpreted as an
@@ -376,7 +376,7 @@ This function is a wrapper over `calc-find-root'.
   (calc-push (math-read-expr (read-string "Interval to find root(s): ")))
   (call-interactively #'calc-find-root))
 
-(defun casual-calc--calc-greater-equal ()
+(defun casual-calc--greater-equal ()
   "Compare top two elements in the stack if they are ≥ to each other.
 \nThis command tests a ≥ b and places the result in the top of stack.
 \nStack Arguments:
@@ -391,7 +391,7 @@ This function is a wrapper over `calc-greater-equal'.
   (interactive)
   (call-interactively #'calc-greater-equal))
 
-(defun casual-calc--calc-greater-than ()
+(defun casual-calc--greater-than ()
   "Compare top two elements in the stack if they are > to each other.
 \nThis command tests a > b and places the result in the top of stack.
 \nStack Arguments:
@@ -406,7 +406,7 @@ This function is a wrapper over `calc-greater-than'.
   (interactive)
   (call-interactively #'calc-greater-than))
 
-(defun casual-calc--calc-head ()
+(defun casual-calc--head ()
   "Extract the first element of the result vector, discarding the error term.
 
 This function is a wrapper over `calc-head'.
@@ -417,9 +417,9 @@ This function is a wrapper over `calc-head'.
   (interactive)
   (call-interactively #'calc-head))
 
-(defun casual-calc--calc-why ()
+(defun casual-calc--why ()
   "Provide explanation for why no root was found.
-\nIn the event that `casual-calc--calc-find-root' is unable to find a
+\nIn the event that `casual-calc--find-root' is unable to find a
 solution and leaves the function in symbolic form on the stack,
 this command will provide an explanation as to why.
 \nStack Arguments:
@@ -430,7 +430,7 @@ this command will provide an explanation as to why.
   (interactive)
   (call-interactively #'calc-why))
 
-(defun casual-calc--calc-in-set ()
+(defun casual-calc--in-set ()
   "Test if a ∈ b.
 \nThis command returns true if ‘a’ is in the set ‘b’.  ‘b’ can be
 either a vector or an interval.  If ‘b’ is an interval form, ‘a’
@@ -451,7 +451,7 @@ This function is a wrapper over `calc-in-set'.
   (interactive)
   (call-interactively #'calc-in-set))
 
-(defun casual-calc--calc-integral ()
+(defun casual-calc--integral ()
   "Compute the indefinite integral of an expression.
 \nThis command computes the indefinite integral of the expression
 on the top of the stack with respect to a prompted-for variable.
@@ -476,7 +476,7 @@ This function is a wrapper over `calc-integral'.
   (interactive)
   (call-interactively #'calc-integral))
 
-(defun casual-calc--calc-less-equal ()
+(defun casual-calc--less-equal ()
   "Compare top two elements in the stack if they are ≤ to each other.
 \nThis command tests a ≤ b and places the result in the top of stack.
 \nStack Arguments:
@@ -491,7 +491,7 @@ This function is a wrapper over `calc-less-equal'.
   (interactive)
   (call-interactively #'calc-less-equal))
 
-(defun casual-calc--calc-less-than ()
+(defun casual-calc--less-than ()
   "Compare top two elements in the stack if they are < to each other.
 \nThis command tests a < b and places the result in the top of stack.
 \nStack Arguments:
@@ -506,7 +506,7 @@ This function is a wrapper over `calc-less-than'.
   (interactive)
   (call-interactively #'calc-less-than))
 
-(defun casual-calc--calc-logical-and ()
+(defun casual-calc--logical-and ()
   "Logical a ∧ b.
 \nEvaluate true if both a and b are true, i.e., are non-zero numbers.
 \nStack Arguments:
@@ -521,7 +521,7 @@ This function is a wrapper over `calc-logical-and'.
   (interactive)
   (call-interactively #'calc-logical-and))
 
-(defun casual-calc--calc-logical-if ()
+(defun casual-calc--logical-if ()
   "If ‘a’ non-zero then ‘b’, else ‘c’.
 \nIf ‘a’ is not a number, the test is left in symbolic form and
 neither ‘b’ nor ‘c’ is evaluated in any way.  In algebraic
@@ -541,7 +541,7 @@ This function is a wrapper over `calc-logical-if'.
   (interactive)
   (call-interactively #'calc-logical-if))
 
-(defun casual-calc--calc-logical-not ()
+(defun casual-calc--logical-not ()
   "Evaluate true (1) if top of stack is zero, else false (0).
 \nStack Argument:
 1: a
@@ -554,7 +554,7 @@ This function is a wrapper over `calc-logical-not'.
   (interactive)
   (call-interactively #'calc-logical-not))
 
-(defun casual-calc--calc-logical-or ()
+(defun casual-calc--logical-or ()
   "Logical a ∨ b.
 \nEvaluate true if either a and b are true, i.e., are non-zero numbers.
 \nStack Arguments:
@@ -569,7 +569,7 @@ This function is a wrapper over `calc-logical-or'.
   (interactive)
   (call-interactively #'calc-logical-or))
 
-(defun casual-calc--calc-map-equation ()
+(defun casual-calc--map-equation ()
   "Apply a given function or operator to an equation.
 \nStack Arguments:
 1: equation
@@ -582,7 +582,7 @@ This function is a wrapper over `calc-map-equation'.
   (interactive)
   (call-interactively #'calc-map-equation))
 
-(defun casual-calc--calc-normalize-rat ()
+(defun casual-calc--normalize-rat ()
   "Rearrange a formula into a quotient of two polynomials, if possible.
 \nFor example, given ‘1 + (a + b/c) / d’, the result would be
 ‘(b + a c + c d) / c d’.
@@ -597,7 +597,7 @@ This function is a wrapper over `calc-normalize-rat'.
   (interactive)
   (call-interactively #'calc-normalize-rat))
 
-(defun casual-calc--calc-not-equal-to ()
+(defun casual-calc--not-equal-to ()
   "Compare top two elements in the stack if they are not equal.
 \nStack Arguments:
 2: a
@@ -611,7 +611,7 @@ This function is a wrapper over `calc-not-equal-to'.
   (interactive)
   (call-interactively #'calc-not-equal-to))
 
-(defun casual-calc--calc-num-integral ()
+(defun casual-calc--num-integral ()
   "Calculate numerical integration of expression.
 \nThis command prompts for an integration variable, a lower
 limit, and an upper limit.  Except for the integration variable,
@@ -629,7 +629,7 @@ This function is a wrapper over `calc-num-integral'.
   (interactive)
   (call-interactively #'calc-num-integral))
 
-(defun casual-calc--calc-poly-div ()
+(defun casual-calc--poly-div ()
   "Divide two polynomials and return the quotient ‘q’, discarding remainder ‘r’.
 \nFor any formulas ‘a’ and ‘b’, this command returns ‘q’ such that:
   ‘a = q b + r’
@@ -645,7 +645,7 @@ This function is a wrapper over `calc-poly-div'.
   (interactive)
   (call-interactively #'calc-poly-div))
 
-(defun casual-calc--calc-poly-div-rem ()
+(defun casual-calc--poly-div-rem ()
   "Divide two polynomials and return vector [‘q’, ‘r’].
 \nFor any formulas ‘a’ and ‘b’, this command returns the quotient
 ‘q’ and remainder ‘r’ as vector [‘q’, ‘r’] such that:
@@ -662,7 +662,7 @@ This function is a wrapper over `calc-poly-div-rem'.
   (interactive)
   (call-interactively #'calc-poly-div-rem))
 
-(defun casual-calc--calc-poly-gcd ()
+(defun casual-calc--poly-gcd ()
   "Computes the greatest common divisor of two polynomials.
 \nThe GCD actually is unique only to within a constant
 multiplier; Calc attempts to choose a GCD which will be
@@ -679,7 +679,7 @@ This function is a wrapper over `calc-poly-gcd'.
   (interactive)
   (call-interactively #'calc-poly-gcd))
 
-(defun casual-calc--calc-poly-interp ()
+(defun casual-calc--poly-interp ()
   "Polynomial interpolate 2-D data (x, y) at a particular value of x.
 \nThis command attempts to fit a set of data (‘x’ and ‘y’ vectors
 of numbers) at a particular ‘x’ value.
@@ -698,7 +698,7 @@ This function is a wrapper over `calc-poly-interp'.
   (interactive)
   (call-interactively #'calc-poly-interp))
 
-(defun casual-calc--calc-poly-rem ()
+(defun casual-calc--poly-rem ()
   "Divide two polynomials and keep the remainder ‘r’, discarding quotient ‘q’.
 \nFor any formulas ‘a’ and ‘b’, this command returns ‘r’ such that:
   ‘a = q b + r’
@@ -714,7 +714,7 @@ This function is a wrapper over `calc-poly-rem'.
   (interactive)
   (call-interactively #'calc-poly-rem))
 
-(defun casual-calc--calc-poly-roots ()
+(defun casual-calc--poly-roots ()
   "Solve for all roots, if possible.
 \nThis command tries to solve an equation in general form, then for
 all arbitrary-sign variables, then for all arbitrary-integer
@@ -731,7 +731,7 @@ This function is a wrapper over `calc-poly-roots'.
   (interactive)
   (call-interactively #'calc-poly-roots))
 
-(defun casual-calc--calc-product ()
+(defun casual-calc--product ()
   "Computes the product of a formula over a certain range of index values.
 \nThe formula is taken from the top of the stack; the command
 prompts for the name of the product index variable, the lower
@@ -747,7 +747,7 @@ This function is a wrapper over `calc-product'.
   (interactive)
   (call-interactively #'calc-product))
 
-(defun casual-calc--calc-remove-equal ()
+(defun casual-calc--remove-equal ()
   "Extract the righthand side of the equation or inequality.
 \nStack Arguments:
 1: expression
@@ -760,7 +760,7 @@ This function is a wrapper over `calc-remove-equal'.
   (interactive)
   (call-interactively #'calc-remove-equal))
 
-(defun casual-calc--calc-sel-distribute ()
+(defun casual-calc--sel-distribute ()
   "Mix the selected sum or product using the distributive law.
 \nThis command mixes the selected sum or product into the
 surrounding formula using the distributive law.
@@ -773,7 +773,7 @@ This function is a wrapper over `calc-sel-distribute'.
   (interactive)
   (call-interactively #'calc-sel-distribute))
 
-(defun casual-calc--calc-sel-commute ()
+(defun casual-calc--sel-commute ()
   "Swap the arguments of the selected sum, product, or equation.
 \nThis command swaps the arguments of the selected sum, product,
 or equation.  The sum ‘a + b + c’ is treated as the nested sums
@@ -790,7 +790,7 @@ This function is a wrapper over `calc-sel-commute'.
   (interactive)
   (call-interactively #'calc-sel-commute))
 
-(defun casual-calc--calc-sel-evaluate ()
+(defun casual-calc--sel-evaluate ()
   "Perform basic simplifications on the selected sub-formula.
 \nThis function is a wrapper over `calc-sel-evaluate'.
 
@@ -800,7 +800,7 @@ This function is a wrapper over `calc-sel-commute'.
   (interactive)
   (call-interactively #'calc-sel-evaluate))
 
-(defun casual-calc--calc-sel-invert ()
+(defun casual-calc--sel-invert ()
   "Take the reciprocal of the selected term.
 \nThis function is a wrapper over `calc-sel-invert'.
 
@@ -810,7 +810,7 @@ This function is a wrapper over `calc-sel-commute'.
   (interactive)
   (call-interactively #'calc-sel-invert))
 
-(defun casual-calc--calc-sel-isolate ()
+(defun casual-calc--sel-isolate ()
   "Isolate the selected term on its side of an equation.
 \nThis function is a wrapper over `calc-sel-isolate'.
 
@@ -820,7 +820,7 @@ This function is a wrapper over `calc-sel-commute'.
   (interactive)
   (call-interactively #'calc-sel-isolate))
 
-(defun casual-calc--calc-sel-jump-equals ()
+(defun casual-calc--sel-jump-equals ()
   "Move the selected term from one side of the equation to the other.
 \nThis function is a wrapper over `calc-sel-jump-equals'.
 
@@ -830,10 +830,10 @@ This function is a wrapper over `calc-sel-commute'.
   (interactive)
   (call-interactively #'calc-sel-jump-equals))
 
-(defun casual-calc--calc-sel-merge ()
+(defun casual-calc--sel-merge ()
   "Merge selected term.
 \nThis can be viewed as the complement to
-`casual-calc--calc-sel-distribute'.
+`casual-calc--sel-distribute'.
 \nFor example, if given an expression ‘a b - a c’ with either ‘a b’
 or ‘a c’ selected, the result is ‘a * (b - c)’.
 
@@ -845,7 +845,7 @@ This function is a wrapper over `calc-sel-merge'.
   (interactive)
   (call-interactively #'calc-sel-merge))
 
-(defun casual-calc--calc-sel-negate ()
+(defun casual-calc--sel-negate ()
   "Replace selected term with the negative of that term, preserving equality.
 \nThis command replaces the selected term with the negative of
 that term, then adjusts the surrounding formula in order to
@@ -859,7 +859,7 @@ This function is a wrapper over `calc-sel-negate'.
   (interactive)
   (call-interactively #'calc-sel-negate))
 
-(defun casual-calc--calc-select-here ()
+(defun casual-calc--select-here ()
   "Select a sub-formula at cursor (point).
 \nGiven a cursor located in an expression (or formula), this
 command will highlight the smallest portion of that formula.
@@ -874,10 +874,10 @@ This function is a wrapper over `calc-select-here'.
   (interactive)
   (call-interactively #'calc-select-here))
 
-(defun casual-calc--calc-select-less ()
+(defun casual-calc--select-less ()
   "Reduce the current selection around the point (cursor) position.
 \nTypically use this command in conjunction with
-`casual-calc--calc-select-here'. \nThis function is a wrapper
+`casual-calc--select-here'. \nThis function is a wrapper
 over `calc-select-less'.
 
 * References
@@ -886,11 +886,11 @@ over `calc-select-less'.
   (interactive)
   (call-interactively #'calc-select-less))
 
-(defun casual-calc--calc-select-more ()
+(defun casual-calc--select-more ()
   "Expand the current selection around the point (cursor) position.
 
 Typically use this command in conjunction with
-`casual-calc--calc-select-here'.
+`casual-calc--select-here'.
 
 This function is a wrapper over `calc-select-more'.
 
@@ -900,11 +900,11 @@ This function is a wrapper over `calc-select-more'.
   (interactive)
   (call-interactively #'calc-select-more))
 
-(defun casual-calc--calc-select-next ()
+(defun casual-calc--select-next ()
   "Change the current selection to the next sub-formula at the same level.
 
 Typically use this command in conjunction with
-`casual-calc--calc-select-here'.
+`casual-calc--select-here'.
 
 This function is a wrapper over `calc-select-next'.
 
@@ -914,7 +914,7 @@ This function is a wrapper over `calc-select-next'.
   (interactive)
   (call-interactively #'calc-select-next))
 
-(defun casual-calc--calc-select-once ()
+(defun casual-calc--select-once ()
   "Select a sub-formula such that selection lives only for the next command.
 \nThis function is a wrapper over `calc-select-once'.
 
@@ -924,11 +924,11 @@ This function is a wrapper over `calc-select-next'.
   (interactive)
   (call-interactively #'calc-select-once))
 
-(defun casual-calc--calc-select-previous ()
+(defun casual-calc--select-previous ()
   "Change the current selection to the previous sub-formula at the same level.
 
 Typically use this command in conjunction with
-`casual-calc--calc-select-here'.
+`casual-calc--select-here'.
 
 This function is a wrapper over `calc-select-previous'.
 
@@ -938,7 +938,7 @@ This function is a wrapper over `calc-select-previous'.
   (interactive)
   (call-interactively #'calc-select-previous))
 
-(defun casual-calc--calc-solve-for ()
+(defun casual-calc--solve-for ()
   "Rearrange an equation to solve for a specific variable.
 \nAn equation is an expression of the form ‘L = R’.  This command
 will prompt for a variable to solve for.
@@ -956,7 +956,7 @@ This function is a wrapper over `calc-solve-for'.
   (interactive)
   (call-interactively #'calc-solve-for))
 
-(defun casual-calc--calc-substitute ()
+(defun casual-calc--substitute ()
   "Substitute a variable or sub-expression of a formula with another.
 \nSubstitutes all occurrences of some variable or sub-expression
 of an expression with a new sub-expression.
@@ -971,7 +971,7 @@ This function is a wrapper over `calc-substitute'.
   (interactive)
   (call-interactively #'calc-substitute))
 
-(defun casual-calc--calc-summation ()
+(defun casual-calc--summation ()
   "Computes the sum of a formula over a certain range of index values.
 \nThe formula is taken from the top of the stack; the command
 prompts for the name of the summation index variable, the lower
@@ -987,7 +987,7 @@ This function is a wrapper over `calc-summation'.
   (interactive)
   (call-interactively #'calc-summation))
 
-(defun casual-calc--calc-tabulate ()
+(defun casual-calc--tabulate ()
   "Evaluate a formula as a series of iterated index values.
 \nThe formula is taken from the top of the stack; the command
 prompts for the name of the summation index variable, the lower
@@ -1004,7 +1004,7 @@ This function is a wrapper over `calc-tabulate'.
   (interactive)
   (call-interactively #'calc-tabulate))
 
-(defun casual-calc--calc-taylor ()
+(defun casual-calc--taylor ()
   "Computes a power series expansion or Taylor series of a function.
 \nThis command prompts you for a variable and a desired number of terms.
 You may give an expression of the form ‘VAR = A’ or ‘VAR - A’
@@ -1023,7 +1023,7 @@ This function is a wrapper over `calc-taylor'.
   (interactive)
   (call-interactively #'calc-taylor))
 
-(defun casual-calc--calc-unselect ()
+(defun casual-calc--unselect ()
   "Unselects the formula that the cursor is on.
 \nIf there was no selection in the formula, this command
 has no effect.

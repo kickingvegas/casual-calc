@@ -19,26 +19,25 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-
 ;;
 
 ;;; Code:
 (require 'calc)
+(require 'casual-calc--calc)
 (require 'transient)
 (require 'casual-lib)
 (require 'casual-calc-utils)
 
 (transient-define-prefix casual-calc-rounding-tmenu ()
   "Casual rounding functions menu."
-  ["Rounding Functions"
-   ("r" "Round" calc-round :transient nil)
-   ("f" "Floor" calc-floor :transient nil)
-   ("c" "Ceiling" calc-ceiling :transient nil)
-   ("t" "Truncate" calc-trunc :transient nil)]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+  [["Rounding Functions"
+    ("r" "Round" casual-calc--round :transient t)
+    ("f" "Floor" casual-calc--floor :transient t)
+    ("c" "Ceiling" casual-calc--ceiling :transient t)
+    ("t" "Truncate" casual-calc--trunc :transient t)]
+   casual-calc-operators-group]
+
+  casual-calc-navigation-group)
 
 (provide 'casual-calc-rounding)
 ;;; casual-calc-rounding.el ends here

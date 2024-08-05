@@ -34,18 +34,21 @@
   "Casual binary functions menu."
   ["Binary Functions"
    ["Operators"
-    ("a" "and" casual-calc--calc-and :transient nil)
-    ("o" "or" casual-calc--calc-or :transient nil)
-    ("x" "xor" casual-calc--calc-xor :transient nil)
-    ("-" "diff" casual-calc--calc-diff :transient nil)
-    ("!" "not" casual-calc--calc-not :transient nil)]
+    ("&" "and" casual-calc--and :transient t)
+    ("|" "or" casual-calc--or :transient t)
+    ("^" "xor" casual-calc--xor :transient t)
+    ("d" "diff" casual-calc--diff :transient t)
+    ("!" "not" casual-calc--not :transient t)]
    ["Shift"
     :pad-keys t
-    ("l" "binary left" casual-calc--calc-lshift-binary :transient t)
-    ("r" "binary right" casual-calc--calc-rshift-binary :transient t)
-    ("M-l" "arithmetic left" casual-calc--calc-lshift-arith :transient t)
-    ("M-r" "arithmetic right" casual-calc--calc-rshift-arith :transient t)
-    ("C-r" "rotate binary" casual-calc--calc-rotate-binary :transient t)]
+    ("l" "binary left" casual-calc--lshift-binary :transient t)
+    ("r" "binary right" casual-calc--rshift-binary :transient t)
+    ("M-l" "arithmetic left" casual-calc--lshift-arith :transient t)
+    ("M-r" "arithmetic right" casual-calc--rshift-arith :transient t)
+    ("C-r" "rotate binary" casual-calc--rotate-binary :transient t)]
+
+   casual-calc-operators-group
+
    ["Utils"
     ("R" casual-calc-radix-tmenu
      :description (lambda ()
@@ -59,18 +62,16 @@
      :description (lambda ()
                     (format "Set Thousands Separator (now %s)…" calc-group-char))
      :transient t)
-    ("w" "Set Word Size…" casual-calc--calc-word-size :transient t)
-    ("u" "Unpack Bits" casual-calc--calc-unpack-bits :transient nil)
-    ("p" "Pack Bits" casual-calc--calc-pack-bits :transient nil)]]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+    ("w" "Set Word Size…" casual-calc--word-size :transient t)
+    ("u" "Unpack Bits" casual-calc--unpack-bits :transient t)
+    ("p" "Pack Bits" casual-calc--pack-bits :transient t)]]
+
+  casual-calc-navigation-group)
 
 
 ;; Wrapped Calc Functions
 
-(defun casual-calc--calc-and ()
+(defun casual-calc--and ()
   "Computes the bitwise AND of the two numbers on the top of the stack.
 \nStack Arguments:
 2: a
@@ -84,7 +85,7 @@ This function is a wrapper over `calc-and'.
  (interactive)
  (call-interactively #'calc-and))
 
-(defun casual-calc--calc-or ()
+(defun casual-calc--or ()
   "Computes the bitwise inclusive OR of two numbers.
 \nStack Arguments:
 2: a
@@ -98,7 +99,7 @@ This function is a wrapper over `calc-or'.
  (interactive)
  (call-interactively #'calc-or))
 
-(defun casual-calc--calc-xor ()
+(defun casual-calc--xor ()
   "Computes the bitwise exclusive OR of two numbers.
 \nStack Arguments:
 2: a
@@ -112,7 +113,7 @@ This function is a wrapper over `calc-xor'.
  (interactive)
  (call-interactively #'calc-xor))
 
-(defun casual-calc--calc-diff ()
+(defun casual-calc--diff ()
   "Computes the bitwise difference of two numbers.
 \nStack Arguments:
 2: a
@@ -129,7 +130,7 @@ This function is a wrapper over `calc-diff'.
  (interactive)
  (call-interactively #'calc-diff))
 
-(defun casual-calc--calc-not ()
+(defun casual-calc--not ()
   "Computes the bitwise NOT of a number.
 \nStack Arguments:
 1: n
@@ -144,7 +145,7 @@ This function is a wrapper over `calc-not'.
  (interactive)
  (call-interactively #'calc-not))
 
-(defun casual-calc--calc-lshift-binary ()
+(defun casual-calc--lshift-binary ()
   "Shifts a number left by one bit.
 \nStack Arguments:
 1: n
@@ -157,7 +158,7 @@ This function is a wrapper over `calc-lshift-binary'.
  (interactive)
  (call-interactively #'calc-lshift-binary))
 
-(defun casual-calc--calc-rshift-binary ()
+(defun casual-calc--rshift-binary ()
     "Shifts a number right by one bit.
 \nStack Arguments:
 1: n
@@ -170,7 +171,7 @@ This function is a wrapper over `calc-rshift-binary'.
  (interactive)
  (call-interactively #'calc-rshift-binary))
 
-(defun casual-calc--calc-lshift-arith ()
+(defun casual-calc--lshift-arith ()
   "Arithmetic shift left by one bit.
 \nStack Arguments:
 1: n
@@ -183,7 +184,7 @@ This function is a wrapper over `calc-lshift-arith'.
  (interactive)
  (call-interactively #'calc-lshift-arith))
 
-(defun casual-calc--calc-rshift-arith ()
+(defun casual-calc--rshift-arith ()
   "Arithmetic shift right by one bit.
 \nStack Arguments:
 1: n
@@ -204,7 +205,7 @@ This function is a wrapper over `calc-rshift-arith'.
  (interactive)
  (call-interactively #'calc-rshift-arith))
 
-(defun casual-calc--calc-rotate-binary ()
+(defun casual-calc--rotate-binary ()
   "Rotates a number one bit to the left.
 \nStack Arguments:
 1: n
@@ -220,7 +221,7 @@ This function is a wrapper over `calc-rotate-binary'.
  (interactive)
  (call-interactively #'calc-rotate-binary))
 
-(defun casual-calc--calc-word-size ()
+(defun casual-calc--word-size ()
     "Set the word size from a prompt.
 
 This command displays a prompt with the current word size; press
@@ -235,7 +236,7 @@ This function is a wrapper over function `calc-word-size'.
  (interactive)
  (call-interactively #'calc-word-size))
 
-(defun casual-calc--calc-unpack-bits ()
+(defun casual-calc--unpack-bits ()
     "Unpack into set of bit indexes.
 \nStack Arguments:
 1: n
@@ -248,7 +249,7 @@ This function is a wrapper over `calc-unpack-bits'.
  (interactive)
  (call-interactively #'calc-unpack-bits))
 
-(defun casual-calc--calc-pack-bits ()
+(defun casual-calc--pack-bits ()
     "Pack set of bit indexes into a number.
 \nStack Arguments:
 1: n

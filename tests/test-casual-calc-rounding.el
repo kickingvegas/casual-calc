@@ -29,14 +29,19 @@
 
 (ert-deftest test-casual-calc-rounding-tmenu ()
   (casualt-setup)
-  (casualt-run-menu-input-testcases
-   'casual-calc-rounding-tmenu
-   '(("r" ((float 27 -1)) 3)
-     ("r" ((float 22 -1)) 2)
-     ("f" ((float 25 -1)) 2)
-     ("c" ((float 25 -1)) 3)
-     ("t" ((float 25 -1)) 2)))
-  (casualt-breakdown t))
+
+  (let* ((test-vectors
+          '(("r" . casual-calc--round)
+            ("f" . casual-calc--floor)
+            ("c" . casual-calc--ceiling)
+            ("t" . casual-calc--trunc)))
+         (test-vectors (append test-vectors casualt-test-operators-group)))
+
+    ;;(pp test-vectors)
+    (casualt-suffix-testbench-runner test-vectors
+                                     #'casual-calc-rounding-tmenu
+                                     '(lambda () (random 5000))))
+  (casualt-breakdown t t))
 
 (provide 'test-casual-calc-rounding)
 ;;; test-casual-calc-rounding.el ends here

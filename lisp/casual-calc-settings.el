@@ -60,7 +60,7 @@
      :description (lambda ()
                     (format "Precision (now %d)" calc-internal-prec))
      :transient t)
-    ("I" "Infinite Mode" casual-calc--calc-infinite-mode
+    ("I" "Infinite Mode" casual-calc--infinite-mode
      :description (lambda ()
                     (casual-lib-checkbox-label calc-infinite-mode
                                             "Infinite Mode"))
@@ -105,6 +105,7 @@
      :transient t)]
 
    ["Settings"
+    ("C" "Customize Calc group" casual-calc--customize-group)
     ("S" "Save Calc Settings" calc-save-modes :transient t)
     ("O" "Open Calc Settings File" casual-calc-open-settings-file :transient nil)
     ("C-M-r" "Calc Reset" calc-reset :transient t)
@@ -116,6 +117,12 @@
           ("v" "Version" casual-calc-version :transient nil)
           ("M-a" "About" casual-calc-about :transient nil)
           (casual-lib-quit-all)])
+
+
+(defun casual-calc--customize-group ()
+  "Customize calc group."
+  (interactive)
+  (customize-group "calc"))
 
 (transient-define-prefix casual-calc-complex-format-tmenu ()
   "Casual complex formats menu."
@@ -134,10 +141,8 @@
    ("j" calc-j-notation
     :description "𝑗 notation"
     :transient nil)]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+
+  casual-calc-navigation-group)
 
 
 (transient-define-prefix casual-calc-float-format-tmenu ()
@@ -147,30 +152,31 @@
    ("f" "Fixed Point 𝑛" calc-fix-notation :transient nil)
    ("s" "Scientific" calc-sci-notation :transient nil)
    ("e" "Engineering" calc-eng-notation :transient nil)]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+
+  casual-calc-navigation-group)
 
 ;; = Functions =
 (defun casual-calc-about-casual ()
-  "Casual is an opinionated porcelain for Emacs Calc.
+  "Casual Calc is an opinionated user interface for the Emacs calculator.
 
-Learn more about using Casual at our discussion group on GitHub.
+Learn more about using Casual Calc at our discussion group on GitHub.
 Any questions or comments about Casual should be made there.
-URL `https://github.com/kickingvegas/Casual/discussions'
+URL `https://github.com/kickingvegas/casual-calc/discussions'
 
 If you find a bug or have an enhancement request, please file an issue.
 Our best effort will be made to answer it.
-URL `https://github.com/kickingvegas/Casual/issues'
+URL `https://github.com/kickingvegas/casual-calc/issues'
 
-If you enjoy using Casual, consider making a modest financial
+If you enjoy using Casual Calc, consider making a modest financial
 contribution to help support its development and maintenance.
 URL `https://www.buymeacoffee.com/kickingvegas'
 
-Casual was conceived and crafted by Charles Choi in San Francisco, California.
+Casual Calc was conceived and crafted by Charles Choi in
+San Francisco, California.
 
-Thank you for using Casual and always choose love."
+Thank you for using Casual Calc.
+
+Always choose love."
   (ignore))
 
 (defun casual-calc-about ()
@@ -178,7 +184,7 @@ Thank you for using Casual and always choose love."
   (interactive)
   (describe-function 'casual-calc-about-casual))
 
-(defun casual-calc--calc-infinite-mode ()
+(defun casual-calc--infinite-mode ()
   "Toggle infinite mode on or off.
 
 Divide-by-zero (e.g. ‘1 / 0’) results are normally treated as
