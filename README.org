@@ -58,7 +58,7 @@ Once raised, the Casual Calc interface can be dismissed via:
 - ~C-g~ to dismiss the current menu.
 - ~C-q~ to dismiss the interface completely.
 
-For nearly all menus, algebraic entry via the ~'~ binding is available, as well as basic calculator operations (addition, subtraction, multiplication, division) and stack operations (pop, enter).
+For nearly all menus, algebraic entry via the ' binding is available, as well as basic calculator operations (addition, subtraction, multiplication, division) and stack operations (pop, enter).
 
 * Common Menu Actions
 Casual Calc is built using Transient menus and as such adopts much of its default behavior.
