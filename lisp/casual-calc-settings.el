@@ -171,7 +171,8 @@ If you enjoy using Casual Calc, consider making a modest financial
 contribution to help support its development and maintenance.
 URL `https://www.buymeacoffee.com/kickingvegas'
 
-Casual Calc was conceived and crafted by Charles Choi in San Francisco, California.
+Casual Calc was conceived and crafted by Charles Choi in
+San Francisco, California.
 
 Thank you for using Casual Calc.
 
