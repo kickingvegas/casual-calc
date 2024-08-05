@@ -1,4 +1,5 @@
-[[https://melpa.org/#/casual][file:https://melpa.org/packages/casual-badge.svg]]
+[[https://melpa.org/#/casual-calc][file:https://melpa.org/packages/casual-calc-badge.svg]]
+
 * Casual Calc
 An opinionated [[https://github.com/magit/transient][Transient]]-based user interface to support the casual usage of Emacs [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][Calc]].
 
