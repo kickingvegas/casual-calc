@@ -52,14 +52,12 @@ from `kill-ring' operations."
     ("n" "Next" calc-truncate-down :transient t)]
 
    ["Misc"
-    ("R" "Refresh" calc-refresh :transient t)
-    ("l" "Customize kill line numbering"
-     casual-calc-customize-kill-line-numbering :transient nil)]]
-  [""
-   :class transient-row
-   (casual-lib-quit-one)
-   (casual-lib-quit-all)
-   ("s" "Save Settings" calc-save-modes :transient t)])
+    ("g" "Refresh" calc-refresh :transient t)
+    ("k" "Customize kill line numbering"
+     casual-calc-customize-kill-line-numbering :transient nil)
+    ("s" "Save Settings" calc-save-modes :transient t)]]
+
+  casual-calc-navigation-group)
 
 
 ;; Wrapped Functions
@@ -117,7 +115,7 @@ This function is a wrapper over `calc-pop'.
   (call-interactively #'calc-last-args))
 
 
-(defun casual-calc--calc-copy-as-kill ()
+(defun casual-calc--copy-as-kill ()
   "Copy top of stack (1:) to the clip-ring (aka `kill-ring').
 \nBy default, Calc will include the stack line number to clip-ring operations.
 To _not_ do this, set `calc-kill-line-numbering' to nil.

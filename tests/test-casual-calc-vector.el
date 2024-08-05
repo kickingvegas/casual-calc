@@ -27,7 +27,7 @@
 (require 'casual-calc-test-utils)
 (require 'casual-calc-vector)
 
-(ert-deftest test-casual-calc-vector-tmenu ()
+(ert-deftest test-casual-calc-vector-tmenu-integration ()
   (casualt-setup)
   (casualt-run-menu-input-testcases
    'casual-calc-vector-tmenu
@@ -60,7 +60,7 @@
   (should (= (calc-top) 2))
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc-vector-building-tmenu ()
+(ert-deftest test-casual-calc-vector-building-tmenu-integration ()
   (casualt-setup)
   (casualt-run-menu-input-testcases
    'casual-calc-vector-building-tmenu
@@ -88,7 +88,7 @@
      ))
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc-vector-arithmetic-tmenu ()
+(ert-deftest test-casual-calc-vector-arithmetic-tmenu-integration ()
   (casualt-setup)
   (casualt-run-menu-input-testcases
    'casual-calc-vector-arithmetic-tmenu
@@ -122,7 +122,7 @@
      ("T" ((vec (vec 2 4 ) (vec 8 9))) 11)))
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc-statistics-tmenu ()
+(ert-deftest test-casual-calc-statistics-tmenu-integration ()
   (casualt-setup)
   (casualt-run-menu-input-testcases
    'casual-calc-statistics-tmenu
@@ -146,14 +146,14 @@
      ("7" ((vec 1 2 3 4 5) (vec 5 3 3 4 1)) (float -746202507245 -12))))
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc-set-operations-tmenu ()
+(ert-deftest test-casual-calc-set-operations-tmenu-integration ()
   (casualt-setup)
   (casualt-run-menu-input-testcases
    'casual-calc-set-operations-tmenu
    '(("d" ((vec 5 3 3 4 1)) (vec 1 3 4 5))
      ("u" ((vec 1 2) (vec 3 4)) (vec 1 2 3 4))
      ("i" ((vec 1 2 3) (vec 3 4)) (vec 3))
-     ("-" ((vec 1 2 3) (vec 3 4)) (vec 1 2))
+     ("D" ((vec 1 2 3) (vec 3 4)) (vec 1 2))
      ("x" ((vec 1 2 3) (vec 3 4)) (vec 1 2 4))
      ("~" ((vec 3 10)) (vec
                         (intv 2 (neg (var inf var-inf)) 3) (intv 0 3 10)
@@ -161,7 +161,7 @@
      ("#" ((vec 5 3 3 4 1)) 4)))
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc-map-and-reduce-tmenu ()
+(ert-deftest test-casual-calc-map-and-reduce-tmenu-integration ()
   (casualt-setup)
   (casualt-run-menu-input-testcases
    'casual-calc-map-and-reduce-tmenu
@@ -172,7 +172,7 @@
      ("A+" ((vec 1 3 8)) (vec 1 4 12))))
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc--calc-histogram ()
+(ert-deftest test-casual-calc--histogram ()
   (casualt-setup)
   (calc-push '(vec 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18
                    19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34
@@ -187,37 +187,199 @@
   (should (equal (calc-top) '(vec 5 10 10 10 10 10 10 10 10 10 5)))
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc-vector-tmenu-bindings ()
+(ert-deftest test-casual-calc-vector-tmenu ()
   (casualt-setup)
-  (let ((test-vectors '(("b" . casual-calc-vector-building-tmenu)
-                        ("a" . casual-calc-vector-arithmetic-tmenu)
-                        ("s" . casual-calc-statistics-tmenu)
-                        ("S" . casual-calc-set-operations-tmenu)
-                        ("m" . casual-calc-map-and-reduce-tmenu)
-                        ;; TODO: seems like calc functions can not be advised, need to wrap
-                        ;; ("lq" . calc-vlength)
-                        ;; ("tq" . calc-transpose)
-                        ;; ("v" . calc-reverse-vector)
-                        ;; ("o" . calc-sort)
-                        ;; ("d" . calc-remove-duplicates)
-                        ;; ("r" . calc-mrow)
-                        ;; ("c" . calc-mcol)
-                        ;; ("p" . calc-pack)
-                        ;; ("u" . calc-unpack)
-                        )))
-    (casualt-suffix-testbench-runner test-vectors
-                                     #'casual-calc-vector-tmenu
-                                     '(lambda () (random 5000))))
-  (casualt-breakdown t))
+  (cl-letf
+      (((symbol-function #'calc-vlength) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-transpose) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-reverse-vector) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-sort) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-remove-duplicates) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-mrow) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-mcol) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-pack) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-unpack) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("b" . casual-calc-vector-building-tmenu)
+                           ("a" . casual-calc-vector-arithmetic-tmenu)
+                           ("s" . casual-calc-statistics-tmenu)
+                           ("S" . casual-calc-set-operations-tmenu)
+                           ("m" . casual-calc-map-and-reduce-tmenu)
+                           ("l" . calc-vlength)
+                           ("t" . calc-transpose)
+                           ("v" . calc-reverse-vector)
+                           ("o" . calc-sort)
+                           ("d" . calc-remove-duplicates)
+                           ("r" . calc-mrow)
+                           ("c" . calc-mcol)
+                           ("p" . calc-pack)
+                           ("u" . calc-unpack)))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-vector-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
 
-(ert-deftest test-casual-calc-statistics-tmenu-bindings ()
+(ert-deftest test-casual-calc-vector-building-tmenu ()
   (casualt-setup)
-  (let ((test-vectors '(("h" . casual-calc--calc-histogram)
-                        )))
-    (casualt-suffix-testbench-runner test-vectors
-                                     #'casual-calc-statistics-tmenu
-                                     '(lambda () (random 5000))))
-  (casualt-breakdown t))
+  (cl-letf
+      (((symbol-function #'calc-concat) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-index) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-set-enumerate) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-ident) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-diag) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-build-vector) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-transpose) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-reverse-vector) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-arrange-vector) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-sort) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-remove-duplicates) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vlength) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-count) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-find) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-histogram) (lambda (x) (interactive)(print "WARNING: override")))
+       )
+    (let* ((test-vectors '(("|" . calc-concat)
+                           ("i" . calc-index)
+                           ("e" . calc-set-enumerate)
+                           ("I" . calc-ident)
+                           ("d" . calc-diag)
+                           ("b" . calc-build-vector)
+                           ("t" . calc-transpose)
+                           ("r" . calc-reverse-vector)
+                           ("a" . calc-arrange-vector)
+                           ("s" . calc-sort)
+                           ("p" . calc-remove-duplicates)
+                           ("l" . calc-vlength)
+                           ("c" . calc-vector-count)
+                           ("f" . calc-vector-find)
+                           ("h" . calc-histogram)))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-vector-building-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
+
+(ert-deftest test-casual-calc-vector-arithmetic-tmenu ()
+  (casualt-setup)
+  (cl-letf
+      (((symbol-function #'calc-conj-transpose) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-abs) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-rnorm) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-cnorm) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-cross) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-kron) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-inv) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-mdet) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-mlud) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-mtrace) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'casual-calc-crossp) (lambda () t))
+       ((symbol-function #'casual-calc-matrixmultp) (lambda () t))
+       ((symbol-function #'casual-calc-square-matrixp) (lambda () t))
+       )
+    (let* ((test-vectors '(
+                           ("t" . calc-conj-transpose)
+                           ("A" . calc-abs)
+                           ("r" . calc-rnorm)
+                           ("c" . calc-cnorm)
+                           ("p" . calc-cross)
+                           ("k" . calc-kron)
+                           ("&" . calc-inv)
+                           ("d" . calc-mdet)
+                           ("l" . calc-mlud)
+                           ("T" . calc-mtrace)))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-vector-arithmetic-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
+
+
+(ert-deftest test-casual-calc-statistics-tmenu ()
+  (casualt-setup)
+  (cl-letf
+      (((symbol-function #'calc-vector-count) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-sum) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-max) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-mean) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-mean-error) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-median) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-harmonic-mean) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-geometric-mean) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-rms) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-sdev) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-pop-sdev) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-variance) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-pop-variance) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-covariance) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-pop-covariance) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-vector-correlation) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("c" . calc-vector-count)
+                           ("s" . calc-vector-sum)
+                           ("x" . calc-vector-max)
+                           ("m" . calc-vector-mean)
+                           ("h" . casual-calc--histogram)
+                           ("e" . calc-vector-mean-error)
+                           ("M" . calc-vector-median)
+                           ("H" . calc-vector-harmonic-mean)
+                           ("g" . calc-vector-geometric-mean)
+                           ("r" . calc-vector-rms)
+                           ("1" . calc-vector-sdev)
+                           ("2" . calc-vector-pop-sdev)
+                           ("3" . calc-vector-variance)
+                           ("4" . calc-vector-pop-variance)
+                           ("5" . calc-vector-covariance)
+                           ("6" . calc-vector-pop-covariance)
+                           ("7" . calc-vector-correlation)))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-statistics-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
+
+
+(ert-deftest test-casual-calc-set-operations-tmenu ()
+  (casualt-setup)
+  (cl-letf
+      (
+       ((symbol-function #'calc-remove-duplicates) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-set-union) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-set-intersect) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-set-difference) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-set-xor) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-set-complement) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-set-cardinality) (lambda (x) (interactive)(print "WARNING: override")))
+       )
+    (let* ((test-vectors '(
+                           ("d" . calc-remove-duplicates)
+                           ("u" . calc-set-union)
+                           ("i" . calc-set-intersect)
+                           ("D" . calc-set-difference)
+                           ("x" . calc-set-xor)
+                           ("~" . calc-set-complement)
+                           ("#" . calc-set-cardinality)))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-set-operations-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
+
+
+(ert-deftest test-casual-calc-map-and-reduce-tmenu ()
+  (casualt-setup)
+  (cl-letf
+      (((symbol-function #'calc-map) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-reduce) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-apply) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-accumulate) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("m" . calc-map)
+                           ("r" . calc-reduce)
+                           ("a" . calc-apply)
+                           ("A" . calc-accumulate)))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-map-and-reduce-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
 
 (provide 'test-casual-calc-vector)
 ;;; test-casual-calc-vector.el ends here

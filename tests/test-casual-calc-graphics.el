@@ -96,16 +96,83 @@
   (should (equal '(+ (+ (^ (var x var-x) 3) (^ (var x var-x) 2)) 1) (calc-top)))
   (casualt-breakdown t))
 
+(ert-deftest test-casual-calc-plot-tmenu ()
+  (casualt-setup)
+  (cl-letf
+      (((symbol-function #'calc-graph-plot) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-graph-clear) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-graph-print) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-graph-command) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'casual-calc-read-plot-data) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("a" . casual-calc--graph-add)
+                           ("e" . casual-calc--graph-add-equation)
+                           ("A" . casual-calc--graph-add-3d)
+                           ("d" . casual-calc--graph-delete)
+                           ("N" . casual-calc--graph-name)
+                           ("j" . casual-calc--graph-juggle)
+                           ("s" . casual-calc-curve-style-tmenu)
+                           ("o" . casual-calc-read-plot-data)
+                           ("c" . calc-graph-clear)
+                           ("r" . calc-graph-plot) ; can't get this to work, dunno why
+                           ("n" . casual-calc--graph-num-points)
+                           ("S" . casual-calc-plot-options-tmenu)
+                           ("g" . casual-calc-graph-settings-tmenu)
+                           ("p" . calc-graph-print)
+                           ("C" . calc-graph-command)
+                           ("E" . casual-calc-graph-examples-tmenu)))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-plot-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
 
-;; TODO: figure out how to mock functions called by Transient prefix.
-;; At current, unknown how to write a test without exercising Gnuplot which is
-;; _not_ desired.
 
-;; (ert-deftest test-casual-calc-plot-tmenu ())
-;; (ert-deftest test-casual-calc-plot-options-tmenu ())
-;; (ert-deftest test-casual-calc-graph-examples-tmenu ())
-;; (ert-deftest test-casual-calc-graph-settings-tmenu ())
-;; (ert-deftest test-casual-calc-curve-style-tmenu ())
+(ert-deftest test-casual-calc-graph-examples-tmenu ()
+  (casualt-setup)
+  (let* ((test-vectors '(("a" . casual-calc--push-natural-interval-0-100)
+                         ("b" . casual-calc--push-natural-interval-0-360)
+                         ("c" . casual-calc--push-float-interval-0-100)
+                         ("d" . casual-calc--push-float-interval-1-symmetric)
+                         ("1" . casual-calc--push-sin)
+                         ("2" . casual-calc--push-cos)
+                         ("3" . casual-calc--push-tan)
+                         ("4" . casual-calc--push-ln)
+                         ("5" . casual-calc--push-e-raised-to-x)
+                         ("6" . casual-calc--push-polynomial-order-2)
+                         ("7" . casual-calc--push-polynomial-order-3)))
+         (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-graph-examples-tmenu
+                                       '(lambda () (random 5000))))
+
+  (casualt-breakdown t t))
+
+
+(ert-deftest test-casual-calc-graph-settings-tmenu ()
+  (casualt-setup)
+  (cl-letf
+      (((symbol-function #'calc-graph-device) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-graph-output) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-graph-quit) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("d" . calc-graph-device)
+                           ("o" . calc-graph-output)
+                           ("Q" . calc-graph-quit))))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-graph-settings-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t))
+
+
+(ert-deftest test-casual-calc-curve-style-tmenu ()
+  (casualt-setup)
+  (let* ((test-vectors '(("l" . casual-calc--graph-toggle-line-style)
+                         ("p" . casual-calc--graph-toggle-point-style))))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-curve-style-tmenu
+                                       '(lambda () (random 5000))))
+  (casualt-breakdown t))
+
+
 
 (provide 'test-casual-calc-graphics)
 ;;; test-casual-calc-graphics.el ends here

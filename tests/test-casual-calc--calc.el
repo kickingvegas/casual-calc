@@ -30,86 +30,86 @@
 
 ;;; Tests
 
-(ert-deftest test-casual-calc--calc-inv ()
+(ert-deftest test-casual-calc--inv ()
   (casualt-setup)
   (calc-push 10)
-  (casualt-testbench-calc-fn #'casual-calc--calc-inv
+  (casualt-testbench-calc-fn #'casual-calc--inv
                              '()
                              '(float 1 -1))
   (casualt-breakdown t))
 
 
-(ert-deftest test-casual-calc--calc-sqrt ()
+(ert-deftest test-casual-calc--sqrt ()
   (casualt-setup)
   (calc-push 25)
-  (casualt-testbench-calc-fn #'casual-calc--calc-sqrt
+  (casualt-testbench-calc-fn #'casual-calc--sqrt
                              '()
                              5)
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc--calc-change-sign ()
+(ert-deftest test-casual-calc--change-sign ()
   (casualt-setup)
   (calc-push 10)
-  (casualt-testbench-calc-fn #'casual-calc--calc-change-sign
+  (casualt-testbench-calc-fn #'casual-calc--change-sign
                              '()
                              -10)
   (casualt-breakdown t))
 
 
-(ert-deftest test-casual-calc--calc-power ()
+(ert-deftest test-casual-calc--power ()
   (casualt-setup)
   (calc-push 2)
   (calc-push 3)
-  (casualt-testbench-calc-fn #'casual-calc--calc-power
+  (casualt-testbench-calc-fn #'casual-calc--power
                              '()
                              8)
   (casualt-breakdown t))
 
 
-(ert-deftest test-casual-calc--calc-abs ()
+(ert-deftest test-casual-calc--abs ()
   (casualt-setup)
   (calc-push -10)
-  (casualt-testbench-calc-fn #'casual-calc--calc-abs
+  (casualt-testbench-calc-fn #'casual-calc--abs
                              '()
                              10)
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc--calc-factorial ()
+(ert-deftest test-casual-calc--factorial ()
   (casualt-setup)
   (calc-push 10)
-  (casualt-testbench-calc-fn #'casual-calc--calc-factorial
+  (casualt-testbench-calc-fn #'casual-calc--factorial
                              '()
                              3628800)
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc--calc-percent ()
+(ert-deftest test-casual-calc--percent ()
   (casualt-setup)
   (calc-push 10)
-  (casualt-testbench-calc-fn #'casual-calc--calc-percent
+  (casualt-testbench-calc-fn #'casual-calc--percent
                              '()
                              '(calcFunc-percent 10))
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc--calc-percent-change ()
+(ert-deftest test-casual-calc--percent-change ()
   (casualt-setup)
   (calc-push 40)
   (calc-push 50)
-  (casualt-testbench-calc-fn #'casual-calc--calc-percent-change
+  (casualt-testbench-calc-fn #'casual-calc--percent-change
                              '()
                              '(calcFunc-percent 25))
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc--calc-pi ()
+(ert-deftest test-casual-calc--pi ()
   (casualt-setup)
-  (casualt-testbench-calc-fn #'casual-calc--calc-pi
+  (casualt-testbench-calc-fn #'casual-calc--pi
                              '()
                              '(float 314159265359 -11))
   (casualt-breakdown t))
 
-(ert-deftest test-casual-calc--calc-evaluate ()
+(ert-deftest test-casual-calc--evaluate ()
   (casualt-setup)
   (calc-push '(* 10 (var x var-x)))
-  (casualt-testbench-calc-fn #'casual-calc--calc-evaluate
+  (casualt-testbench-calc-fn #'casual-calc--evaluate
                              '()
                              '(* 10 (var x var-x)))
   (casualt-breakdown t))

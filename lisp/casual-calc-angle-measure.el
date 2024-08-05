@@ -40,8 +40,10 @@
    ("h" "Degrees-Minutes-Seconds" calc-hms-mode :transient nil)]
   [:class transient-row
           (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+          (casual-calc-algebraic-entry)
+          (casual-calc-pop)
+          (casual-calc-undo-suffix)
+          (casual-lib-quit-all)])
 
 (provide 'casual-calc-angle-measure)
 ;;; casual-calc-angle-measure.el ends here

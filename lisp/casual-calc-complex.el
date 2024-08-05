@@ -30,15 +30,13 @@
 
 (transient-define-prefix casual-calc-complex-number-tmenu ()
   "Casual complex number functions menu."
-  ["Complex Number"
-   ("r" "Real Part" calc-re :transient nil)
-   ("i" "Imaginary Part" calc-im :transient nil)
-   ("c" "Complex Conjugate" calc-conj :transient nil)
-   ("a" "Argument" calc-argument :transient nil)]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+  [["Complex Number"
+    ("r" "Real Part" calc-re :transient t)
+    ("i" "Imaginary Part" calc-im :transient t)
+    ("c" "Complex Conjugate" calc-conj :transient t)
+    ("a" "Argument" calc-argument :transient t)]
+   casual-calc-operators-group]
+  casual-calc-navigation-group)
 
 (provide 'casual-calc-complex)
 ;;; casual-calc-complex.el ends here

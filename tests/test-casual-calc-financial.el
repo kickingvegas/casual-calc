@@ -170,48 +170,60 @@
   (casualt-breakdown t))
 
 ;; Menus ----
+
 (ert-deftest test-casual-calc-financial-tmenu ()
   (casualt-setup)
-  (let ((test-vectors '(("f" . casual-calc-fin-pv-fv-tmenu)
-                        ("p" . casual-calc-fin-periodic-payments-tmenu)
-                        ("n" . casual-calc-fin-number-of-payments-tmenu)
-                        ("t" . casual-calc-fin-periods-to-target-tmenu)
-                        ("r" . casual-calc-fin-rate-of-return-tmenu)
+  (cl-letf
+      (((symbol-function #'calc-percent) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-convert-percent) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-percent-change) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-evaluate) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-refresh) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-last-args) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("f" . casual-calc-fin-pv-fv-tmenu)
+                           ("p" . casual-calc-fin-periodic-payments-tmenu)
+                           ("n" . casual-calc-fin-number-of-payments-tmenu)
+                           ("t" . casual-calc-fin-periods-to-target-tmenu)
+                           ("r" . casual-calc-fin-rate-of-return-tmenu)
 
-                        ("%q" . calc-percent)
-                        ("cq" . calc-convert-percent)
-                        ("Dq" . calc-percent-change)
-                        ;; ("=q" . calc-evaluate)  ; dunno why this doesn't work
+                           ("%" . calc-percent)
+                           ("c" . calc-convert-percent)
+                           ("D" . calc-percent-change)
+                           ("=" . calc-evaluate)
 
-                        ("v" . casual-calc-fin-npv-tmenu)
-                        ("i" . casual-calc-fin-irr-tmenu)
-                        ("d" . casual-calc-fin-depreciation-tmenu))))
-
-    (casualt-suffix-testbench-runner test-vectors
-                                     #'casual-calc-financial-tmenu
-                                     '(lambda () (random 5000))))
-  (casualt-breakdown t))
+                           ("ó" . casual-calc-stack-display-tmenu)
+                           ("R" . calc-refresh)
+                           ("L" . calc-last-args)
+                           ("v" . casual-calc-fin-npv-tmenu)
+                           ("i" . casual-calc-fin-irr-tmenu)
+                           ("d" . casual-calc-fin-depreciation-tmenu)))
+           (test-vectors (append test-vectors casualt-test-basic-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-financial-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
 
 (ert-deftest test-casual-calc-fin-npv-tmenu ()
   (casualt-setup)
-  (casualt-testbench-transient-suffix #'casual-calc-fin-npv-tmenu
-                                      "n"
-                                      #'casual-calc--fin-npv
-                                      (random 5000))
-  (casualt-breakdown t))
-
+  (let* ((test-vectors '(("n" . casual-calc-fin-npv-tmenu)))
+         (test-vectors (append test-vectors casualt-test-basic-operators-group)))
+    (casualt-suffix-testbench-runner test-vectors
+                                     #'casual-calc-fin-npv-tmenu
+                                     '(lambda () (random 5000))))
+  (casualt-breakdown t t))
 
 (ert-deftest test-casual-calc-fin-pv-fv-tmenu ()
   (casualt-setup)
-  (let ((test-vectors '(("f" . casual-calc--fin-fv-periodic)
-                        ("F" . casual-calc--fin-fv-lump)
-                        ("p" . casual-calc--fin-pv-periodic)
-                        ("P" . casual-calc--fin-pv-lump))))
+  (let* ((test-vectors '(("f" . casual-calc--fin-fv-periodic)
+                         ("F" . casual-calc--fin-fv-lump)
+                         ("p" . casual-calc--fin-pv-periodic)
+                         ("P" . casual-calc--fin-pv-lump)))
+         (test-vectors (append test-vectors casualt-test-basic-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-fin-pv-fv-tmenu
+                                       '(lambda () (random 5000))))
 
-    (casualt-suffix-testbench-runner test-vectors
-                                     #'casual-calc-fin-pv-fv-tmenu
-                                     '(lambda () (random 5000)))
-    (casualt-breakdown t)))
+  (casualt-breakdown t t))
 
 (ert-deftest test-casual-calc-fin-periodic-payments-tmenu ()
   (casualt-setup)
@@ -219,7 +231,7 @@
                                       "p"
                                       #'casual-calc--fin-periodic-payment
                                       (random 5000))
-  (casualt-breakdown t))
+  (casualt-breakdown t t))
 
 (ert-deftest test-casual-calc-fin-number-of-payments-tmenu ()
   (casualt-setup)
@@ -227,7 +239,7 @@
                                       "n"
                                       #'casual-calc--fin-number-of-payments
                                       (random 5000))
-  (casualt-breakdown t))
+  (casualt-breakdown t t))
 
 (ert-deftest test-casual-calc-fin-rate-of-return-tmenu ()
   (casualt-setup)
@@ -235,7 +247,7 @@
                                       "r"
                                       #'casual-calc--fin-rate-of-return
                                       (random 5000))
-  (casualt-breakdown t))
+  (casualt-breakdown t t))
 
 (ert-deftest test-casual-calc-fin-periods-to-target-tmenu ()
   (casualt-setup)
@@ -243,7 +255,7 @@
                                       "n"
                                       #'casual-calc--fin-periods-to-reach-target
                                       (random 5000))
-  (casualt-breakdown t))
+  (casualt-breakdown t t))
 
 (ert-deftest test-casual-calc-fin-depreciation-tmenu ()
   (casualt-setup)
@@ -253,10 +265,8 @@
 
     (casualt-suffix-testbench-runner test-vectors
                                      #'casual-calc-fin-depreciation-tmenu
-                                     '(lambda () (random 5000)))
-    (casualt-breakdown t))
-
-  (casualt-breakdown t))
+                                     '(lambda () (random 5000))))
+  (casualt-breakdown t t))
 
 ;; (provide 'test-casual-calc-financial)
 ;;; test-casual-calc-financial.el ends here

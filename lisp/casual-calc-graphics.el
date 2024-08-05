@@ -360,22 +360,22 @@ This string name is used in the canvas legend (key)."
     ;;("h" "Toggle Hide" casual-calc--graph-hide :transient t) ; does this even work?
     ("n" "# Data Points…" casual-calc--graph-num-points :transient t)
     ;; force redraw by setting current-prefix-arg to -1 and call calc-graph-plot
-    ("S" "Style›" casual-calc-plot-options-tmenu :transient t)]
+    ("S" "Style›" casual-calc-plot-options-tmenu)]
    ["Utils"
     ("g" "Settings›" casual-calc-graph-settings-tmenu :transient nil)
     ("p" "Print" calc-graph-print
      ;:description (lambda () (format "Print (%s)…" calc-gnuplot-print-device))
      :transient nil)
-    ("C" "Raw Command…" calc-graph-command :transient nil)]]
+    ("C" "Raw Command…" calc-graph-command :transient nil)]
+   casual-calc-operators-group]
 
   ["Data"
    :pad-keys t
    ("E" "Examples›" casual-calc-graph-examples-tmenu :transient nil)]
-   ;;("v" "Vector/Matrix›" casual-calc-vector-tmenu :transient nil)
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+  ;;("v" "Vector/Matrix›" casual-calc-vector-tmenu :transient nil)
+
+  casual-calc-navigation-group)
+
 
 (transient-define-prefix casual-calc-plot-options-tmenu ()
   "Casual plot options menu."
@@ -406,10 +406,8 @@ This string name is used in the canvas legend (key)."
    ["Zero Axis"
     ("1" "Toggle 𝑥" casual-calc--graph-zero-x :transient t); refactor to new menu
     ("2" "Toggle 𝑦" casual-calc--graph-zero-y :transient t)]]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-graph-examples-tmenu ()
   "Menu of plot examples."
@@ -423,7 +421,9 @@ This string name is used in the canvas legend (key)."
     ("c" "insert [0.0 .. 100.0]"
      casual-calc--push-float-interval-0-100 :transient t)
     ("d" "insert [-1.0 .. 1.0]"
-     casual-calc--push-float-interval-1-symmetric :transient t)]]
+     casual-calc--push-float-interval-1-symmetric :transient t)]
+
+   casual-calc-operators-group]
 
   ["Curves"
    ["Trigonometric"
@@ -435,17 +435,14 @@ This string name is used in the canvas legend (key)."
    ["Logarithmic"
     :pad-keys t
     ("4" "𝑙𝑛(𝑥)" casual-calc--push-ln :transient t)
-    ("5" "𝑒^𝑥" casual-calc--push-e-raised-to-x :transient t)]
+    ("5" "𝑒ˣ" casual-calc--push-e-raised-to-x :transient t)]
 
    ["Polynomial"
     :pad-keys t
     ("6" "𝑥² + 𝟣" casual-calc--push-polynomial-order-2 :transient t)
     ("7" "𝑥³ + 𝑥² + 𝟣" casual-calc--push-polynomial-order-3 :transient t)]]
 
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-graph-settings-tmenu ()
   "Graphics settings menu."
@@ -456,11 +453,9 @@ This string name is used in the canvas legend (key)."
     ("o" "Set Output File…" calc-graph-output
      ;:description (lambda () (format "Output (%s)…" calc-gnuplot-default-output))
      :transient nil)
-    ("Q" "Quit Gnuplot Session" calc-graph-quit :transient nil)
-   ]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)])
+    ("Q" "Quit Gnuplot Session" calc-graph-quit :transient nil)]
+
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-curve-style-tmenu ()
   "Style curve menu."
@@ -469,9 +464,8 @@ This string name is used in the canvas legend (key)."
     ("l" "Toggle Line" casual-calc--graph-toggle-line-style :transient t)]
    ["Point"
     ("p" "Toggle Point" casual-calc--graph-toggle-point-style :transient t)]]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)])
+
+  casual-calc-navigation-group)
 
 
 ;; (transient-define-prefix casual-calc-curve-style-tmenu ()

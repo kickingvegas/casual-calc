@@ -26,7 +26,32 @@
 (require 'ert)
 (require 'casual-calc-test-utils)
 
-;; TODO: write tests when mocking for Transients is solved.
+(ert-deftest test-casual-calc-stack-display-tmenu ()
+  (casualt-setup)
+  (cl-letf
+      (((symbol-function #'calc-left-justify) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-center-justify) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-right-justify) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-truncate-stack) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-truncate-up) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-truncate-down) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-refresh) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-save-modes) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(
+                           ("l" . calc-left-justify)
+                           ("c" . calc-center-justify)
+                           ("r" . calc-right-justify)
+                           ("." . calc-truncate-stack)
+                           ("p" . calc-truncate-up)
+                           ("n" . calc-truncate-down)
+                           ("g" . calc-refresh)
+                           ("k" . casual-calc-customize-kill-line-numbering)
+                           ("s" . calc-save-modes))))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-stack-display-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
+
 
 (provide 'test-casual-calc-stack)
 ;;; test-casual-calc-stack.el ends here

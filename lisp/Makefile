@@ -28,8 +28,8 @@ endif
 PACKAGE_NAME=casual-calc
 
 ELISP_INCLUDES =				\
-casual-calc-utils.el				\
 casual-calc--calc.el				\
+casual-calc-utils.el				\
 casual-calc-algebra.el				\
 casual-calc-predicates.el			\
 casual-calc-labels.el				\
@@ -47,7 +47,6 @@ casual-calc-complex.el				\
 casual-calc-conversion.el			\
 casual-calc-logarithmic.el			\
 casual-calc-random.el				\
-casual-calc-rounding.el				\
 casual-calc-rounding.el				\
 casual-calc-settings.el				\
 casual-calc-time.el				\

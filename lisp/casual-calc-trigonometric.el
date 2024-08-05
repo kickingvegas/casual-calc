@@ -23,9 +23,9 @@
 ;;
 
 ;;; Code:
-(require 'calc)
 (require 'transient)
 (require 'casual-lib)
+(require 'casual-calc-utils)
 (require 'casual-calc-labels)
 (require 'casual-calc-angle-measure)
 
@@ -35,41 +35,42 @@
   ;;  ("i" "inverse" "-inverse")
   ;;  ("h" "hyperbolic" "-hyperbolic")]
   [["Trig"
-    ("s" "sin" calc-sin :transient nil)
-    ("c" "cos" calc-cos :transient nil)
-    ("t" "tan" calc-tan :transient nil)]
+    ("s" "sin" calc-sin :transient t)
+    ("c" "cos" calc-cos :transient t)
+    ("t" "tan" calc-tan :transient t)]
    ["Inverse"
-    ("S" "arcsin" calc-arcsin :transient nil)
-    ("C" "arccos" calc-arccos :transient nil)
-    ("T" "arctan" calc-arctan :transient nil)]
+    ("S" "arcsin" calc-arcsin :transient t)
+    ("C" "arccos" calc-arccos :transient t)
+    ("T" "arctan" calc-arctan :transient t)]
 
-   ["Angle Measure"
+   ["Misc"
+    ("p" "𝜋" casual-calc--pi :transient t)
+    ("d" "To Degrees" calc-to-degrees :transient t)
+    ("r" "To Radians" calc-to-radians :transient t)
     ("a" casual-calc-angle-measure-tmenu
      :description (lambda ()
                     (format "Angle Measure (now %s)›"
                             (casual-calc-angle-mode-label)))
-     :transient nil)]]
-  [("h" "Hyperbolic›" casual-calc-hyperbolic-trig-tmenu :transient nil)]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+     :transient t)
+    ("h" "Hyperbolic›" casual-calc-hyperbolic-trig-tmenu)]
+   casual-calc-operators-group]
+
+  casual-calc-navigation-group)
+
 
 (transient-define-prefix casual-calc-hyperbolic-trig-tmenu ()
   "Casual hyperbolic trigonometric functions menu."
   [["Hyperbolic"
-    ("s" "sinh" calc-sinh :transient nil)
-    ("c" "cosh" calc-cosh :transient nil)
-    ("t" "tanh" calc-tanh :transient nil)]
+    ("s" "sinh" calc-sinh :transient t)
+    ("c" "cosh" calc-cosh :transient t)
+    ("t" "tanh" calc-tanh :transient t)]
    ["Inverse Hyperbolic"
-    ("S" "arcsinh" calc-arcsinh :transient nil)
-    ("C" "arccosh" calc-arccosh :transient nil)
-    ("T" "arctanh" calc-arctanh :transient nil)]]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+    ("S" "arcsinh" calc-arcsinh :transient t)
+    ("C" "arccosh" calc-arccosh :transient t)
+    ("T" "arctanh" calc-arctanh :transient t)]
+   casual-calc-operators-group]
 
+  casual-calc-navigation-group)
 
 (provide 'casual-calc-trigonometric)
 ;;; casual-calc-trigonometric.el ends here

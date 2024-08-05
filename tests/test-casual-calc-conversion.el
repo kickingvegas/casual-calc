@@ -29,15 +29,22 @@
 
 (ert-deftest test-casual-calc-conversions-tmenu ()
   (casualt-setup)
-  (casualt-run-menu-input-testcases
-   'casual-calc-conversions-tmenu
-   '(("d" ((float 785398163397 -12)) (float 45 0))
-     ("r" ((float 45 0)) (float 785398163397 -12))
-     ("h" ((float 150833333333 -11)) (hms 1 30 (float 3 1)))
-     ("F" ((float 15 -1)) (frac 3 2))
-     ("f" ((frac 3 2)) (float 15 -1))
-     ))
-  (casualt-breakdown t))
+  (cl-letf
+      (((symbol-function #'calc-to-degrees) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-to-radians) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-to-hms) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-float) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-fraction) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("d" . calc-to-degrees)
+                           ("r" . calc-to-radians)
+                           ("h" . calc-to-hms)
+                           ("f" . calc-float)
+                           ("F" . calc-fraction)))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-conversions-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
 
 (provide 'test-casual-calc-conversion)
 ;;; test-casual-calc-conversion.el ends here

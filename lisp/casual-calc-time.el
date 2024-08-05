@@ -30,28 +30,24 @@
 
 (transient-define-prefix casual-calc-time-tmenu ()
   "Casual time functions menu."
-  ["Time"
-   ("n" "Now" calc-now :transient nil)
-   ("f" "First Day of›" casual-calc-first-day-tmenu :transient nil)
-   ("i" "Increment Month" calc-inc-month :transient nil)
-   ("u" "To Unix Time" calc-unix-time :transient nil)
-   ("+" "Add Business Days" calc-business-days-plus :transient nil)
-   ("-" "Subtract Business Days" calc-business-days-minus :transient nil)]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+  [["Time"
+    ("n" "Now" calc-now :transient t)
+    ("f" "First Day of›" casual-calc-first-day-tmenu)
+    ("i" "Increment Month" calc-inc-month :transient t)
+    ("u" "To Unix Time" calc-unix-time :transient t)
+    ("a" "Add Business Days" calc-business-days-plus :transient t)
+    ("s" "Subtract Business Days" calc-business-days-minus :transient t)]
+   casual-calc-operators-group]
+  casual-calc-navigation-group)
 
 (transient-define-prefix casual-calc-first-day-tmenu ()
   "Casual time first day of menu."
-  ["First Day Of"
-   ("w" "Week" calc-new-week :transient nil)
-   ("m" "Month" calc-new-month :transient nil)
-   ("y" "Year" calc-new-year :transient nil)]
-  [:class transient-row
-          (casual-lib-quit-one)
-          (casual-lib-quit-all)
-          (casual-calc-undo-suffix)])
+  [["First Day Of"
+    ("w" "Week" calc-new-week :transient t)
+    ("m" "Month" calc-new-month :transient t)
+    ("y" "Year" calc-new-year :transient t)]
+   casual-calc-operators-group]
+  casual-calc-navigation-group)
 
 (provide 'casual-calc-time)
 ;;; casual-calc-time.el ends here

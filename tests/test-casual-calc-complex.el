@@ -29,13 +29,20 @@
 
 (ert-deftest test-casual-calc-complex-number-tmenu ()
   (casualt-setup)
-  (casualt-run-menu-input-testcases
-   'casual-calc-complex-number-tmenu
-   '(("r" ((cplx 2 3)) 2)
-     ("i" ((cplx 2 3)) 3)
-     ("c" ((cplx 2 3)) (cplx 2 -3))
-     ("a" ((cplx 2 3)) (float 56309932474 -9))))
-  (casualt-breakdown t))
+  (cl-letf
+      (((symbol-function #'calc-re) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-im) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-conj) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-argument) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("r" . calc-re)
+                           ("i" . calc-im)
+                           ("c" . calc-conj)
+                           ("a" . calc-argument)))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-complex-number-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
 
 (provide 'test-casual-calc-complex)
 ;;; test-casual-calc-complex.el ends here

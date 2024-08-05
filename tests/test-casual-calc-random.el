@@ -27,7 +27,7 @@
 (require 'casual-calc-test-utils)
 (require 'casual-calc-random)
 
-(ert-deftest test-casual-calc-random-number-tmenu ()
+(ert-deftest test-casual-calc-random-number-tmenu-integration ()
   (casualt-setup)
   (casualt-run-menu-assert-testcases
    'casual-calc-random-number-tmenu
@@ -60,6 +60,21 @@
       (lambda () ; TODO: Figure out bounds check for xfloat
         (should (math-floatp (calc-top)))))))
   (casualt-breakdown t))
+
+
+(ert-deftest test-casual-calc-random-number-tmenu ()
+  (casualt-setup)
+  (cl-letf
+      (((symbol-function #'calc-rrandom) (lambda (x) (interactive)(print "WARNING: override")))
+       ((symbol-function #'calc-random-again) (lambda (x) (interactive)(print "WARNING: override"))))
+    (let* ((test-vectors '(("r" . casual-calc--random-interval-0-to-m)
+                           ("c" . calc-rrandom)
+                           ("a" . calc-random-again)))
+           (test-vectors (append test-vectors casualt-test-operators-group)))
+      (casualt-suffix-testbench-runner test-vectors
+                                       #'casual-calc-random-number-tmenu
+                                       '(lambda () (random 5000)))))
+  (casualt-breakdown t t))
 
 (provide 'test-casual-calc-random)
 ;;; test-casual-calc-random.el ends here

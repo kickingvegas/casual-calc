@@ -23,21 +23,34 @@
 
 ;;; Commentary:
 
-;; Casual Calc is an opinionated Transient-based porcelain for Emacs Calc.
+;; Casual Calc is an opinionated Transient-based user interface for Emacs Calc.
 
 ;; INSTALLATION
 ;; (require 'casual-calc)
 ;; (keymap-set calc-mode-map "C-o" #'casual-calc-tmenu)
 ;; (keymap-set calc-alg-map "C-o" #'casual-calc-tmenu)
 
+;; Alternately using `use-package':
+;; (use-package calc
+;;   :defer t)
+;; (use-package casual-calc
+;;   :ensure nil
+;;   :bind (:map
+;;          calc-mode-map
+;;          ("C-o" . casual-calc-tmenu)
+;;          :map
+;;          calc-alg-map
+;;          ("C-o" . casual-calc-tmenu)))
+;;   :after (calc))
+
 ;;; Code:
 
 (require 'calc)
 (require 'calc-math) ; needed to reference some symbols not loaded in `calc'.
+(require 'casual-calc--calc)
 (require 'transient)
 (require 'casual-lib)
 (require 'casual-calc-utils)
-(require 'casual-calc--calc)
 (require 'casual-calc-version)
 (require 'casual-calc-binary)
 (require 'casual-calc-complex)
@@ -60,60 +73,70 @@
 ;; Menus
 ;;;###autoload (autoload 'casual-calc-tmenu "casual-calc" nil t)
 (transient-define-prefix casual-calc-tmenu ()
-  "Casual main menu."
-  [["Casual"
-    :pad-keys t
-    ("&" "1/𝑥" casual-calc--calc-inv :transient nil)
-    ("Q" " √" casual-calc--calc-sqrt :transient nil)
-    ("n" "+∕− " casual-calc--calc-change-sign :transient nil)
-    ("^" "𝑦^𝑥" casual-calc--calc-power :transient nil)
-    ("=" " =" casual-calc--calc-evaluate :transient nil)]
+  "Casual Calc main menu."
+  [["Calc"
+    ("&" "1/x" casual-calc--inv :transient t)
+    ("Q" "√" casual-calc--sqrt :transient t)
+    ("n" "∓" casual-calc--change-sign :transient t)
+    ("^" "𝑦ˣ" casual-calc--power :transient t)
+    ("=" "=" casual-calc--evaluate :transient t)]
    [""
-    ("A" "|𝑥|" casual-calc--calc-abs :transient nil)
-    ("!" " !" casual-calc--calc-factorial :transient nil)
-    ("%" " ٪" casual-calc--calc-percent :transient nil)
-    ("D" " Δ%" casual-calc--calc-percent-change :transient nil)]
+    ("A" "|𝑥|" casual-calc--abs :transient t)
+    ("!" " !" casual-calc--factorial :transient t)
+    ("%" " ٪" casual-calc--percent :transient t)
+    ("D" " Δ%" casual-calc--percent-change :transient t)]
    ["Constants"
-    ("p" "𝜋" casual-calc--calc-pi :transient nil)
-    ("e" "𝑒" casual-calc--e-constant :transient nil)]
-   ["Settings"
-    :pad-keys t
-    ("m" "Modes, Displays, Angles›" casual-calc-modes-tmenu :transient nil)
-    ("M-s" "Stack›" casual-calc-stack-display-tmenu :transient nil)
-    ("M-t" "Trail›" casual-calc-trail-tmenu :transient nil)]]
+    ("p" "𝜋" casual-calc--pi :transient t)
+    ("e" "𝑒" casual-calc--e-constant :transient t)]
 
-  [["Arithmetic"
-    :pad-keys t
-    ("o" "Rounding›" casual-calc-rounding-tmenu :transient nil)
-    ("c" "Conversion›" casual-calc-conversions-tmenu :transient nil)
-    ("T" "Time›" casual-calc-time-tmenu :transient nil)
-    ("i" "Complex›" casual-calc-complex-number-tmenu :transient nil)
-    ("R" "Random›" casual-calc-random-number-tmenu :transient nil)]
-
-   ["Functions" ; test if anything is on the stack calc-stack-size 0
-    ("t" "Trigonometric›" casual-calc-trig-tmenu :transient nil)
-    ("l" "Logarithmic›" casual-calc-logarithmic-tmenu :transient nil)
-    ("b" "Binary›" casual-calc-binary-tmenu :transient nil)
-    ("v" "Vector/Matrix›" casual-calc-vector-tmenu :transient nil)
-    ("u" "Units›" casual-calc-units-tmenu :transient nil)
-    ("f" "Financial›" casual-calc-financial-tmenu :transient nil)
-    ("g" "Graphics›" casual-calc-plot-tmenu :transient nil)
-    ("a" "Algebra›" casual-calc-symbolic-tmenu :transient nil)]
+   casual-calc-basic-operators-group
 
    ["Stack"
-    :pad-keys t
     ("s" "Swap" casual-calc--stack-swap :transient t)
     ("r" "Roll" casual-calc--stack-roll-all :transient t)
     ("d" "Drop" casual-calc--stack-drop :transient t)
-    ("C" "Clear" casual-calc--stack-clear :transient t)
+    ("C" "Clear" casual-calc--stack-clear :transient t)]
+
+   [""
     ("L" "Last" casual-calc--stack-last :transient t)
-    ("w" "Copy" casual-calc--calc-copy-as-kill :transient nil)
-    ("z" "Variables›" casual-calc-variable-crud-tmenu :transient nil)]]
+    ("w" "Copy" casual-calc--copy-as-kill :transient nil)
+    ("`" "Edit" calc-edit)
+    ("z" "Variables›" casual-calc-variable-crud-tmenu)]]
+
+  ["Arithmetic"
+   :class transient-row
+    ("o" "Rounding›" casual-calc-rounding-tmenu)
+    ("c" "Conversion›" casual-calc-conversions-tmenu)
+    ("T" "Time›" casual-calc-time-tmenu)
+    ("i" "Complex›" casual-calc-complex-number-tmenu)
+    ("R" "Random›" casual-calc-random-number-tmenu)]
+
+  ["Functions"
+   [("t" "Trigonometric›" casual-calc-trig-tmenu)
+    ("l" "Logarithmic›" casual-calc-logarithmic-tmenu)]
+
+   [("b" "Binary›" casual-calc-binary-tmenu)
+    ("v" "Vector/Matrix›" casual-calc-vector-tmenu)]
+
+   [("u" "Units›" casual-calc-units-tmenu)
+    ("f" "Financial›" casual-calc-financial-tmenu)]
+
+   [("g" "Graphics›" casual-calc-plot-tmenu)
+    ("a" "Algebra›" casual-calc-symbolic-tmenu)]]
+
+  ["Settings"
+   :class transient-row
+   ("m" "Modes, Displays, Angles›" casual-calc-modes-tmenu)
+   ("S" "Stack›" casual-calc-stack-display-tmenu)
+   ("M-t" "Trail›" casual-calc-trail-tmenu)]
 
   [:class transient-row
           (casual-lib-quit-one)
+          (casual-calc-algebraic-entry)
+          (casual-calc-enter)
+          (casual-calc-pop)
           (casual-calc-undo-suffix)
-          ("q" "Quit Calc" calc-quit)])
+          ("q" "Quit" calc-quit)])
 
 (provide 'casual-calc)
 ;;; casual-calc.el ends here
