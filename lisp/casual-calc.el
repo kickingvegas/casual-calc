@@ -40,7 +40,7 @@
 ;;          ("C-o" . casual-calc-tmenu)
 ;;          :map
 ;;          calc-alg-map
-;;          ("C-o" . casual-calc-tmenu)))
+;;          ("C-o" . casual-calc-tmenu))
 ;;   :after (calc))
 
 ;;; Code:
