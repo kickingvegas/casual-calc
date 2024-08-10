@@ -5,7 +5,7 @@
 ;; Author: Charles Choi <kickingvegas@gmail.com>
 ;; URL: https://github.com/kickingvegas/casual-calc
 ;; Keywords: tools
-;; Version: 1.11.0
+;; Version: 1.11.1
 ;; Package-Requires: ((emacs "29.1") (casual-lib "1.1.0"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -40,7 +40,7 @@
 ;;          ("C-o" . casual-calc-tmenu)
 ;;          :map
 ;;          calc-alg-map
-;;          ("C-o" . casual-calc-tmenu)))
+;;          ("C-o" . casual-calc-tmenu))
 ;;   :after (calc))
 
 ;;; Code:
