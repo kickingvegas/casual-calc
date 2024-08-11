@@ -35,9 +35,13 @@
    :description (lambda ()
                   (format "Angle Measure (now %s)›"
                           (casual-calc-angle-mode-label)))
-   ("d" "Degrees" calc-degrees-mode :transient nil)
-   ("r" "Radians" calc-radians-mode :transient nil)
-   ("h" "Degrees-Minutes-Seconds" calc-hms-mode :transient nil)]
+   ("d" "Degrees" calc-degrees-mode
+    :description (lambda () (casual-calc-unicode-get :degrees))
+    :transient nil)
+   ("r" "Radians" calc-radians-mode
+    :description (lambda () (casual-calc-unicode-get :radians))
+    :transient nil)
+   ("h" "Hours-Minutes-Seconds" calc-hms-mode :transient nil)]
   [:class transient-row
           (casual-lib-quit-one)
           (casual-calc-algebraic-entry)

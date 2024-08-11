@@ -5,7 +5,7 @@
 ;; Author: Charles Choi <kickingvegas@gmail.com>
 ;; URL: https://github.com/kickingvegas/casual-calc
 ;; Keywords: tools
-;; Version: 1.11.1
+;; Version: 1.11.2
 ;; Package-Requires: ((emacs "29.1") (casual-lib "1.1.0"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -75,19 +75,39 @@
 (transient-define-prefix casual-calc-tmenu ()
   "Casual Calc main menu."
   [["Calc"
-    ("&" "1/x" casual-calc--inv :transient t)
-    ("Q" "√" casual-calc--sqrt :transient t)
-    ("n" "∓" casual-calc--change-sign :transient t)
-    ("^" "𝑦ˣ" casual-calc--power :transient t)
+    ("&" "1/x" casual-calc--inv
+     :description (lambda () (casual-calc-unicode-get :inv))
+     :transient t)
+    ("Q" "√" casual-calc--sqrt
+     :description (lambda () (casual-calc-unicode-get :sqrt))
+     :transient t)
+    ("n" "∓" casual-calc--change-sign
+     :description (lambda () (casual-calc-unicode-get :change-sign))
+     :transient t)
+    ("^" "𝑦ˣ" casual-calc--power
+     :description (lambda () (casual-calc-unicode-get :power))
+     :transient t)
     ("=" "=" casual-calc--evaluate :transient t)]
    [""
-    ("A" "|𝑥|" casual-calc--abs :transient t)
-    ("!" " !" casual-calc--factorial :transient t)
-    ("%" " ٪" casual-calc--percent :transient t)
-    ("D" " Δ%" casual-calc--percent-change :transient t)]
+    ("A" "|𝑥|" casual-calc--abs
+     :description (lambda () (casual-calc-unicode-get :abs))
+     :transient t)
+    ("!" " !" casual-calc--factorial
+     :description (lambda () (casual-calc-unicode-get :factorial))
+     :transient t)
+    ("%" " ٪" casual-calc--percent
+     :description (lambda () (casual-calc-unicode-get :percent))
+     :transient t)
+    ("D" " Δ%" casual-calc--percent-change
+     :description (lambda () (casual-calc-unicode-get :percent-change))
+     :transient t)]
    ["Constants"
-    ("p" "𝜋" casual-calc--pi :transient t)
-    ("e" "𝑒" casual-calc--e-constant :transient t)]
+    ("p" "𝜋" casual-calc--pi
+     :description (lambda () (casual-calc-unicode-get :pi))
+     :transient t)
+    ("e" "𝑒" casual-calc--e-constant
+     :description (lambda () (casual-calc-unicode-get :e))
+     :transient t)]
 
    casual-calc-basic-operators-group
 
