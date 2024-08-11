@@ -31,12 +31,25 @@
 (transient-define-prefix casual-calc-conversions-tmenu ()
   "Casual conversion functions menu."
   [["Conversions"
-    ("d" "To Degrees" calc-to-degrees :transient t)
-    ("r" "To Radians" calc-to-radians :transient t)
+    ("d" "To Degrees" calc-to-degrees
+     :description (lambda ()
+                    (format "%s %s %s"
+                            (casual-calc-unicode-get :radians)
+                            (casual-calc-unicode-get :to)
+                            (casual-calc-unicode-get :degrees)))
+     :transient t)
+    ("r" "To Radians" calc-to-radians
+     :description (lambda ()
+                    (format "%s %s %s"
+                            (casual-calc-unicode-get :degrees)
+                            (casual-calc-unicode-get :to)
+                            (casual-calc-unicode-get :radians)))
+     :transient t)
     ("h" "To HMS" calc-to-hms :transient t)
     ("f" "To Float" calc-float :transient t)
-    ("F" "To Fraction" calc-fraction :transient t)]
-   casual-calc-operators-group]
+    ("F" "To Fraction" calc-fraction :transient t)]]
+
+  casual-calc-operators-group-row
 
   casual-calc-navigation-group)
 

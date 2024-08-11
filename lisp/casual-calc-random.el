@@ -46,13 +46,14 @@
     ("r" "Natural within [𝟢..𝑚)" casual-calc--random-interval-0-to-m :transient t)]
 
    ["Real Number"
-    ("c" "Real within [𝟢.𝟢..𝟣.𝟢)" calc-rrandom :transient t)]
-
-   casual-calc-operators-group]
+    ("c" "Real within [𝟢.𝟢..𝟣.𝟢)" calc-rrandom :transient t)]]
 
   ;;("r" "Random number within [0..𝑛)" calc-random :transient nil)
 
-  [("a" "Random number again" calc-random-again :transient t)]
+  ["Repeat"
+   ("a" "Random number again" calc-random-again :transient t)]
+
+  casual-calc-operators-group-row
   casual-calc-navigation-group)
 
 (provide 'casual-calc-random)
