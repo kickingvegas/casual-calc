@@ -34,27 +34,53 @@
   ;; ["Arguments"
   ;;  ("i" "inverse" "-inverse")
   ;;  ("h" "hyperbolic" "-hyperbolic")]
-  [["Trig"
-    ("s" "sin" calc-sin :transient t)
-    ("c" "cos" calc-cos :transient t)
-    ("t" "tan" calc-tan :transient t)]
-   ["Inverse"
-    ("S" "arcsin" calc-arcsin :transient t)
-    ("C" "arccos" calc-arccos :transient t)
-    ("T" "arctan" calc-arctan :transient t)]
+  ["Trigonometric Functions"
+   [("s" "sin" calc-sin
+     :description (lambda () (casual-calc-unicode-get :sin))
+     :transient t)
+    ("c" "cos" calc-cos
+     :description (lambda () (casual-calc-unicode-get :cos))
+     :transient t)
+    ("t" "tan" calc-tan
+     :description (lambda () (casual-calc-unicode-get :tan))
+     :transient t)]
+   [("S" "arcsin" calc-arcsin
+     :description (lambda () (casual-calc-unicode-get :arcsin))
+     :transient t)
+    ("C" "arccos" calc-arccos
+     :description (lambda () (casual-calc-unicode-get :arccos))
+     :transient t)
+    ("T" "arctan" calc-arctan
+     :description (lambda () (casual-calc-unicode-get :arctan))
+     :transient t)]
 
-   ["Misc"
-    ("p" "𝜋" casual-calc--pi :transient t)
-    ("d" "To Degrees" calc-to-degrees :transient t)
-    ("r" "To Radians" calc-to-radians :transient t)
-    ("a" casual-calc-angle-measure-tmenu
+   [("d" "To Degrees" calc-to-degrees
+     :description (lambda ()
+                    (format "%s %s %s"
+                            (casual-calc-unicode-get :radians)
+                            (casual-calc-unicode-get :to)
+                            (casual-calc-unicode-get :degrees)))
+     :transient t)
+    ("r" "To Radians" calc-to-radians
+     :description (lambda ()
+                    (format "%s %s %s"
+                            (casual-calc-unicode-get :degrees)
+                            (casual-calc-unicode-get :to)
+                            (casual-calc-unicode-get :radians)))
+     :transient t)]]
+
+  [:class transient-row
+   ("p" "𝜋" casual-calc--pi
+     :description (lambda () (casual-calc-unicode-get :pi))
+     :transient t)
+   ("a" casual-calc-angle-measure-tmenu
      :description (lambda ()
                     (format "Angle Measure (now %s)›"
                             (casual-calc-angle-mode-label)))
      :transient t)
-    ("h" "Hyperbolic›" casual-calc-hyperbolic-trig-tmenu)]
-   casual-calc-operators-group]
+   ("h" "Hyperbolic›" casual-calc-hyperbolic-trig-tmenu)]
 
+  casual-calc-operators-group-row
   casual-calc-navigation-group)
 
 

@@ -77,8 +77,8 @@ can be subsequently edited or removed."
 (defun casual-calc-angle-mode-label ()
   "Label for angle mode."
   (cond
-   ((eq calc-angle-mode 'deg) "Degrees")
-   ((eq calc-angle-mode 'rad) "Radians")
+   ((eq calc-angle-mode 'deg) (casual-calc-unicode-get :degrees))
+   ((eq calc-angle-mode 'rad) (casual-calc-unicode-get :radians))
    ((eq calc-angle-mode 'hms) "hms")))
 
 (defun casual-calc-complex-format-label ()
