@@ -5,7 +5,7 @@
 ;; Author: Charles Choi <kickingvegas@gmail.com>
 ;; URL: https://github.com/kickingvegas/casual-calc
 ;; Keywords: tools
-;; Version: 1.11.2
+;; Version: 1.11.3
 ;; Package-Requires: ((emacs "29.1") (casual-lib "1.1.0"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -42,6 +42,12 @@
 ;;          calc-alg-map
 ;;          ("C-o" . casual-calc-tmenu))
 ;;   :after (calc))
+
+;; NOTE: This package requires `casual-lib' which in turn requires an update of
+;; the built-in package `transient' ≥ 0.6.0. Please customize the variable
+;; `package-install-upgrade-built-in' to t to allow for `transient' to be
+;; updated. For further details, consult the INSTALL section of this package's
+;; README.
 
 ;;; Code:
 
