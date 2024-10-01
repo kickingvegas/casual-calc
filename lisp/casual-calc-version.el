@@ -22,7 +22,7 @@
 
 ;;; Code:
 
-(defconst casual-calc-version "1.11.3"
+(defconst casual-calc-version "1.11.4-rc.1"
   "Casual Version.")
 
 (defun casual-calc-version ()
