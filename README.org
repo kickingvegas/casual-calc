@@ -8,7 +8,7 @@ An opinionated [[https://github.com/magit/transient][Transient]]-based user inte
 * Motivation
 While Emacs Calc has an embarrassingly rich feature set, for many users this capability is inaccessible due the overwhelming number of keybindings used to access them. These keybindings have a steep learning curve that is quickly lost if not in constant use.
 
-Menus are a user interface (UI) affordance that offer users discoverability and recall. Providing a hierarchical menu UI over Calc greatly improves its casual use.
+Menus are a user interface (UI) affordance that offer users discoverability and recognition. Providing a hierarchical menu UI over Calc greatly improves its casual use.
 
 ** Goals
 - To provide a keyboard-driven UI to Calc that is menu based.
