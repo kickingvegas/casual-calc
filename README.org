@@ -1,4 +1,11 @@
-[[https://melpa.org/#/casual-calc][file:https://melpa.org/packages/casual-calc-badge.svg]]
+* NOTICE
+
+This package has been superseded by the package [[https://github.com/kickingvegas/casual][casual]]. Please install the package ~casual~ from either [[https://melpa.org/#/casual][MELPA]] or [[https://stable.melpa.org/#/casual][MELPA stable]].
+
+Upon installation and upgrade of ~casual~, this package will be uninstalled from your Emacs configuration. Please revisit your configuration of Casual Calc in your initialization file(s) accordingly.
+
+This repository should be treated as an archive. All future development on Casual Calc will be done in the [[https://github.com/kickingvegas/casual][Casual repository]].
+
 
 * Casual Calc
 An opinionated [[https://github.com/magit/transient][Transient]]-based user interface to support the casual usage of Emacs [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][Calc]].
