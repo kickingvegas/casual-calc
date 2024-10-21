@@ -5,7 +5,7 @@
 ;; Author: Charles Choi <kickingvegas@gmail.com>
 ;; URL: https://github.com/kickingvegas/casual-calc
 ;; Keywords: tools
-;; Version: 1.11.4
+;; Version: 1.11.5-rc.1
 ;; Package-Requires: ((emacs "29.1") (casual-lib "1.1.0"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -22,6 +22,12 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+
+;; NOTICE
+;; This package `casual-calc' has been superseded by the package `casual'.
+;; Please update to the `casual' package from either MELPA or MELPA stable. Upon
+;; installation and upgrade of the `casual' package, this package will be
+;; removed.
 
 ;; Casual Calc is an opinionated Transient-based user interface for Emacs Calc.
 
@@ -75,6 +81,13 @@
 (require 'casual-calc-financial)
 (require 'casual-calc-symbolic)
 (require 'casual-calc-variables)
+
+(display-warning
+ :warning
+ (concat
+  "NOTICE: "
+  "The package casual-calc has been superseded by the package casual. "
+  "Please upgrade to casual at your earliest convenience."))
 
 ;; Menus
 ;;;###autoload (autoload 'casual-calc-tmenu "casual-calc" nil t)
